@@ -1,0 +1,18 @@
+<div class="container"  >
+    <h2 class="mt-5 mb-5">Nepolozeni ispiti</h2>
+    <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Naziv predmeta</th>
+            <th>Datum polaganja</th>
+            <th>Ocena</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let ispit of nepolozeniIspiti; index as i">
+          <tr *ngIf="idUcenika == ispit.ucenik.id && ispit.polozen == false">
+            <td>{{i+1}}</td><td>{{ispit.predmet.naziv}}</td><td>{{ispit.datumPolaganja}}</td><td>{{ispit.ocena}}</td>
+          </tr>
+        </tbody>
+      </table>
+</div>

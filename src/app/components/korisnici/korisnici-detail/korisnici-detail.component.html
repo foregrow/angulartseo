@@ -1,0 +1,40 @@
+<div class="container-fluid" *ngIf="this._korisnikService.getRole()==='ROLE_ADMIN'">
+   
+    <h4 class="mt-5 mb-3">Informacije o korisniku</h4>
+    <div *ngIf="korisnik != undefined">
+        <div class="bg-dark w-50">
+            <h5 class="text-white p-1">Korisnicko ime: <span class="label label-default">{{korisnik.korisnickoIme}}</span></h5>
+            <h5 class="text-white p-1" *ngIf="korisnik.uloga==='ROLE_ADMIN'">Uloga: <span class="label label-default">ADMIN</span></h5>
+            <!-- <h5 class="text-white" *ngIf="korisnik.nastavnik.ime!=null && korisnik.nastavnik.id != 0">Uloga: <span class="label label-default">NASTAVNIK</span></h5> -->
+            <ng-template [ngIf]="korisnik.ucenik.ime!=null && korisnik.ucenik.id != 0">
+                <h5 class="text-white p-1">Uloga: <span class="label label-default">UCENIK</span></h5>
+                <h5 class="text-white p-1">Ime ucenika: <span class="label label-default">{{korisnik.ucenik.ime}}</span></h5>
+                <h5 class="text-white p-1">Prezime ucenika: <span class="label label-default">{{korisnik.ucenik.prezime}}</span></h5>
+                <h5 class="text-white p-1">Index ucenika: <span class="label label-default">{{korisnik.ucenik.index}}</span></h5>
+                <h5 class="text-white p-1">Smer ucenika: <span class="label label-default">{{korisnik.ucenik.smer.naziv}}</span></h5>
+              </ng-template>
+              <ng-template [ngIf]="korisnik.nastavnik.ime!=null && korisnik.nastavnik.id != 0">
+                <h5 class="text-white p-1">Ime nastavnika: <span class="label label-default">{{korisnik.nastavnik.ime}}</span></h5>
+                <h5 class="text-white p-1">Prezime nastavnika: <span class="label label-default">{{korisnik.nastavnik.prezime}}</span></h5>
+                <h5 class="text-white p-1">Email nastavnika: <span class="label label-default">{{korisnik.nastavnik.email}}</span></h5>
+                <h5 class="text-white p-1">Uloga: <span class="label label-default">{{korisnik.nastavnik.uloga}}</span></h5>
+              </ng-template>
+        </div>
+        <button class="btn btn-primary" (click)="goBackToKorisnici()">Back</button>
+        <!-- <h4 class="mt-5 mb-3">Izmena podataka korisnika</h4>
+        <form [formGroup]="korisnikForm" (ngSubmit)="izmenaKorisnika()">
+            <div class="form-group">
+                <label>Korisnicko ime</label>
+                <input [class.is-invalid]="korisnickoIme.invalid &&
+                korisnickoIme.touched" formControlName="korisnickoIme" type="text" class="form-control">
+                <small [class.d-none]="korisnickoIme.valid
+                || korisnickoIme.untouched" class="text-danger">Korisnicko ime je obavezno!</small>
+            </div>
+
+            <button class="btn btn-primary" type="submit">Izmeni</button>
+        </form> -->
+    </div> 
+
+    
+</div>  
+

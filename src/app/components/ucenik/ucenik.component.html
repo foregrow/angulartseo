@@ -1,0 +1,40 @@
+<h3  *ngIf="korisnik">{{korisnik.ucenik.ime}} {{korisnik.ucenik.prezime}} - {{index}}</h3>
+<div class="container">
+    <div class="row mt-5">
+      <div class="col-md-4 mb-5">
+        <div class="card text-center">
+          <div class="card-body">
+            <a class="btn btn-primary" (click)="prikazProfilaUcenika()">Profil</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-5">
+          <div class="card text-center">
+            <div class="card-body">
+              <a class="btn btn-primary" (click)="finansijskaKartica()" >Finansijska kartica</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-5">
+          <div class="card text-center">
+            <div class="card-body">
+              <a class="btn btn-primary" (click)="polozeniIspiti()">Polozeni ispiti</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-5">
+          <div class="card text-center">
+            <div class="card-body">
+              <a class="btn btn-primary" (click)="nepolozeniIspiti()" >Nepolozeni ispiti</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-5">
+          <div class="card text-center">
+            <div class="card-body">
+              <a class="btn btn-primary" (click)="prijavaIspita()">Prijava ispita</a>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>

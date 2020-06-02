@@ -1,0 +1,23 @@
+<div class="container">
+    <h2 class="mt-5 mb-5">Svi ucenici</h2>
+    <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Ime</th>
+            <th>Prezime</th>
+            <th>Index</th>
+            <th>Godina upisa</th>
+            <th>Godina studija</th>
+            <th>Smer</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let ucenik of ucenici; index as i">
+          <tr>
+            <td>{{i+1}}</td><td>{{ucenik.ime}}</td><td>{{ucenik.prezime}}</td><td>{{ucenik.index}}</td>
+            <td>{{ucenik.godinaUpisa}}</td><td>{{ucenik.godinaStudija}}</td><td>{{ucenik.smer.naziv}}</td>
+          </tr>
+        </tbody>
+      </table>
+</div>
+

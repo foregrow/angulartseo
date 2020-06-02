@@ -1,0 +1,27 @@
+<div class="container" *ngIf="this._korisnikService.getRole()==='ROLE_ADMIN'">
+    <h2 class="mt-5 mb-5">Svi korisnici<a class="btn btn-sm text-white btn-success ml-3" (click)="navigateToAddKorisnik()">Dodaj novog korisnika</a></h2>
+    <!-- w-25,75,50.. klasa za width tabele  -->
+    <table class="table table-hover w-75">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Korisnicko ime</th>
+            <th>Uloga</th>
+            <th>Info</th>
+            <th>Brisanje</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let kor of korisnici; index as i">
+          <tr>
+            <td>{{i+1}}</td>
+            <td>{{kor.korisnickoIme}}</td>
+            <td *ngIf="kor.uloga==='ROLE_ADMIN';else elseBlock">ADMIN</td>
+            <ng-template #elseBlock>
+                <td>KORISNIK</td>
+            </ng-template>
+            <td><a class="btn btn-sm text-white btn-primary" (click)="detaljiKorisnika(kor)">Detalji</a></td>
+            <td><a class="btn btn-sm text-white btn-danger" (click)="deleteKorisnik(kor.id)">Izbrisi</a></td>
+        </tr>
+        </tbody>
+      </table>
+</div>

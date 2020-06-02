@@ -1,0 +1,49 @@
+<div class="container-fluid w-25" *ngIf="this._korisnikService.getRole()==='ROLE_ADMIN'">
+    <h4 class="mt-5 mb-3">Dodavanje novog korisnika</h4>
+    <form [formGroup]="addForm" (ngSubmit)="addKorisnika()">
+        <div class="form-group">
+            <label>Korisnicko ime</label>
+            <input [class.is-invalid]="korisnickoIme.invalid &&
+            korisnickoIme.touched" formControlName="korisnickoIme" type="text" class="form-control">
+            <small [class.d-none]="korisnickoIme.valid
+            || korisnickoIme.untouched" class="text-danger">Korisnicko ime je obavezno!</small>
+        </div>
+        <div class="form-group">
+            <label>Lozinka</label>
+            <input [class.is-invalid]="lozinka.invalid &&
+            lozinka.touched" formControlName="lozinka" type="text" class="form-control">
+            <small [class.d-none]="lozinka.valid
+            || lozinka.untouched" class="text-danger">Lozinka je obavezna!</small>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Uloga korisnika</label>
+            <select class="form-control" formControlName="uloge" (change)="chosenKorisnik()" required>
+                <option [ngValue]="null" disabled>Izaberite ulogu korisnika</option>
+                <option *ngFor="let ulogaLine of ulogeArray" [ngValue]="ulogaLine">
+                 {{ ulogaLine }}
+                </option>
+              </select> 
+        </div>
+        <div class="form-group" *ngIf="ucenikIzabran" >
+            <label class="control-label">Ucenik</label>
+            <select class="form-control"  formControlName="ucenikPodaci" (change)="ucenikChosen()">
+                <option [ngValue]="null" disabled>Izaberite ucenika</option>
+                <option *ngFor="let ucenik of uceniciStr" [ngValue]="ucenik">
+                 {{ ucenik }}
+                </option>
+              </select> 
+        </div>
+        <div class="form-group" *ngIf="nastavnikIzabran">
+            <label class="control-label">Nastavnik</label>
+            <select class="form-control" formControlName="nastavnikPodaci" (change)="nastavnikChosen()">
+                <option [ngValue]="null" disabled>Izaberite nastavnika</option>
+                <option *ngFor="let nastavnik of nastavniciStr" [ngValue]="nastavnik">
+                 {{ nastavnik }}
+                </option>
+              </select> 
+        </div>
+        <button class="btn btn-primary" [disabled]="addForm.invalid || !korIzabran || (ucenikIzabran && !ucenikObjekatIzabran)
+        || (nastavnikIzabran && !nastavnikObjekatIzabran)" type="submit">Dodaj</button>
+    </form>
+</div>

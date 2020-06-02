@@ -1,0 +1,34 @@
+<h3 style="text-align: center; margin-top: 2cm; margin-bottom: 1cm;">Ispitni rok: </h3>
+<div class="container">
+    <div class="row">
+      <div class="col-12">
+        <table class="table table-bordered" >
+          <thead>
+            <tr>
+              <th scope="col">Izaberi</th>
+              <th scope="col">Naziv predmeta</th>
+              <th scope="col">Profesor</th>
+              <th scope="col">Datum odrzavanja ispita</th>
+              <th scope="col">Cena</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let ispit of ispiti; index as i">
+            <tr *ngIf="idUcenika == ispit.ucenik.id && ispit.polozen == false">
+              <td>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input"  id="{{i + 1}}">
+                    <label class="custom-control-label" for="{{i + 1}}"></label>
+                </div>
+              </td>
+              <td>{{ispit.predmet.naziv}}</td>
+              <td>Profesorrrrr</td>
+              <td>{{ispit.datumPolaganja}}</td>
+              <td>{{ispit.cena}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <button style="margin-right: 16cm;" type="button" class="btn btn-primary btn-lg">Large button</button>
+        Ukupna cena: <input type="text" value="{{ukCena}}" disabled>
+      </div>
+    </div>
+  </div>

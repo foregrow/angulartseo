@@ -1,0 +1,18 @@
+
+<div class="container" *ngIf="this._korisnikService.getRole()==='ROLE_ADMIN'">
+    <h2 class="mt-5 mb-5">Svi predmeti</h2>
+    <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Naziv predmeta</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let predmet of predmeti; index as i">
+          <tr>
+            <td>{{i+1}}</td><td>{{predmet.naziv}}</td>
+          </tr>
+        </tbody>
+      </table>
+</div>
+

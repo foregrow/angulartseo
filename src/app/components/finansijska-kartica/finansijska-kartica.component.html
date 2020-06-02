@@ -1,0 +1,46 @@
+<div class="padding"  *ngFor="let kartica of kartice">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card" *ngIf="idUcenika == kartica.ucenik.id" >
+                <div class="card-header">
+                    <strong>FInansijska Kartica</strong>
+                </div>
+                <div class="card-body"  >
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="name">Ime</label>
+                                <input class="form-control" type="text" disabled = true value={{kartica.ucenik.ime}}>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="name">Prezime</label>
+                                <input class="form-control" type="text" disabled = true value={{kartica.ucenik.prezime}}>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="name">Broj kartice</label>
+                                <input class="form-control" type="text" disabled = true value={{kartica.brojKartice}}>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="name">Suma</label>
+                                <input class="form-control" type="text" disabled = true value={{kartica.suma}}> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    
+            </div>
+        </div>
+    </div>
+</div>
