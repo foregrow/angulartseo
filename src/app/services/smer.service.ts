@@ -12,7 +12,20 @@ export class SmerService {
   
   constructor(private http: HttpClient) { }
 
+  getById(id){
+    var numbid = +id;
+    return this.http.get(`${this._urlGetAll}/${numbid}`);
+  }
+
   getSmerovi() : Observable<Smer[]>{
     return this.http.get<Smer[]>(this._urlGetAll);
+  }
+
+  addSmer(smerData:Smer,emailNas){
+    return this.http.post<any>(`${this._urlGetAll}/${emailNas}`,smerData);
+  }
+  deleteSmer(id): Observable<any>{
+    var numbid = +id;
+    return this.http.delete(`${this._urlGetAll}/${numbid}`);
   }
 }

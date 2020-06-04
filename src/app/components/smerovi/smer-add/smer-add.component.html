@@ -1,0 +1,21 @@
+<div class="container-fluid w-25" *ngIf="this._korisnikService.getRole()==='ROLE_ADMIN'">
+    <h4 class="mt-5 mb-3">Dodavanje novog smera</h4>
+    <form [formGroup]="addForm" (ngSubmit)="addSmer()">
+        <div class="form-group">
+            <label>Naziv smera</label>
+            <input formControlName="naziv" type="text" class="form-control">
+            <small [class.d-none]="naziv.valid || naziv.untouched" class="text-danger">Naziv smera je obavezan!</small>
+            
+        </div>
+        <div class="form-group">
+            <label class="control-label">Sef katedre</label>
+            <select class="form-control" formControlName="nastavnikPodaci">
+                <option [ngValue]="null" disabled>Izaberite nastavnika</option>
+                <option *ngFor="let nastavnik of nastavniciStr" [ngValue]="nastavnik">
+                 {{ nastavnik }}
+                </option>
+              </select> 
+        </div>
+        <button class="btn btn-primary" [disabled]="addForm.invalid" type="submit">Dodaj</button>
+    </form>
+</div>

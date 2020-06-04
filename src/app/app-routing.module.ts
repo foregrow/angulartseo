@@ -23,6 +23,11 @@ import { FinansijskaKarticaComponent } from './components/finansijska-kartica/fi
 import { PolozeniIspitiComponent } from './components/ispiti/polozeni-ispiti/polozeni-ispiti.component';
 import { NepolozeniIspitiComponent } from './components/ispiti/nepolozeni-ispiti/nepolozeni-ispiti.component';
 import { PrijavaIspitaComponent } from './components/ispiti/prijava-ispita/prijava-ispita.component';
+
+import { SmerAddComponent } from './components/smerovi/smer-add/smer-add.component';
+import { SmerDetailComponent } from './components/smerovi/smer-detail/smer-detail.component';
+import { NastavniciDetailComponent } from './components/nastavnici/nastavnici-detail/nastavnici-detail.component';
+import { NastavniciAddComponent } from './components/nastavnici/nastavnici-add/nastavnici-add.component';
 const routes: Routes = [
     {path: '', redirectTo: 'login', pathMatch: 'full'},
     {path: 'login', component: LoginComponent},
@@ -40,14 +45,22 @@ const routes: Routes = [
     data: {
         roles: ['ROLE_ADMIN']
       }},
+    
 
     {path: 'korisnici', component: KorisniciComponent, canActivate: [AuthGuard]},
     {path: 'korisnici-detail/:id', component: KorisniciDetailComponent, canActivate: [AuthGuard]},
     {path: 'korisnici-add', component: KorisniciAddComponent, canActivate: [AuthGuard]},
     
     {path: 'nastavnici', component: NastavniciComponent, canActivate: [AuthGuard]},
+    {path: 'nastavnici-detail/:id', component: NastavniciDetailComponent, canActivate: [AuthGuard]},
+    {path: 'nastavnici-add', component: NastavniciAddComponent, canActivate: [AuthGuard]},
+
     {path: 'ucenici', component: UceniciComponent, canActivate: [AuthGuard]},
+
     {path: 'smerovi', component: SmeroviComponent, canActivate: [AuthGuard]},
+    {path: 'smerovi-detail/:id', component: SmerDetailComponent, canActivate: [AuthGuard]},
+    {path: 'smerovi-add', component: SmerAddComponent, canActivate: [AuthGuard]},
+    
     {path: 'predmeti', component: PredmetiComponent, canActivate: [AuthGuard]},
     {path: 'ispiti', component: IspitiComponent, canActivate: [AuthGuard]},
 
@@ -84,7 +97,7 @@ export class AppRoutingModule{}
 
 export const routingComponents = [LoginComponent,
 UcenikComponent, NastavnikComponent, AdminComponent, 
-KorisniciComponent,NastavniciComponent,UceniciComponent,
-SmeroviComponent,PredmetiComponent,IspitiComponent,
+KorisniciComponent,NastavniciComponent,NastavniciDetailComponent,NastavniciAddComponent,UceniciComponent,
+SmeroviComponent,PredmetiComponent,IspitiComponent,SmerAddComponent,SmerDetailComponent,
 KorisniciDetailComponent,KorisniciAddComponent,
 ProfilUcenikComponent,FinansijskaKarticaComponent,PolozeniIspitiComponent,NepolozeniIspitiComponent,PrijavaIspitaComponent]

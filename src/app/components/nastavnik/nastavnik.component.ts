@@ -12,7 +12,7 @@ export class NastavnikComponent implements OnInit {
   constructor(private _korisnikService: KorisnikService,private _router: Router) { }
 
   ngOnInit(): void {
-    //console.log('korIme:' +this._korisnikService.loggedInKorisnik.korisnickoIme);
+   
   }
 
 }

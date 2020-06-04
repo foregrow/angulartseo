@@ -10,6 +10,7 @@ export class NastavnikService {
 
   private _urlGetAll: string = "http://localhost:8080/api/nastavnici";
   private _urlGetNastavniciWithoutAccount: string = "http://localhost:8080/api/nastavnici/notInKorisnik";
+  private _urlGetNastavniciWhereSefKatedreNull: string = "http://localhost:8080/api/nastavnici/sefKatedreNull";
   constructor(private http: HttpClient) { }
 
   getNastavnici() : Observable<Nastavnik[]>{
@@ -18,5 +19,18 @@ export class NastavnikService {
 
   getNastavniciWithoutAccount() : Observable<Nastavnik[]>{
     return this.http.get<Nastavnik[]>(this._urlGetNastavniciWithoutAccount);
+  }
+
+  getNastavniciWhereSefKatedreNull() : Observable<Nastavnik[]>{
+    return this.http.get<Nastavnik[]>(this._urlGetNastavniciWhereSefKatedreNull);
+  }
+
+  addNastavnik(data:Nastavnik){
+    return this.http.post<any>(this._urlGetAll,data);
+  }
+
+  deleteNastavnik(id): Observable<any>{
+    var numbid = +id;
+    return this.http.delete(`${this._urlGetAll}/${numbid}`);
   }
 }

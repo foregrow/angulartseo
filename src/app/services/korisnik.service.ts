@@ -22,7 +22,7 @@ export class KorisnikService {
 
 
   getAllKorisnici(): Observable<any>{
-    return this._http.get(this._urlGetAll);
+    return this._http.get<Korisnik[]>(this._urlGetAll);
   }
   getByKorisnickoIme(korisnickoIme){
     return this._http.get(`${this._urlGetByKorisnickoIme}/${korisnickoIme}`);

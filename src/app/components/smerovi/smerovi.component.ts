@@ -23,4 +23,19 @@ export class SmeroviComponent implements OnInit {
         .subscribe(data => this.smerovi = data);
   }
 
+  navigateToAddSmer(){
+    this._router.navigate(['smerovi-add'])
+  }
+
+  detaljiSmera(smer){
+    var strId : string = String(smer.id);
+    this._router.navigate(['smerovi-detail/'+strId]);
+  }
+
+  deleteSmer(id){
+    this._smerService.deleteSmer(id)
+    .subscribe(
+      data => this.smerovi = data
+    );
+  }
 }

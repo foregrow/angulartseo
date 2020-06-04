@@ -24,7 +24,6 @@ export class KorisniciDetailComponent implements OnInit {
     this.getById(this.id);
   }
 
-
   goBackToKorisnici(){
     let selectedId = this.id ? this.id : null;
     this.router.navigate(["/korisnici"]);

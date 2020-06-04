@@ -11,5 +11,5 @@ export class IspitiComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  
 }

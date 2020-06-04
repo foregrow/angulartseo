@@ -10,8 +10,11 @@ import { KorisnikService } from './services/korisnik.service';
 import { AuthGuard } from './auth.guard';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { RoleGuard } from './role.guard';
-
-
+import { SmerService } from './services/smer.service';
+import { FinansijskaKarticaService } from './services/finansijska-kartica.service';
+import { IspitService } from './services/ispit.service';
+import { NastavnikService } from './services/nastavnik.service';
+import { UcenikService } from './services/ucenik.service';
 
 //routingComponents = sve komponente
 @NgModule({
@@ -25,12 +28,12 @@ import { RoleGuard } from './role.guard';
     AppRoutingModule,
     ReactiveFormsModule
   ],
-  providers: [PredmetService,KorisnikService,AuthGuard,
+  providers: [PredmetService,KorisnikService,AuthGuard,SmerService,FinansijskaKarticaService,IspitService,NastavnikService,PredmetService,UcenikService,
   {
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptorService,
     multi: true //za multiple interceptors ako su potrebni
-  },RoleGuard],
+  },RoleGuard,],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

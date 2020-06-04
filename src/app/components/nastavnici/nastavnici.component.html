@@ -1,20 +1,30 @@
-<div class="container">
-    <h2 class="mt-5 mb-5">Svi nastavnici</h2>
-    <table class="table table-hover">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Ime</th>
-            <th>Prezime</th>
-            <th>Email</th>
-            <th>Uloga</th>
-          </tr>
-        </thead>
-        <tbody *ngFor="let nastavnik of nastavnici; index as i">
-          <tr>
-            <td>{{i+1}}</td><td>{{nastavnik.ime}}</td><td>{{nastavnik.prezime}}</td><td>{{nastavnik.email}}</td><td>{{nastavnik.uloga}}</td>
-          </tr>
-        </tbody>
-      </table>
+<div class="container" *ngIf="this._korisnikService.getRole()==='ROLE_ADMIN'">
+  <h2 class="mt-5 mb-5">Svi nastavnici<a class="btn btn-sm text-white btn-success ml-3" (click)="navigateToAddNastavnik()">Dodaj novog nastavnika</a></h2>
+
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Ime</th>
+        <th>Prezime</th>
+        <th>Email</th>
+        <th>Uloga</th>
+        <th>Info</th>
+        <th>Brisanje</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let nastavnik of nastavnici; index as i">
+      <tr>
+        <td>{{i+1}}</td><td>{{nastavnik.ime}}</td><td>{{nastavnik.prezime}}</td><td>{{nastavnik.email}}</td><td>{{nastavnik.uloga}}</td>
+        <td><a class="btn btn-sm text-white btn-primary" (click)="detaljiNastavnika(nastavnik)">Detalji</a></td>
+        <td><a class="btn btn-sm text-white btn-danger" (click)="deleteNastavnik(nastavnik.id)">Izbrisi</a></td>
+
+      </tr>
+    </tbody>
+  </table>
+  
 </div>
+
+
 

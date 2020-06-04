@@ -17,6 +17,7 @@ export class AdminComponent implements OnInit {
   }
 
   
+  
   prikazKorisnika(){
     this._router.navigate(['/korisnici']);
   }

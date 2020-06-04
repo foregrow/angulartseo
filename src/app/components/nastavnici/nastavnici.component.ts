@@ -11,17 +11,33 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class NastavniciComponent implements OnInit {
 
   public nastavnici = [];
-
+  
   constructor(private _nastavnikService: NastavnikService,
               public _korisnikService: KorisnikService,
               private _activatedRoute: ActivatedRoute, 
               private _router: Router) { }
 
   ngOnInit(): void {
-    
-    //console.log('korIme:' +this._korisnikService.loggedInKorisnik.korisnickoIme);
     this._nastavnikService.getNastavnici()
         .subscribe(data => this.nastavnici = data);
+      
   }
 
+  navigateToAddNastavnik(){
+    this._router.navigate(['nastavnici-add'])
+  }
+
+  detaljiNastavnika(nas){
+    this._router.navigate(['nastavnici-detail',nas.id])
+  }
+
+  deleteNastavnik(id){
+    this._nastavnikService.deleteNastavnik(id)
+    .subscribe(
+      data => this.nastavnici = data
+    );
+  }
+
+  
+  
 }

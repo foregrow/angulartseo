@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormArray, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, FormArray, Validators, FormGroup, AbstractControl } from '@angular/forms';
 import { KorisnikService } from 'src/app/services/korisnik.service';
 import { UcenikService } from 'src/app/services/ucenik.service';
 import { Ucenik } from 'src/app/model/ucenik';
 import { Korisnik } from 'src/app/model/korisnik';
 import { Nastavnik } from 'src/app/model/nastavnik';
 import { NastavnikService } from 'src/app/services/nastavnik.service';
-import { TranslationWidth } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-korisnici-add',
@@ -18,6 +18,8 @@ export class KorisniciAddComponent implements OnInit {
   
   addForm: FormGroup;
 
+  korImena: string[] = [];
+  korisniciObj = [];
   ucenici: Ucenik[] = []; //lista svih vracenih ucenika sa backenda
   uceniciStr: string[] = []; //ucenikovi fieldovi concatovani u string
 
@@ -49,7 +51,32 @@ export class KorisniciAddComponent implements OnInit {
   constructor(private fb: FormBuilder,
     public _korisnikService: KorisnikService,
     public _ucenikService: UcenikService,
-    public _nastavnikService: NastavnikService) { }
+    public _nastavnikService: NastavnikService,
+    private _router: Router) { 
+      
+    }
+
+    ngOnInit(): void {
+      this.addForm = this.fb.group({
+        korisnickoIme: ['',Validators.required],
+        lozinka: ['',Validators.required],
+        uloge: [this.fb.array(this.ulogeArray)],
+        ucenikPodaci: [this.fb.array(this.uceniciStr)],
+        nastavnikPodaci: [this.fb.array(this.nastavniciStr)]
+      });
+      
+      this.getUceniciWithoutAccount();
+      this.getNastavniciWithoutAccount();
+      this.getAllKorisnickaImena();
+
+      //na promenu vrednosti u input polju poziva se funkcija koja proverava da li je korisnicko ime zauzeto ili nije
+      this.korisnickoIme.valueChanges.subscribe(data =>
+        {
+          this.existingKorIme();
+        }
+      )
+      
+    }
 
     getUceniciWithoutAccount(){
       this._ucenikService.getUceniciWithoutAccount().subscribe(
@@ -81,23 +108,19 @@ export class KorisniciAddComponent implements OnInit {
       );
     }
 
+    getAllKorisnickaImena(){
+      this._korisnikService.getAllKorisnici()
+        .subscribe(
+          data => {
+            this.korisniciObj = data
+            for (var i = 0; i < this.korisniciObj.length; i++) {
+              this.korImena.push(this.korisniciObj[i].korisnickoIme);
+              
+            }  
+          });
+    }
 
-  ngOnInit(): void {
-    this.addForm = this.fb.group({
-      korisnickoIme: ['',Validators.required],
-      lozinka: ['',Validators.required],
-      uloge: [this.fb.array(this.ulogeArray)],
-      ucenikPodaci: [this.fb.array(this.uceniciStr)],
-      nastavnikPodaci: [this.fb.array(this.nastavniciStr)]
-    });
-    
-    this.getUceniciWithoutAccount();
-    this.getNastavniciWithoutAccount();
-
-    this.addForm.get('')
-    
-  }
-
+  korImeExists = false;
   korIzabran = false;
   ucenikIzabran = false;
   nastavnikIzabran = false;
@@ -137,9 +160,16 @@ export class KorisniciAddComponent implements OnInit {
       this.korIzabran = false;
     }
   }
+ 
 
-
+  existingKorIme(){
+    if(this.korImena.includes(this.korisnickoIme.value))
+      this.korImeExists = true;
+    else
+    this.korImeExists = false;
+  }
   addKorisnika(){
+  
     var korIme =this.korisnickoIme.value;
     var lozinka =this.lozinka.value;
     var uloga =this.uloge.value;
@@ -162,17 +192,14 @@ export class KorisniciAddComponent implements OnInit {
     }
     var kor: Korisnik = new Korisnik(korIme,lozinka,
       uloga,null,null);
-    // console.log('korIme'+korIme);
-    // console.log('lozinka'+lozinka);
-    // console.log('uloga'+uloga);
-    // console.log(index);
-    // console.log(email);
 
     this._korisnikService.addKorisnik(kor,index,email)
     .subscribe(
-      response => console.log('Success',response),
-      error => console.log('Error!',error)
+      data =>{
+        this._router.navigate(['korisnici']);
+      }
     );
+    
   }
 
 }

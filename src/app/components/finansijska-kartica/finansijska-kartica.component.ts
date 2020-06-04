@@ -11,11 +11,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class FinansijskaKarticaComponent implements OnInit {
 
-kor;
+  kor;
 
-idUcenika;
-kartice = [];
-kartica = [];
+  idUcenika;
+  kartice = [];
+  kartica = [];
 
 
   constructor(private _ucenikService: UcenikService, 

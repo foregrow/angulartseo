@@ -7,11 +7,12 @@
             korisnickoIme.touched" formControlName="korisnickoIme" type="text" class="form-control">
             <small [class.d-none]="korisnickoIme.valid
             || korisnickoIme.untouched" class="text-danger">Korisnicko ime je obavezno!</small>
+            <small *ngIf="korImeExists" class="text-danger">Uneto korisnicko ime je zauzeto!</small>
         </div>
         <div class="form-group">
             <label>Lozinka</label>
             <input [class.is-invalid]="lozinka.invalid &&
-            lozinka.touched" formControlName="lozinka" type="text" class="form-control">
+            lozinka.touched" formControlName="lozinka" type="password" class="form-control">
             <small [class.d-none]="lozinka.valid
             || lozinka.untouched" class="text-danger">Lozinka je obavezna!</small>
         </div>
@@ -43,7 +44,7 @@
                 </option>
               </select> 
         </div>
-        <button class="btn btn-primary" [disabled]="addForm.invalid || !korIzabran || (ucenikIzabran && !ucenikObjekatIzabran)
+        <button class="btn btn-primary" [disabled]="addForm.invalid || korImeExists || !korIzabran || (ucenikIzabran && !ucenikObjekatIzabran)
         || (nastavnikIzabran && !nastavnikObjekatIzabran)" type="submit">Dodaj</button>
     </form>
 </div>
