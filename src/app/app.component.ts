@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { KorisnikService } from './services/korisnik.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Event,Router,NavigationStart,NavigationEnd, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +9,17 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  showLoadingIndicator = true;
+  constructor(public _korisnikService: KorisnikService,
+    private _router: Router){
+      this._router.events.subscribe((routerEvent: Event) => {
 
-  constructor(public _korisnikService: KorisnikService){}
+        if(routerEvent instanceof NavigationStart){
+          this.showLoadingIndicator = true;
+        }
+        if(routerEvent instanceof NavigationEnd){
+          this.showLoadingIndicator = false;
+        }
+      });
+    }
 }

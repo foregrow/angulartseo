@@ -1,1 +1,88 @@
-<p>nastavnici-detail works!</p>
+<div *ngIf="this.korisnikService.getRole()==='ROLE_ADMIN'">
+    <!-- <div class="container-fluid">
+   
+        <h4 class="mt-5 mb-3">Informacije o nastavniku</h4>
+        <div *ngIf="nastavnik != undefined">
+            <div class="bg-dark w-50">
+                <h5 class="text-white p-1">Ime: <span class="label label-default">{{nastavnik.ime}}</span></h5>
+                <h5 class="text-white p-1">Prezime: <span class="label label-default">{{nastavnik.prezime}}</span></h5>
+                <h5 class="text-white p-1">Email: <span class="label label-default">{{nastavnik.email}}</span></h5>
+                <h5 class="text-white p-1">Uloga nastavnika: <span class="label label-default">{{nastavnik.uloga}}</span></h5>
+                <h5 *ngIf="nastavnik.smer != null && nastavnik.smer.naziv != null" class="text-white p-1">Sef katedre smera: <span class="label label-default">
+                    {{nastavnik.smer.naziv}}</span></h5>
+                <h5 *ngIf="nastavnik.korisnik != null && nastavnik.korisnik.korisnickoIme != null" class="text-white p-1">Korisnicko ime naloga: <span class="label label-default">
+                    {{nastavnik.korisnik.korisnickoIme}}</span></h5>
+            </div>
+    
+    </div>   -->
+    <div class="container-fluid">
+        <h4 class="mt-5 mb-3">Informacije o nastavniku</h4>
+        <form class="w-50" [formGroup]="editForm">
+            <div class="form-group">
+                <label>Ime</label>
+                <input formControlName="ime" type="text" class="form-control">
+                <small [class.d-none]="ime.valid || ime.untouched" class="text-danger">Ime je obavezno!</small>
+            </div>
+            <div class="form-group">
+              <label>Prezime</label>
+              <input formControlName="prezime" type="text" class="form-control">
+              <small [class.d-none]="prezime.valid || prezime.untouched" class="text-danger">Prezime je obavezno!</small>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input formControlName="email" type="text" class="form-control">
+            <small [class.d-none]="email.valid || email.untouched" class="text-danger">Email je obavezan i mora biti u ispravnom formatu!</small>
+            <small *ngIf="emailExists" class="text-danger">Uneti email je zauzet!</small>
+        </div>
+            <div class="form-group">
+                <label class="control-label">Uloga</label>
+                <select class="form-control" formControlName="uloga">
+                    <option [value]="null" disabled>Izaberite ulogu</option>
+                    <option *ngFor="let ul of ulogeArray" [value]="ul">
+                      {{ ul }}
+                    </option>
+                  </select> 
+            </div>
+            <div class="form-group" *ngIf="hasKorAcc">
+                <label class="control-label">Korisnicko ime:</label>
+                <input formControlName="korisnik" type="text" class="form-control">
+            </div>
+            <div class="form-group" *ngIf="isSefSmera">
+                <label class="control-label">Sef smera:</label>
+                <input formControlName="smer" type="text" class="form-control">
+            </div>
+                <div class="form-group">
+                <label>Naziv predmeta</label>
+                <input formControlName="predmeti" type="text" class="form-control">
+                <small *ngIf="!predmetAddIsValid" class="text-danger">Uneti predmet nije validan!</small>
+                <div class="row">
+                    <button class="btn btn-primary col-sm-1 ml-3 mt-1" (click)="addPredmet()" type="submit">Dodaj</button>
+                    <button class="btn btn-danger col-sm-1 ml-3 mt-1" (click)="removePredmet()"  type="submit">Ukloni</button>   
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Dodati predmeti:</label>
+                    <input formControlName="dodatiPredmeti" type="text" class="form-control">
+                </div>
+                <!-- <small [class.d-none]="ime.valid || ime.untouched" class="text-danger">Ime je obavezno!</small>  -->
+            </div>
+            <button class="btn btn-primary mt-5" [disabled]="editForm.invalid || emailExists" (click)="editNastavnik()" type="submit">Sazuvaj izmene</button>
+        </form>
+      
+    <div class="container-fluid" *ngIf="nastavnik != undefined">
+        <h2 class="mt-5 mb-5">Predmeti koje predaje</h2>
+        <table class="table table-hover w-50">
+            <thead>
+                <tr>
+                <th>#</th>
+                <th>Naziv predmeta</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let predmet of nastavnik.predaje; index as i">
+                <tr>
+                <td>{{i+1}}</td><td>{{predmet.naziv}}</td>
+                </tr>
+            </tbody>
+            </table>
+    </div>
+    
+</div>

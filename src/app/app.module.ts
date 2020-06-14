@@ -15,7 +15,6 @@ import { FinansijskaKarticaService } from './services/finansijska-kartica.servic
 import { IspitService } from './services/ispit.service';
 import { NastavnikService } from './services/nastavnik.service';
 import { UcenikService } from './services/ucenik.service';
-
 //routingComponents = sve komponente
 @NgModule({
   declarations: [

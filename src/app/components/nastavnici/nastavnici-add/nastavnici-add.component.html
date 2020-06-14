@@ -14,7 +14,7 @@
       <div class="form-group">
         <label>Email</label>
         <input formControlName="email" type="text" class="form-control">
-        <small [class.d-none]="email.valid || email.untouched" class="text-danger">Email je obavezan!</small> 
+        <small [class.d-none]="email.valid || email.untouched" class="text-danger">Email je obavezan i mora biti u ispravnom formatu!</small>
         <small *ngIf="emailExists" class="text-danger">Uneti email je zauzet!</small>
     </div>
         <div class="form-group">

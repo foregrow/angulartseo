@@ -8,10 +8,14 @@ import { Observable } from 'rxjs';
 export class PredmetService {
 
   private _urlGetAll: string = "http://localhost:8080/api/predmeti";
+  private _urlGetAllNastavnikNePredaje: string = "http://localhost:8080/api/predmeti/nastavnikNePredaje";
   
   constructor(private http: HttpClient) { }
 
   getPredmeti() : Observable<Predmet[]>{
     return this.http.get<Predmet[]>(this._urlGetAll);
+  }
+  getPredmetiNastavnikNePredaje(id) : Observable<Predmet[]>{
+    return this.http.get<Predmet[]>(`${this._urlGetAllNastavnikNePredaje}/${+id}`);
   }
 }

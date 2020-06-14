@@ -26,8 +26,8 @@ export class SmerDetailComponent implements OnInit {
   }
 
   goBackToKorisnici(){
-    let selectedId = this.id ? this.id : null;
-    this.router.navigate(["/korisnici"]);
+    //let selectedId = this.id ? this.id : null;
+    this.router.navigate(["/smerovi"]);
   }
 
   getById(id){

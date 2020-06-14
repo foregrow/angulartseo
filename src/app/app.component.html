@@ -10,6 +10,13 @@
       </ul>
     </div>
 </nav>  
-<router-outlet></router-outlet>
+<div *ngIf="showLoadingIndicator" class="spinner">
+  Loading...
+</div>
+<router-outlet>
+  <div *ngIf="showLoadingIndicator" class="spinner">
+    Loading...
+  </div>
+</router-outlet>
 
 

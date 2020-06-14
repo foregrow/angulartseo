@@ -23,7 +23,7 @@ export class NastavniciAddComponent implements OnInit {
     this.addForm = this.fb.group({
       ime: ['',Validators.required],
       prezime: ['',Validators.required],
-      email: ['',Validators.required],
+      email: ['',[Validators.required,Validators.email]],
       uloge: [this.fb.array(this.ulogeArray)],
     });
     this.getAllEmailovi();
