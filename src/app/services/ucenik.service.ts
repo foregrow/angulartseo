@@ -24,4 +24,8 @@ export class UcenikService {
   getByKorisnickoIme(korisnickoIme){
     return this.http.get(`${this._urlGetByKorisnickoIme}/${korisnickoIme}`);
   }
+  deleteUcenik(id): Observable<any>{
+    var numbid = +id;
+    return this.http.delete(`${this._urlGetAll}/${numbid}`);
+  }
 }

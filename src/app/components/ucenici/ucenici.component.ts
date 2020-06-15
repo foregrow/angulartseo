@@ -24,4 +24,18 @@ export class UceniciComponent implements OnInit {
         .subscribe(data => this.ucenici = data);
   }
 
+  navigateToAddUcenik(){
+    this._router.navigate(['ucenici-add'])
+  }
+
+  detaljiUcenika(ucenik){
+    this._router.navigate(['ucenici-detail',ucenik.id])
+  }
+
+  deleteUcenik(id){
+    this._ucenikService.deleteUcenik(id)
+    .subscribe(
+      data => this.ucenici = data
+    );
+  }
 }
