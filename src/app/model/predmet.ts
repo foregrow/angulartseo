@@ -7,6 +7,7 @@ import { Nastavnik } from './nastavnik';
 export class Predmet {
     id: number;
     naziv: string;
+    brojECTSBodova: number;
     ucenici: Ucenik[] = [];
     nastavnici: Nastavnik[] = [];
     ispiti: Ispit[] = [];
@@ -15,9 +16,10 @@ export class Predmet {
 
     constructor(id: number,naziv:string,ucenici:Ucenik[],
         nastavnici:Nastavnik[],ispiti:Ispit[],
-        kolokvijumi:Kolokvijum[],smerovi:Smer[]){
+        kolokvijumi:Kolokvijum[],smerovi:Smer[], brojECTSBodova:number){
         this.id = id;
         this.naziv = naziv;
+        this.brojECTSBodova = brojECTSBodova;
         this.ucenici = ucenici;
         this.nastavnici = nastavnici;
         this.ispiti = ispiti;
