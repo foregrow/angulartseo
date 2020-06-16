@@ -27,6 +27,7 @@ export class SmerAddComponent implements OnInit {
   ngOnInit(): void {
     this.addForm = this.fb.group({
       naziv: ['',Validators.required],
+      bodovi: ['',[Validators.required,Validators.pattern("^[0-9]*$")]],
       nastavnikPodaci: [this.fb.array(this.nastavniciStr)],
     });
     this.getNastavniciWhereSefKatedreNull();
@@ -51,6 +52,10 @@ export class SmerAddComponent implements OnInit {
     return this.addForm.get('naziv');
   }
 
+  get bodovi() {
+    return this.addForm.get('bodovi');
+  }
+
   get nastavnikPodaci() {
     return this.addForm.get('nastavnikPodaci')  as FormArray;
   }
@@ -59,6 +64,7 @@ export class SmerAddComponent implements OnInit {
     var naziv = this.naziv.value;
     var email;
     var nastavnik;
+    var brojBodova = this.bodovi.value;
     
     if(this.nastavnikPodaci.dirty){
       nastavnik = this.nastavnikPodaci.value;
@@ -70,8 +76,7 @@ export class SmerAddComponent implements OnInit {
     }else{
       email = 'null';
     }
-    console.log(email);
-    var smer: Smer = new Smer(null,naziv,null,null,null);
+    var smer: Smer = new Smer(null,naziv,brojBodova,null,null,null);
     this._smerService.addSmer(smer,email)
     .subscribe(
       data =>{

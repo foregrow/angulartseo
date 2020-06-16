@@ -5,7 +5,11 @@
             <label>Naziv smera</label>
             <input formControlName="naziv" type="text" class="form-control">
             <small [class.d-none]="naziv.valid || naziv.untouched" class="text-danger">Naziv smera je obavezan!</small>
-            
+        </div>
+        <div class="form-group">
+            <label>Broj ECTS bodova</label>
+            <input formControlName="bodovi" type="text" class="form-control">
+            <small [class.d-none]="bodovi.valid || bodovi.untouched" class="text-danger">Molimo vas unesite BROJ bodova!</small>
         </div>
         <div class="form-group">
             <label class="control-label">Sef katedre</label>
