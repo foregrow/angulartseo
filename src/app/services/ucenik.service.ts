@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Ucenik } from '../model/ucenik';
 import { Observable } from 'rxjs';
+import { FinansijskaKartica } from '../model/finansijskakartica';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,10 @@ export class UcenikService {
   }
   getByKorisnickoIme(korisnickoIme){
     return this.http.get(`${this._urlGetByKorisnickoIme}/${korisnickoIme}`);
+  }
+  //finansijska kartica sadrzi ucenika
+  addUcenik(fkdto:FinansijskaKartica){
+    return this.http.post<any>(this._urlGetAll,fkdto);
   }
   deleteUcenik(id): Observable<any>{
     var numbid = +id;

@@ -4,7 +4,8 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Naziv predmeta</th>
+            <th>Naziv</th>
+            <th>Oznaka</th>
             <th>Sef katedre</th>
             <th>Info</th>
             <th>Brisanje</th>
@@ -12,7 +13,7 @@
         </thead>
         <tbody *ngFor="let smer of smerovi; index as i">
           <tr>
-            <td>{{i+1}}</td><td>{{smer.naziv}}</td><td>{{smer.nastavnik.ime}} {{smer.nastavnik.prezime}}</td>
+            <td>{{i+1}}</td><td>{{smer.naziv}}</td><td>{{smer.oznakaSmera}}</td><td>{{smer.nastavnik.ime}} {{smer.nastavnik.prezime}}</td>
             <td><a class="btn btn-sm text-white btn-primary" (click)="detaljiSmera(smer)">Detalji</a></td>
             <td><a class="btn btn-sm text-white btn-danger" (click)="deleteSmer(smer.id)">Izbrisi</a></td>
           </tr>

@@ -28,13 +28,15 @@ export class Ucenik{
     adresa: string;
     ukupnoECTSBodova: number;
     prosecnaOcena: number;
+    redniBrojUpisa: string;
 
     constructor(id: number,ime:string,prezime:string,
         index:string,godinaUpisa:number,godinaStudija:number,
         smer:Smer,kartica:FinansijskaKartica,korisnik:Korisnik,
         dokumenti:Dokument[],predmeti:Predmet[],ispiti:Ispit[],
         drzavaRodjenja: string,mestoRodjenja: string,datumRodjenja: any,pol: string,
-        nacinFinansiranja: string,email: string,adresa: string,ukupnoECTSBodova: number,prosecnaOcena: number){
+        nacinFinansiranja: string,email: string,adresa: string,ukupnoECTSBodova: number,prosecnaOcena: number,
+        redniBrojUpisa:string){
         this.id = id;
         this.ime = ime;
         this.prezime = prezime;
@@ -56,5 +58,6 @@ export class Ucenik{
         this.adresa = adresa;
         this.ukupnoECTSBodova = ukupnoECTSBodova;
         this.prosecnaOcena = prosecnaOcena;
+        this.redniBrojUpisa = redniBrojUpisa;
     }
 }

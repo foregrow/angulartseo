@@ -1,1 +1,94 @@
-<p>ucenici-add works!</p>
+<div class="container-fluid w-25">
+    <h4 class="mt-5 mb-3">Dodavanje novog ucenika</h4>
+    <form [formGroup]="addForm" (ngSubmit)="addUcenik()">
+        <div class="form-group">
+            <label>Ime</label>
+            <input formControlName="ime" type="text" class="form-control">
+            <small [class.d-none]="ime.valid || ime.untouched" class="text-danger">Ime je obavezno!</small> 
+        </div>
+        <div class="form-group">
+          <label>Prezime</label>
+          <input formControlName="prezime" type="text" class="form-control">
+          <small [class.d-none]="prezime.valid || prezime.untouched" class="text-danger">Prezime je obavezno!</small> 
+      </div>
+      <div class="form-group">
+        <label>Godina Upisa</label>
+        <input formControlName="godinaUpisa" type="text" class="form-control">
+        <small [class.d-none]="godinaUpisa.valid || godinaUpisa.untouched" class="text-danger">Godina upisa je obavezna i mora biti ispravna!</small> 
+    </div>
+    <div class="form-group">
+        <label>Godina Studija</label>
+        <input formControlName="godinaStudija" type="text" class="form-control">
+        <small [class.d-none]="godinaStudija.valid || godinaStudija.untouched" class="text-danger">Godina studija je obavezna i mora biti ispravna!</small> 
+    </div>
+    <div class="form-group">
+        <label>Drzava rodjenja</label>
+        <input formControlName="drzavaRodjenja" type="text" class="form-control">
+        <small [class.d-none]="drzavaRodjenja.valid || drzavaRodjenja.untouched" class="text-danger">Drzava rodjenja je obavezna!</small> 
+    </div>
+    <div class="form-group">
+        <label>Mesto rodjenja</label>
+        <input formControlName="mestoRodjenja" type="text" class="form-control">
+        <small [class.d-none]="mestoRodjenja.valid || mestoRodjenja.untouched" class="text-danger">Mesto rodjenja je obavezno!</small> 
+    </div>
+    <div class="form-group">
+        <label>Adresa</label>
+        <input formControlName="adresa" type="text" class="form-control">
+        <small [class.d-none]="adresa.valid || adresa.untouched" class="text-danger">Adresa je obavezna!</small> 
+    </div>
+    <div class="form-group">
+        <label>Datum rodjenja</label>
+        <input formControlName="datumRodjenja" type="text" class="form-control">
+        <small [class.d-none]="datumRodjenja.valid || datumRodjenja.untouched" class="text-danger">Datum rodjenja mora biti u formatu (dd.mm.gggg.)!</small> 
+    </div>
+    <div class="form-group">
+        <label class="control-label">Pol</label>
+        <select class="form-control" formControlName="pol" (change)="chosenPol()">
+            <option [ngValue]="null" disabled>Izaberite pol</option>
+            <option *ngFor="let p of polArray" [ngValue]="p">
+            {{ p }}
+            </option>
+        </select> 
+    </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input formControlName="email" type="text" class="form-control">
+        <small [class.d-none]="email.valid || email.untouched" class="text-danger">Email je obavezan i mora biti u ispravnom formatu!</small>
+        <!-- <small *ngIf="emailExists" class="text-danger">Uneti email je zauzet!</small> -->
+      </div>
+    <div class="form-group">
+        <label class="control-label">Smer</label>
+        <select class="form-control" formControlName="smer" (change)="chosenSmer()">
+            <option [ngValue]="null" disabled>Izaberite smer</option>
+            <option *ngFor="let sm of smerArray" [ngValue]="sm">
+            {{ sm }}
+            </option>
+        </select> 
+    </div>
+    <div class="form-group">
+        <label class="control-label">Nacin finansiranja</label>
+        <select class="form-control" formControlName="nacinFinansiranja" (change)="chosenFinan()">
+            <option [ngValue]="null" disabled>Izaberite nacin finansiranja</option>
+            <option *ngFor="let finan of finansiranjeArray" [ngValue]="finan">
+            {{ finan }}
+            </option>
+        </select> 
+    </div>
+    <div class="form-group">
+        <label>Ziro racun</label>
+        <input formControlName="ziroRacun" type="text" class="form-control">
+        <small [class.d-none]="ziroRacun.valid || ziroRacun.untouched" class="text-danger">Ziro racun upisa je obavezan!</small> 
+    </div>
+    <div class="form-group">
+        <label>Poziv na broj</label>
+        <input formControlName="pozivNaBroj" type="text" class="form-control">
+        <small [class.d-none]="pozivNaBroj.valid || pozivNaBroj.untouched" class="text-danger">Poziv na broj upisa je obavezan!</small> 
+    </div>
+    <div class="form-group">
+        <label>Broj modela</label>
+        <input formControlName="brojModela" type="text" class="form-control">
+        <small [class.d-none]="brojModela.valid || brojModela.untouched" class="text-danger">Broj modela upisa je obavezan!</small> 
+    </div>
+        <button class="btn btn-primary" [disabled]="addForm.invalid || !polChosen || !smerChosen || !finanChosen" type="submit">Dodaj</button>
+    </form>
+  </div>
