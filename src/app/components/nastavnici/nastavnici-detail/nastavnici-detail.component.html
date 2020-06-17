@@ -1,6 +1,6 @@
-<div *ngIf="this.korisnikService.getRole()==='ROLE_ADMIN'">
+<div>
     <!-- <div class="container-fluid">
-   
+         *ngIf="this.korisnikService.getRole()==='ROLE_ADMIN'"
         <h4 class="mt-5 mb-3">Informacije o nastavniku</h4>
         <div *ngIf="nastavnik != undefined">
             <div class="bg-dark w-50">
@@ -18,25 +18,25 @@
     <div class="container-fluid">
         <h4 class="mt-5 mb-3">Informacije o nastavniku</h4>
         <form class="w-50" [formGroup]="editForm">
-            <div class="form-group">
+            <div class="form-group" >
                 <label>Ime</label>
-                <input formControlName="ime" type="text" class="form-control">
+                <input  formControlName="ime" type="text" class="form-control" >
                 <small [class.d-none]="ime.valid || ime.untouched" class="text-danger">Ime je obavezno!</small>
             </div>
             <div class="form-group">
               <label>Prezime</label>
-              <input formControlName="prezime" type="text" class="form-control">
+              <input formControlName="prezime" type="text" class="form-control" >
               <small [class.d-none]="prezime.valid || prezime.untouched" class="text-danger">Prezime je obavezno!</small>
           </div>
-          <div class="form-group">
+          <div class="form-group" *ngIf="this.korisnikService.getRole()==='ROLE_ADMIN'">
             <label>Email</label>
-            <input formControlName="email" type="text" class="form-control">
+            <input formControlName="email" type="text" class="form-control" >
             <small [class.d-none]="email.valid || email.untouched" class="text-danger">Email je obavezan i mora biti u ispravnom formatu!</small>
-            <small *ngIf="emailExists" class="text-danger">Uneti email je zauzet!</small>
+            <small *ngIf="emailExists" class="text-danger" >Uneti email je zauzet!</small>
         </div>
             <div class="form-group">
                 <label class="control-label">Uloga</label>
-                <select class="form-control" formControlName="uloga">
+                <select class="form-control" formControlName="uloga" >
                     <option [value]="null" disabled>Izaberite ulogu</option>
                     <option *ngFor="let ul of ulogeArray" [value]="ul">
                       {{ ul }}
@@ -51,7 +51,7 @@
                 <label class="control-label">Sef smera:</label>
                 <input formControlName="smer" type="text" class="form-control">
             </div>
-                <div class="form-group">
+                <div class="form-group" *ngIf="this.korisnikService.getRole()==='ROLE_ADMIN'">
                 <label>Naziv predmeta</label>
                 <input formControlName="predmeti" type="text" class="form-control">
                 <small *ngIf="!predmetAddIsValid" class="text-danger">Uneti predmet nije validan!</small>
@@ -59,13 +59,13 @@
                     <button class="btn btn-primary col-sm-1 ml-3 mt-1" (click)="addPredmet()" type="submit">Dodaj</button>
                     <button class="btn btn-danger col-sm-1 ml-3 mt-1" (click)="removePredmet()"  type="submit">Ukloni</button>   
                 </div>
-                <div class="form-group">
+                <div class="form-group" *ngIf="this.korisnikService.getRole()==='ROLE_ADMIN'">
                     <label class="control-label">Dodati predmeti:</label>
                     <input formControlName="dodatiPredmeti" type="text" class="form-control">
                 </div>
                 <!-- <small [class.d-none]="ime.valid || ime.untouched" class="text-danger">Ime je obavezno!</small>  -->
             </div>
-            <button class="btn btn-primary mt-5" [disabled]="editForm.invalid || emailExists" (click)="editNastavnik()" type="submit">Sazuvaj izmene</button>
+            <button *ngIf="this.korisnikService.getRole()==='ROLE_ADMIN'" class="btn btn-primary mt-5" [disabled]="editForm.invalid || emailExists" (click)="editNastavnik()" type="submit">Sazuvaj izmene</button>
         </form>
       
     <div class="container-fluid" *ngIf="nastavnik != undefined">

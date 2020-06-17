@@ -14,6 +14,7 @@ import { Nastavnik } from 'src/app/model/nastavnik';
 export class NastavniciDetailComponent implements OnInit {
 
   id;
+  ulogovan;
   nastavnik;
   editForm: FormGroup;
   ulogeArray = ['PROFESOR','ASISTENT','DEMONSTRATOR'];
@@ -31,7 +32,7 @@ export class NastavniciDetailComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    
+    this.ulogovan = this.korisnikService.getLoggedInUserKorIme();
     this.editForm = this.fb.group({
       ime: ['',Validators.required],
       prezime: ['',Validators.required],
@@ -42,6 +43,14 @@ export class NastavniciDetailComponent implements OnInit {
       predmeti: [''],
       dodatiPredmeti:[{value: '', disabled: true}]
     });
+
+    if(this.ulogovan !== "admin"){
+      this.editForm.get('ime').disable();
+      this.editForm.get('prezime').disable();
+      this.editForm.get('email').disable();
+      this.editForm.get('uloga').disable();
+    } 
+
     this.id = this._route.snapshot.paramMap.get('id');
     this.getByIdAndSetValues(this.id);
     

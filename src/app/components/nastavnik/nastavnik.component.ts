@@ -1,5 +1,8 @@
+import { PredmetService } from './../../services/predmet.service';
+import { FormBuilder } from '@angular/forms';
+import { NastavnikService } from './../../services/nastavnik.service';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { KorisnikService } from 'src/app/services/korisnik.service';
 
 @Component({
@@ -9,10 +12,34 @@ import { KorisnikService } from 'src/app/services/korisnik.service';
 })
 export class NastavnikComponent implements OnInit {
 
-  constructor(private _korisnikService: KorisnikService,private _router: Router) { }
+  id;
+  korisnik;
+  korisnickoImeParam;
+  nastavnik;
+  public nastavnici = [];
+
+  constructor(private _route: ActivatedRoute,
+    public korisnikService:KorisnikService,
+    private router: Router,
+    private _nastavnikService: NastavnikService, private fb: FormBuilder, private _predmetService: PredmetService
+    ) { }
 
   ngOnInit(): void {
-   
+
+    this.korisnickoImeParam = this.korisnikService.getLoggedInUserKorIme();
+
+    this.korisnikService.getByKorisnickoIme(this.korisnickoImeParam)
+    .subscribe(
+      data => {
+       this.korisnik = data;
+       this.id = this.korisnik.nastavnik.id
+      }
+    )
+
   }
 
+
+  detaljiNastavnika(){
+    this.router.navigate(['nastavnici-detail',this.id])
+  }
 }
