@@ -15,12 +15,12 @@ export class UcenikComponent implements OnInit {
   korisnik;
   index;
 
-  constructor(private _korisnikService: KorisnikService,private _ucenikService: UcenikService,private _router: Router, private _route:ActivatedRoute) { }
+  constructor(public korisnikService: KorisnikService,private _ucenikService: UcenikService,private _router: Router, private _route:ActivatedRoute) { }
 
   ngOnInit(): void {
 
     this._route.queryParams.subscribe(params => {
-      this.korisnickoImeParam = this._korisnikService.getLoggedInUserKorIme();
+      this.korisnickoImeParam = this.korisnikService.getLoggedInUserKorIme();
   
       this._ucenikService.getByKorisnickoIme(this.korisnickoImeParam)
       .subscribe(

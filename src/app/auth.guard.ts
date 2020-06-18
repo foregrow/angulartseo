@@ -11,10 +11,8 @@ export class AuthGuard implements CanActivate {
               
   canActivate(): boolean{
     if(this._korService.loggedIn()){
-
       return true
     }else{
-      //console.log('false')
       this._router.navigate(['login']);
       return false
     }

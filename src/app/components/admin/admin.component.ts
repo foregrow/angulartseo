@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class AdminComponent implements OnInit {
 
   
-  constructor(private _korisnikService: KorisnikService,private _router: Router) { }
+  constructor(public korisnikService: KorisnikService,private _router: Router) { }
 
   ngOnInit(): void {
     //console.log('korIme:' +this._korisnikService.loggedInKorisnik.korisnickoIme);

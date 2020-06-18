@@ -29,8 +29,9 @@ import { SmerDetailComponent } from './components/smerovi/smer-detail/smer-detai
 import { NastavniciDetailComponent } from './components/nastavnici/nastavnici-detail/nastavnici-detail.component';
 import { NastavniciAddComponent } from './components/nastavnici/nastavnici-add/nastavnici-add.component';
 import { UceniciDetailComponent } from './components/ucenici/ucenici-detail/ucenici-detail.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 const routes: Routes = [
-    {path: '', redirectTo: 'login', pathMatch: 'full'},
+    {path: '', redirectTo: 'ucenik', pathMatch: 'full'},
     {path: 'login', component: LoginComponent},
     
     {path: 'ucenik', component: UcenikComponent, canActivate: [AuthGuard,RoleGuard],
@@ -48,23 +49,63 @@ const routes: Routes = [
       }},
     
 
-    {path: 'korisnici', component: KorisniciComponent, canActivate: [AuthGuard]},
-    {path: 'korisnici-detail/:id', component: KorisniciDetailComponent, canActivate: [AuthGuard]},
-    {path: 'korisnici-add', component: KorisniciAddComponent, canActivate: [AuthGuard]},
+    {path: 'korisnici', component: KorisniciComponent, canActivate: [AuthGuard,RoleGuard],
+    data: {
+        roles: ['ROLE_ADMIN']
+      }},
+    {path: 'korisnici-detail/:id', component: KorisniciDetailComponent, canActivate: [AuthGuard,RoleGuard],
+    data: {
+        roles: ['ROLE_ADMIN']
+      }},
+    {path: 'korisnici-add', component: KorisniciAddComponent, canActivate: [AuthGuard,RoleGuard],
+    data: {
+        roles: ['ROLE_ADMIN']
+      }},
     
-    {path: 'nastavnici', component: NastavniciComponent, canActivate: [AuthGuard]},
-    {path: 'nastavnici-detail/:id', component: NastavniciDetailComponent, canActivate: [AuthGuard]},
-    {path: 'nastavnici-add', component: NastavniciAddComponent, canActivate: [AuthGuard]},
+    {path: 'nastavnici', component: NastavniciComponent, canActivate: [AuthGuard,RoleGuard],
+    data: {
+        roles: ['ROLE_ADMIN']
+      }},
+    {path: 'nastavnici-detail/:id', component: NastavniciDetailComponent, canActivate: [AuthGuard,RoleGuard],
+    data: {
+        roles: ['ROLE_ADMIN','ROLE_NASTAVNIK']
+      }},
+    {path: 'nastavnici-add', component: NastavniciAddComponent, canActivate: [AuthGuard,RoleGuard],
+    data: {
+        roles: ['ROLE_ADMIN']
+      }},
 
-    {path: 'ucenici', component: UceniciComponent, canActivate: [AuthGuard]},
-    {path: 'ucenici-detail/:id', component: UceniciDetailComponent, canActivate: [AuthGuard]},
+    {path: 'ucenici', component: UceniciComponent, canActivate: [AuthGuard,RoleGuard],
+    data: {
+        roles: ['ROLE_ADMIN']
+      }},
+    {path: 'ucenici-detail/:id', component: UceniciDetailComponent, canActivate: [AuthGuard,RoleGuard],
+    data: {
+        roles: ['ROLE_ADMIN']
+      }},
 
-    {path: 'smerovi', component: SmeroviComponent, canActivate: [AuthGuard]},
-    {path: 'smerovi-detail/:id', component: SmerDetailComponent, canActivate: [AuthGuard]},
-    {path: 'smerovi-add', component: SmerAddComponent, canActivate: [AuthGuard]},
+    {path: 'smerovi', component: SmeroviComponent, canActivate: [AuthGuard,RoleGuard],
+    data: {
+        roles: ['ROLE_ADMIN']
+      }},
+    {path: 'smerovi-detail/:id', component: SmerDetailComponent, canActivate: [AuthGuard,RoleGuard],
+    data: {
+        roles: ['ROLE_ADMIN']
+      }},
+    {path: 'smerovi-add', component: SmerAddComponent, canActivate: [AuthGuard,RoleGuard],
+    data: {
+        roles: ['ROLE_ADMIN']
+      }},
     
-    {path: 'predmeti', component: PredmetiComponent, canActivate: [AuthGuard]},
-    {path: 'ispiti', component: IspitiComponent, canActivate: [AuthGuard]},
+    {path: 'predmeti', component: PredmetiComponent, canActivate: [AuthGuard,RoleGuard],
+    data: {
+        roles: ['ROLE_ADMIN']
+      }},
+
+    {path: 'ispiti', component: IspitiComponent, canActivate: [AuthGuard,RoleGuard],
+    data: {
+        roles: ['ROLE_ADMIN']
+      }},
 
     {path: 'profil-ucenik', component: ProfilUcenikComponent, canActivate: [AuthGuard,RoleGuard],
     data: {
@@ -85,7 +126,8 @@ const routes: Routes = [
     {path: 'prijava-ispita', component: PrijavaIspitaComponent, canActivate: [AuthGuard,RoleGuard],
     data: {
         roles: ['ROLE_UCENIK']
-      }}
+      }},
+      {path: '**', redirectTo: 'ucenik', pathMatch: 'full'},
     
 ];
 
@@ -97,7 +139,7 @@ const routes: Routes = [
 
 export class AppRoutingModule{}
 
-export const routingComponents = [LoginComponent,
+export const routingComponents = [PageNotFoundComponent,LoginComponent,
 UcenikComponent, NastavnikComponent, AdminComponent, 
 KorisniciComponent,NastavniciComponent,NastavniciDetailComponent,NastavniciAddComponent,UceniciComponent,
 SmeroviComponent,PredmetiComponent,IspitiComponent,SmerAddComponent,SmerDetailComponent,

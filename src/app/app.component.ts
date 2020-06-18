@@ -10,9 +10,9 @@ import { Event,Router,NavigationStart,NavigationEnd, ActivatedRoute } from '@ang
 })
 export class AppComponent {
   showLoadingIndicator = true;
-  constructor(public _korisnikService: KorisnikService,
-    private _router: Router){
-      this._router.events.subscribe((routerEvent: Event) => {
+  constructor(public korisnikService: KorisnikService,
+    public router: Router){
+      this.router.events.subscribe((routerEvent: Event) => {
 
         if(routerEvent instanceof NavigationStart){
           this.showLoadingIndicator = true;

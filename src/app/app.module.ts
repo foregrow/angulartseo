@@ -15,6 +15,7 @@ import { FinansijskaKarticaService } from './services/finansijska-kartica.servic
 import { IspitService } from './services/ispit.service';
 import { NastavnikService } from './services/nastavnik.service';
 import { UcenikService } from './services/ucenik.service';
+
 //routingComponents = sve komponente
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import { UcenikService } from './services/ucenik.service';
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptorService,
     multi: true //za multiple interceptors ako su potrebni
-  },RoleGuard,],
+  },RoleGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
