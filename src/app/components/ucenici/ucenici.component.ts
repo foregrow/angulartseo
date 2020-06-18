@@ -25,7 +25,7 @@ export class UceniciComponent implements OnInit {
   }
 
   navigateToAddUcenik(){
-    this._router.navigate(['ucenici-add'])
+    this._router.navigate(['ucenici-detail','add'])
   }
 
   detaljiUcenika(ucenik){

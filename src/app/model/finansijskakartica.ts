@@ -20,4 +20,25 @@ export class FinansijskaKartica{
         this.pozivNaBroj = pozivNaBroj;
         this.brojModela = brojModela;
     }
+    setId(id: number){
+        this.id = id;
+    }
+    setBrojKartice(brojKartice: string){
+        this.brojKartice = brojKartice;
+    }
+    setSuma(suma: number){
+        this.suma = suma;
+    }
+    setUcenik(ucenik: Ucenik){
+        this.ucenik = ucenik;
+    }
+    setZiroRacun(ziroRacun: string){
+        this.ziroRacun = ziroRacun;
+    }
+    setPozivNaBroj(pozivNaBroj: string){
+        this.pozivNaBroj = pozivNaBroj;
+    }
+    setBrojModela(brojModela: string){
+        this.brojModela = brojModela;
+    }
 }

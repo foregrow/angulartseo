@@ -29,7 +29,6 @@ import { SmerDetailComponent } from './components/smerovi/smer-detail/smer-detai
 import { NastavniciDetailComponent } from './components/nastavnici/nastavnici-detail/nastavnici-detail.component';
 import { NastavniciAddComponent } from './components/nastavnici/nastavnici-add/nastavnici-add.component';
 import { UceniciDetailComponent } from './components/ucenici/ucenici-detail/ucenici-detail.component';
-import { UceniciAddComponent } from './components/ucenici/ucenici-add/ucenici-add.component';
 const routes: Routes = [
     {path: '', redirectTo: 'login', pathMatch: 'full'},
     {path: 'login', component: LoginComponent},
@@ -59,7 +58,6 @@ const routes: Routes = [
 
     {path: 'ucenici', component: UceniciComponent, canActivate: [AuthGuard]},
     {path: 'ucenici-detail/:id', component: UceniciDetailComponent, canActivate: [AuthGuard]},
-    {path: 'ucenici-add', component: UceniciAddComponent, canActivate: [AuthGuard]},
 
     {path: 'smerovi', component: SmeroviComponent, canActivate: [AuthGuard]},
     {path: 'smerovi-detail/:id', component: SmerDetailComponent, canActivate: [AuthGuard]},
@@ -105,4 +103,4 @@ KorisniciComponent,NastavniciComponent,NastavniciDetailComponent,NastavniciAddCo
 SmeroviComponent,PredmetiComponent,IspitiComponent,SmerAddComponent,SmerDetailComponent,
 KorisniciDetailComponent,KorisniciAddComponent,
 ProfilUcenikComponent,FinansijskaKarticaComponent,PolozeniIspitiComponent,NepolozeniIspitiComponent,PrijavaIspitaComponent,
-UceniciAddComponent,UceniciDetailComponent]
+UceniciDetailComponent]

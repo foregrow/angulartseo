@@ -1,20 +1,4 @@
 <div>
-    <!-- <div class="container-fluid">
-         *ngIf="this.korisnikService.getRole()==='ROLE_ADMIN'"
-        <h4 class="mt-5 mb-3">Informacije o nastavniku</h4>
-        <div *ngIf="nastavnik != undefined">
-            <div class="bg-dark w-50">
-                <h5 class="text-white p-1">Ime: <span class="label label-default">{{nastavnik.ime}}</span></h5>
-                <h5 class="text-white p-1">Prezime: <span class="label label-default">{{nastavnik.prezime}}</span></h5>
-                <h5 class="text-white p-1">Email: <span class="label label-default">{{nastavnik.email}}</span></h5>
-                <h5 class="text-white p-1">Uloga nastavnika: <span class="label label-default">{{nastavnik.uloga}}</span></h5>
-                <h5 *ngIf="nastavnik.smer != null && nastavnik.smer.naziv != null" class="text-white p-1">Sef katedre smera: <span class="label label-default">
-                    {{nastavnik.smer.naziv}}</span></h5>
-                <h5 *ngIf="nastavnik.korisnik != null && nastavnik.korisnik.korisnickoIme != null" class="text-white p-1">Korisnicko ime naloga: <span class="label label-default">
-                    {{nastavnik.korisnik.korisnickoIme}}</span></h5>
-            </div>
-    
-    </div>   -->
     <div class="container-fluid">
         <h4 class="mt-5 mb-3">Informacije o nastavniku</h4>
         <form class="w-50" [formGroup]="editForm">
@@ -63,7 +47,6 @@
                     <label class="control-label">Dodati predmeti:</label>
                     <input formControlName="dodatiPredmeti" type="text" class="form-control">
                 </div>
-                <!-- <small [class.d-none]="ime.valid || ime.untouched" class="text-danger">Ime je obavezno!</small>  -->
             </div>
             <button *ngIf="this.korisnikService.getRole()==='ROLE_ADMIN'" class="btn btn-primary mt-5" [disabled]="editForm.invalid || emailExists" (click)="editNastavnik()" type="submit">Sazuvaj izmene</button>
         </form>

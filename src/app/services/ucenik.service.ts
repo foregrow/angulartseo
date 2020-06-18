@@ -29,6 +29,9 @@ export class UcenikService {
   addUcenik(fkdto:FinansijskaKartica){
     return this.http.post<any>(this._urlGetAll,fkdto);
   }
+  updateUcenik(fkdto:FinansijskaKartica){
+    return this.http.put<any>(`${this._urlGetAll}`,fkdto);
+  }
   deleteUcenik(id): Observable<any>{
     var numbid = +id;
     return this.http.delete(`${this._urlGetAll}/${numbid}`);
