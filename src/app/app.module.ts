@@ -15,6 +15,8 @@ import { FinansijskaKarticaService } from './services/finansijska-kartica.servic
 import { IspitService } from './services/ispit.service';
 import { NastavnikService } from './services/nastavnik.service';
 import { UcenikService } from './services/ucenik.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './material/material.module';
 
 //routingComponents = sve komponente
 @NgModule({
@@ -26,7 +28,9 @@ import { UcenikService } from './services/ucenik.service';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MaterialModule
   ],
   providers: [PredmetService,KorisnikService,AuthGuard,SmerService,FinansijskaKarticaService,IspitService,NastavnikService,PredmetService,UcenikService,
   {

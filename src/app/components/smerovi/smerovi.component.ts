@@ -24,7 +24,7 @@ export class SmeroviComponent implements OnInit {
   }
 
   navigateToAddSmer(){
-    this._router.navigate(['smerovi-add'])
+    this._router.navigate(['smerovi-detail/'+'add'])
   }
 
   detaljiSmera(smer){

@@ -16,10 +16,19 @@ export class KorisnikService {
   _urlSubmitLogin = 'http://localhost:8080/authenticate'
   _urlGetAll = 'http://localhost:8080/api/korisnici'
   _urlGetByKorisnickoIme = 'http://localhost:8080/api/korisnici/korIme'
+  _urlProveraPristupaUcenika = 'http://localhost:8080/api/korisnici/proveraPristupaUcenika'
+  _urlProveraPristupaNastavnika = 'http://localhost:8080/api/korisnici/proveraPristupaNastavnika'
+  
   constructor(private _http: HttpClient,
               private _router: Router
               ) { }
 
+  proveraPristupaUcenika(idTrazenog,korImeUlogovanog){
+    return this._http.get(`${this._urlProveraPristupaUcenika}/${+idTrazenog}/${korImeUlogovanog}`);
+  }
+  proveraPristupaNastavnika(idTrazenog,korImeUlogovanog){
+    return this._http.get(`${this._urlProveraPristupaNastavnika}/${+idTrazenog}/${korImeUlogovanog}`);
+  }
 
   getAllKorisnici(): Observable<any>{
     return this._http.get<Korisnik[]>(this._urlGetAll);
@@ -54,6 +63,8 @@ export class KorisnikService {
     }
     return true;
   }
+
+
 
   getLoggedInUserKorIme(){
     const helper = new JwtHelperService();

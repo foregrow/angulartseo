@@ -5,6 +5,7 @@ import { NastavnikService } from 'src/app/services/nastavnik.service';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { PredmetService } from 'src/app/services/predmet.service';
 import { Nastavnik } from 'src/app/model/nastavnik';
+import { PageNotFoundComponent } from '../../page-not-found/page-not-found.component';
 
 @Component({
   selector: 'app-nastavnici-detail',
@@ -32,6 +33,18 @@ export class NastavniciDetailComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+    this.id = this._route.snapshot.paramMap.get('id');
+    if(this.id !== 'add'){
+      if(this.korisnikService.getRole() === 'ROLE_NASTAVNIK'){
+        this.korisnikService.proveraPristupaNastavnika(this.id,this.korisnikService.getLoggedInUserKorIme()).subscribe(
+          response =>{},
+          error => {
+            this.router.navigate([PageNotFoundComponent]);
+            return;
+          }
+        )
+      }
+    }
     this.ulogovan = this.korisnikService.getLoggedInUserKorIme();
     this.editForm = this.fb.group({
       ime: ['',Validators.required],
@@ -51,7 +64,7 @@ export class NastavniciDetailComponent implements OnInit {
       this.editForm.get('uloga').disable();
     } 
 
-    this.id = this._route.snapshot.paramMap.get('id');
+    
     this.getByIdAndSetValues(this.id);
     
     this.email.valueChanges.subscribe(data =>

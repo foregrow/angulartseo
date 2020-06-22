@@ -1,5 +1,6 @@
 <div class="container-fluid">
-    <h4 class="mt-5 mb-3">Dodavanje novog ucenika</h4>
+    <h4 class="mt-5 mb-3" *ngIf="this.addEditParam === 'add'">Dodavanje novog ucenika</h4>
+    <h4 class="mt-5 mb-3" *ngIf="this.addEditParam !== 'add'">Podaci ucenika</h4>
     <form [formGroup]="addEditForm" class="w-25">
         <div class="form-group">
             <label>Ime</label>
