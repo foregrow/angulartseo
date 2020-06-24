@@ -1,3 +1,4 @@
+import { NastavnikService } from 'src/app/services/nastavnik.service';
 import { Component, OnInit } from '@angular/core';
 import { IspitService } from 'src/app/services/ispit.service';
 import { KorisnikService } from 'src/app/services/korisnik.service';
@@ -19,6 +20,7 @@ export class PrijavaIspitaComponent implements OnInit {
   constructor(private _ispitService: IspitService,
     private _korisnikService: KorisnikService,
     private _ucenikService: UcenikService,
+    private _nastavnikService: NastavnikService,
     private _router: Router, private _route:ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -35,9 +37,11 @@ export class PrijavaIspitaComponent implements OnInit {
     .subscribe(
       data => {
        this.ispiti = data
-
       }
     )
+
+
+
   }
 
 

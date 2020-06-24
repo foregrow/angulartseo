@@ -15,7 +15,7 @@ import { PageNotFoundComponent } from '../../page-not-found/page-not-found.compo
 export class NastavniciDetailComponent implements OnInit {
 
   id;
-  ulogovan;
+  ulogovanUloga;
   nastavnik;
   editForm: FormGroup;
   ulogeArray = ['PROFESOR','ASISTENT','DEMONSTRATOR'];
@@ -34,6 +34,9 @@ export class NastavniciDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this._route.snapshot.paramMap.get('id');
+    if(this.korisnikService.getRole() ==="ROLE_ADMIN"){
+      this.ulogovanUloga = "ROLE_ADMIN"
+    }
     if(this.id !== 'add'){
       if(this.korisnikService.getRole() === 'ROLE_NASTAVNIK'){
         this.korisnikService.proveraPristupaNastavnika(this.id,this.korisnikService.getLoggedInUserKorIme()).subscribe(
@@ -45,7 +48,6 @@ export class NastavniciDetailComponent implements OnInit {
         )
       }
     }
-    this.ulogovan = this.korisnikService.getLoggedInUserKorIme();
     this.editForm = this.fb.group({
       ime: ['',Validators.required],
       prezime: ['',Validators.required],
@@ -57,7 +59,7 @@ export class NastavniciDetailComponent implements OnInit {
       dodatiPredmeti:[{value: '', disabled: true}]
     });
 
-    if(this.ulogovan !== "admin"){
+    if(this.ulogovanUloga !== "ROLE_ADMIN"){
       this.editForm.get('ime').disable();
       this.editForm.get('prezime').disable();
       this.editForm.get('email').disable();
