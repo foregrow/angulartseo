@@ -8,6 +8,7 @@ import { Nastavnik } from '../model/nastavnik';
 })
 export class NastavnikService {
 
+  
   private _urlGetAll: string = "http://localhost:8080/api/nastavnici";
   private _urlGetNastavniciWithoutAccount: string = "http://localhost:8080/api/nastavnici/notInKorisnik";
   private _urlGetNastavniciWhereSefKatedreNull: string = "http://localhost:8080/api/nastavnici/sefKatedreNull";
@@ -21,6 +22,7 @@ export class NastavnikService {
     var numbid = +id;
     return this.http.get(`${this._urlGetAll}/${numbid}`);
   }
+
 
   getNastavniciWithoutAccount() : Observable<Nastavnik[]>{
     return this.http.get<Nastavnik[]>(this._urlGetNastavniciWithoutAccount);

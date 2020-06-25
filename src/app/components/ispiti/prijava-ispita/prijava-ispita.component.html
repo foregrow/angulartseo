@@ -1,5 +1,5 @@
-<h3 style="text-align: center; margin-top: 2cm; margin-bottom: 1cm;">Ispitni rok: </h3>
-<div class="container">
+<div class="container" *ngIf="ispitniRokUtoku">
+  <h3 class="mt-5">Ispitni rok: {{ispitniRok.nazivRoka}}  </h3>
     <div class="row">
       <div class="col-12">
         <table class="table table-bordered" >
@@ -9,26 +9,30 @@
               <th scope="col">Naziv predmeta</th>
               <th scope="col">Profesor</th>
               <th scope="col">Datum odrzavanja ispita</th>
-              <th scope="col">Cena</th>
             </tr>
           </thead>
-          <tbody *ngFor="let ispit of ispiti; index as i">
-            <tr *ngIf="idUcenika == ispit.ucenik.id && ispit.polozen == false">
+          <tbody *ngFor="let predmet of nepolozeniPredmeti; index as i">
+            <tr>
               <td>
                 <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input"  id="{{i + 1}}">
                     <label class="custom-control-label" for="{{i + 1}}"></label>
                 </div>
               </td>
-              <td>{{ispit.predmet.naziv}}</td>
-              <td>Profesorrrrr</td>
-              <td>{{ispit.datumPolaganja}}</td>
-              <td>{{ispit.cena}}</td>
+              <td>{{predmet.naziv}}</td>
+              <td *ngIf="predmet.profesor !== undefined && predmet.profesor !== null;else elseBlock">{{predmet.profesor.ime}} {{predmet.profesor.prezime}}</td>
+              <ng-template #elseBlock>
+                <td>/</td>
+              </ng-template>
+              <td>{{predmet.datumPolaganja}}</td>
             </tr>
           </tbody>
         </table>
-        <button style="margin-right: 16cm;" type="button" class="btn btn-primary btn-lg">Large button</button>
+        <button style="margin-right: 16cm;" type="button" class="btn btn-primary btn-lg">Prijavi</button>
         Ukupna cena: <input type="text" value="{{ukCena}}" disabled>
       </div>
     </div>
+  </div>
+  <div *ngIf="!ispitniRokUtoku && ispitniRokUtoku !== undefined">
+    <h1>Trenutno nije aktivan nijedan ispitni rok!</h1>
   </div>

@@ -16,7 +16,7 @@ import { IspitService } from './services/ispit.service';
 import { NastavnikService } from './services/nastavnik.service';
 import { UcenikService } from './services/ucenik.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from './material/material.module';
+import { IspitniRokService } from './services/ispitni-rok.service';
 
 //routingComponents = sve komponente
 @NgModule({
@@ -29,10 +29,9 @@ import { MaterialModule } from './material/material.module';
     HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule,
-    MaterialModule
+    BrowserAnimationsModule
   ],
-  providers: [PredmetService,KorisnikService,AuthGuard,SmerService,FinansijskaKarticaService,IspitService,NastavnikService,PredmetService,UcenikService,
+  providers: [PredmetService,KorisnikService,AuthGuard,SmerService,FinansijskaKarticaService,IspitService,NastavnikService,PredmetService,UcenikService,IspitniRokService,
   {
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptorService,

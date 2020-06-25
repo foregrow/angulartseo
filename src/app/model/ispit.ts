@@ -4,7 +4,8 @@ import { IspitniRok } from './ispitnirok';
 
 export class Ispit{
     id: number;
-    datumPolaganja; any; //long u javi
+    datumPolaganja: any; 
+    datumPrijave: any; 
     ocena: number;
     bodoviTeorija: number;
     bodoviVezbe: number;
@@ -17,7 +18,7 @@ export class Ispit{
     constructor(id: number,datumPolaganja:any,
         ocena:number,bodoviTeorija:number, bodoviVezbe:number,
         polozen:boolean,cena:number,predmet:Predmet,
-        ucenik:Ucenik,ispitniRok:IspitniRok){
+        ucenik:Ucenik,ispitniRok:IspitniRok,datumPrijave: any){
         this.id = id;
         this.datumPolaganja = datumPolaganja;
         this.ocena = ocena;
@@ -28,5 +29,6 @@ export class Ispit{
         this.predmet = predmet;
         this.ucenik = ucenik;
         this.ispitniRok = ispitniRok;
+        this.datumPrijave = datumPrijave;
     }
 }

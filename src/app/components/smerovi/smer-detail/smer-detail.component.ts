@@ -46,22 +46,22 @@ export class SmerDetailComponent implements OnInit {
     this.addOrId = this._route.snapshot.paramMap.get('id');
     if(this.addOrId !== 'add'){
       this.getByIdAndSetValues(this.addOrId);
-      this.filteredPredmeti = this.predmeti.valueChanges.pipe(
+      /*this.filteredPredmeti = this.predmeti.valueChanges.pipe(
         startWith(''),
         map(value => this._filter(value))
-      );
+      );*/
     }
     
   }
-  private _filter(value: string): string[]{
+  /*private _filter(value: string): string[]{
     const filterValue= value.toLowerCase();
     
     return this.sviPredmeti.filter
     (pred => pred.naziv.toLowerCase().includes(filterValue));
       
-  }
+  }*/
 
-  dodatiPredmetiString = "";
+  /*dodatiPredmetiString = "";
   izbrisaniPredmeti: Predmet[] = [];
   predmetPostoji = true;
   addPredmet(){
@@ -93,7 +93,7 @@ export class SmerDetailComponent implements OnInit {
     this.sviPredmeti = this.sviPredmeti.concat(this.izbrisaniPredmeti);  
     this.izbrisaniPredmeti = [];
     this.dodatiPredmeti = [];
-  }
+  }*/
 
   getNastavniciWhereSefKatedreNull(){
     this._nastavnikService.getNastavniciWhereSefKatedreNull().subscribe(
@@ -110,10 +110,10 @@ export class SmerDetailComponent implements OnInit {
     );
   }
 
-  displayFn(obj){
+  /*displayFn(obj){
     //prikaz u autocomplete ce biti naziv predmeta a ne Object [object]
     return obj ? obj.naziv : undefined;
-  }
+  }*/
 
   get naziv() {
     return this.addEditForm.get('naziv');
@@ -147,17 +147,22 @@ export class SmerDetailComponent implements OnInit {
           oznakaSmera: this.smer.oznakaSmera,
           bodovi: this.smer.brojECTSBodova
         });
-        this.getAllPredmeti(this.smer.id);
+        //this.getAllPredmeti(this.smer.id);
        });
   }
-  getAllPredmeti(idSmera){
+  /*getAllPredmeti(idSmera){
     this._predmetService.getPredmetiNotInSmer(idSmera).subscribe(
       data =>{
         this.sviPredmeti = data;
       });
-  }
+  }*/
 
-  addSmer(){
+  addSmer(param){
+    if(param === 'add'){
+
+    }else if(param === 'edit'){
+      
+    }
     var naziv = this.naziv.value;
     var oznakaSmera = this.oznakaSmera.value;
     var email;

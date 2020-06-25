@@ -5,13 +5,11 @@
           <tr>
             <th>#</th>
             <th>Naziv predmeta</th>
-            <th>Datum polaganja</th>
-            <th>Ocena</th>
           </tr>
         </thead>
-        <tbody *ngFor="let ispit of nepolozeniIspiti; index as i">
-          <tr *ngIf="idUcenika == ispit.ucenik.id && ispit.polozen == false">
-            <td>{{i+1}}</td><td>{{ispit.predmet.naziv}}</td><td>{{ispit.datumPolaganja}}</td><td>{{ispit.ocena}}</td>
+        <tbody *ngFor="let predmet of nepolozeniPredmeti; index as i">
+          <tr>
+            <td>{{i+1}}</td><td>{{predmet.naziv}}</td>
           </tr>
         </tbody>
       </table>
