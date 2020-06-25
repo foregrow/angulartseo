@@ -51,6 +51,7 @@ export class UceniciDetailComponent implements OnInit {
     this.addEditParam = this._route.snapshot.paramMap.get('id');
     if(this.addEditParam !== 'add' && this.addEditParam !== undefined){
       //znaci da je edit..
+      this.addEditForm.controls['godinaUpisa'].disable();
       this.getByIdAndSetValues(this.addEditParam);
     }
   }
