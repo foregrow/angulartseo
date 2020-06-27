@@ -1,12 +1,85 @@
 <nav id="navnav" class="navbar navbar-expand-lg navbar-dark bg-dark" *ngIf="korisnikService.loggedIn() && router.url !== '/login'">
     <a class="navbar-brand" >Fakultet Tehnickih Nauka</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    
+    <div *ngIf="korisnikService.getRole() === 'ROLE_ADMIN'" class="collapse navbar-collapse" id="navbarSupportedContent">
+      
       <ul class="navbar-nav ml-auto">
-          <a class="nav-link" style="cursor:pointer" (click)="korisnikService.logout()">Logout</a>        
+        <a class="nav-link" style="cursor:pointer" routerLink="/admin" routerLinkActive="active">
+          <i class="fa fa-home" aria-hidden="true"></i> Pocetna</a>        
+      </ul> 
+      <ul class="navbar-nav">
+        <a class="nav-link" style="cursor:pointer" routerLink="/korisnici" routerLinkActive="active">
+          <i class="fa fa-users" aria-hidden="true"></i> Korisnici</a>        
+      </ul> 
+      <ul class="navbar-nav">
+        <a class="nav-link" style="cursor:pointer" routerLink="/nastavnici" routerLinkActive="active">
+          <i class="fa fa-certificate" aria-hidden="true"></i> Nastavnici</a>        
+      </ul> 
+      <ul class="navbar-nav">
+        <a class="nav-link" style="cursor:pointer" routerLink="/ucenici" routerLinkActive="active">
+          <i class="fa fa-graduation-cap" aria-hidden="true"></i> Ucenici</a>        
+      </ul> 
+      <ul class="navbar-nav">
+        <a class="nav-link" style="cursor:pointer" routerLink="/smerovi" routerLinkActive="active">
+          <i class="fa fa-university" aria-hidden="true"></i> Smerovi</a>        
+      </ul> 
+      <ul class="navbar-nav">
+        <a class="nav-link" style="cursor:pointer" routerLink="/predmeti" routerLinkActive="active">
+          <i class="fa fa-book" aria-hidden="true"></i> Predmeti</a>        
+      </ul> 
+      <ul class="navbar-nav">
+        <a class="nav-link" style="cursor:pointer" routerLink="/ispiti" routerLinkActive="active">
+          <i class="fa fa-calendar-check-o" aria-hidden="true"></i> Rokovi</a>        
+      </ul> 
+      
+      <ul class="navbar-nav">
+          <a class="nav-link" style="cursor:pointer" (click)="korisnikService.logout()">
+          <i class="fa fa-sign-out ml-5" aria-hidden="true"></i> Logout</a>          
+      </ul>
+    </div>
+
+    <div *ngIf="korisnikService.getRole() === 'ROLE_UCENIK'" class="collapse navbar-collapse" id="navbarSupportedContent">
+      
+      <ul class="navbar-nav ml-auto">
+        <a class="nav-link" style="cursor:pointer" routerLink="/ucenik" routerLinkActive="active">
+          <i class="fa fa-home" aria-hidden="true"></i> Pocetna</a>        
+      </ul> 
+      <ul class="navbar-nav">
+        <a class="nav-link" style="cursor:pointer" routerLink="/profil-ucenik" routerLinkActive="active">
+          <i class="fa fa-user" aria-hidden="true"></i> Profil</a>        
+      </ul> 
+      <ul class="navbar-nav">
+        <a class="nav-link" style="cursor:pointer" routerLink="/finansijska-kartica" routerLinkActive="active">
+          <i class="fa fa-credit-card" aria-hidden="true"></i> Finansijska kartica</a>        
+      </ul> 
+      <ul class="navbar-nav">
+        <a class="nav-link" style="cursor:pointer" routerLink="/polozeni-ispiti" routerLinkActive="active">
+          <i class="fa fa-check" aria-hidden="true"></i> Polozeni predmeti</a>        
+      </ul> 
+      <ul class="navbar-nav">
+        <a class="nav-link" style="cursor:pointer" routerLink="/nepolozeni-ispiti" routerLinkActive="active">
+          <i class="fa fa-times-circle" aria-hidden="true"></i> Nepolozeni predmeti</a>        
+      </ul> 
+      <ul class="navbar-nav">
+        <a class="nav-link" style="cursor:pointer" routerLink="/prijava-ispita" routerLinkActive="active">
+          <i class="fa fa-book" aria-hidden="true"></i> Prijava ispita</a>        
+      </ul> 
+      
+      <ul class="navbar-nav">
+          <a class="nav-link" style="cursor:pointer" (click)="korisnikService.logout()">
+          <i class="fa fa-sign-out ml-5" aria-hidden="true"></i> Logout</a>          
+      </ul>
+    </div>
+
+    <div *ngIf="korisnikService.getRole() === 'ROLE_NASTAVNIK'" class="collapse navbar-collapse" id="navbarSupportedContent">
+      
+      <ul class="navbar-nav ml-auto">
+        <a class="nav-link" style="cursor:pointer" routerLink="/nastavnik" routerLinkActive="active">
+          <i class="fa fa-home" aria-hidden="true"></i> Pocetna</a>        
+      </ul> 
+      <ul class="navbar-nav">
+          <a class="nav-link" style="cursor:pointer" (click)="korisnikService.logout()">
+          <i class="fa fa-sign-out ml-5" aria-hidden="true"></i> Logout</a>          
       </ul>
     </div>
   </nav>  
