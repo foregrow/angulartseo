@@ -95,6 +95,7 @@ export class KorisniciDetailComponent implements OnInit {
     
     this._korisnikService.updateKorisnik(kor).subscribe(
       response => {
+        alert('Izmena uspesna! ');
         this.getByIdAndSetValues(this.addEditParam);
       },
       error => {
@@ -108,13 +109,7 @@ export class KorisniciDetailComponent implements OnInit {
     this.router.navigate(["/korisnici"]);
   }
 
-  getById(id){
-    this._korisnikService.getById(id).subscribe(
-       data => {
-         this.korisnik = data;
-         console.log(this.korisnik);
-       });
-   }
+  
 
    get korisnickoIme() {
     return this.addEditForm.get('korisnickoIme');

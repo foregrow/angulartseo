@@ -91,7 +91,7 @@
         <small [class.d-none]="brojModela.valid || brojModela.untouched" class="text-danger">Broj modela upisa je obavezan!</small> 
     </div>
         <button *ngIf="this.addEditParam === 'add'" class="btn btn-primary" (click)="submitUcenik('add')" [disabled]="addEditForm.invalid || !polChosen || !smerChosen || !finanChosen" type="submit">Dodaj</button>
-        <button *ngIf="this.addEditParam !== 'add' && this.addEditParam !== undefined" (click)="submitUcenik('edit')" class="btn btn-primary" [disabled]="addEditForm.invalid" type="submit">Izmeni</button>
+        <button *ngIf="this.addEditParam !== 'add' && this.addEditParam !== undefined" (click)="submitUcenik('edit')" class="btn btn-primary" [disabled]="addEditForm.invalid || !smerChosen" type="submit">Izmeni</button>
 
     </form>
     <div class="container-fluid" *ngIf="kartica != undefined && kartica.ucenik != undefined">

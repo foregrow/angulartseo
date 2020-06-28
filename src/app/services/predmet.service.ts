@@ -26,4 +26,8 @@ export class PredmetService {
   getNepolozeniPredmeti(smerId,ucenikId) : Observable<Predmet[]>{
     return this.http.get<Predmet[]>(`${this._urlGetNepolozeniPredmeti}/${+smerId}/${+ucenikId}`);
   }
+  deletePredmet(id): Observable<any>{
+    var numbid = +id;
+    return this.http.delete(`${this._urlGetAll}/${numbid}`);
+  }
 }

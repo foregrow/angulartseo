@@ -13,7 +13,6 @@ import { LoginComponent } from '../login/login.component';
 export class PredmetiComponent implements OnInit {
 
   public predmeti = [];
-  uloga: string;
   
   
 
@@ -23,36 +22,32 @@ export class PredmetiComponent implements OnInit {
               private _router: Router) { }
 
   ngOnInit(): void {
-    /*if(this._korisnikService.loggedInKorisnik.lozinka === 'admin'){
-      console.log('jeste');
-    }*/
-    //console.log('korIme:' +this._korisnikService.loggedInKorisnik.korisnickoIme);
-    this._predmetService.getPredmeti()
-        .subscribe(data => this.predmeti = data);
-    //var auth: Auth = new Auth(this._korisnikService,this._router);
-    //auth.getAuth();
+    this.getPredmeti();
+   
   }
 
-  proveraUloge(){
-    const helper = new JwtHelperService();
-    const decodedToken = helper.decodeToken(this._korisnikService.getToken());
-    const korIme = decodedToken.sub;
-    var korisnik;
-    this._korisnikService.getByKorisnickoIme(korIme)
-      .subscribe(data => {
-        korisnik = data
-        if(korisnik == null || korisnik == undefined){
-          this._router.navigate(['login']);
-        }
-        console.log(korisnik.korisnickoIme);
-        if(korisnik.uloga === 'ROLE_ADMIN'){
-          this.uloga = 'ROLE_ADMIN';
-        }
-        if(korisnik.uloga === 'ROLE_KORISNIK'){
-          //ovde sad treba nastavnik/ucenik da se uradi
-        }
-      }
-      
-        );
+  getPredmeti(){
+    this._predmetService.getPredmeti()
+    .subscribe(
+      data => {
+      this.predmeti = data
+    });
   }
+
+  detaljiPredmeta(predmet){
+    this._router.navigate(['predmeti-detail',predmet.id])
+  }
+  navigateToAdd(){
+    this._router.navigate(['predmeti-detail','add'])
+
+  }
+  deletePredmet(id){
+    this._predmetService.deletePredmet(id)
+    .subscribe(
+      data =>{
+        this.predmeti = data;
+      }
+    )
+  }
+
 }

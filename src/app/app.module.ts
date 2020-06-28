@@ -18,6 +18,7 @@ import { UcenikService } from './services/ucenik.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IspitniRokService } from './services/ispitni-rok.service';
 
+
 //routingComponents = sve komponente
 @NgModule({
   declarations: [

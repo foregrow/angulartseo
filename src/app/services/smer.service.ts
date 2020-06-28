@@ -24,6 +24,9 @@ export class SmerService {
   addSmer(smerData:Smer,emailNas){
     return this.http.post<any>(`${this._urlGetAll}/${emailNas}`,smerData);
   }
+  updateSmer(smerData:Smer,emailNas){
+    return this.http.put<any>(`${this._urlGetAll}/${emailNas}`,smerData);
+  }
   deleteSmer(id): Observable<any>{
     var numbid = +id;
     return this.http.delete(`${this._urlGetAll}/${numbid}`);

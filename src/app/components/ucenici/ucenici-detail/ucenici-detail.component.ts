@@ -74,9 +74,13 @@ export class UceniciDetailComponent implements OnInit {
            }else if(this.kartica.ucenik.nacinFinansiranja === 'SAMOFINANSIRANJE'){
             positionFinan = 1;
           }
-          if(this.kartica.ucenik.smer != undefined){ 
+          if(this.kartica.ucenik.smer.id === 0 || this.kartica.ucenik.smer.oznakaSmera === null){
+            this.smerChosen = false;
+          }else{
+            this.smerChosen = true;
             positionSmer=this.smerArray.indexOf(`Oznaka:${this.kartica.ucenik.smer.oznakaSmera},Naziv:${this.kartica.ucenik.smer.naziv}`)
           }
+          
          }
          
          this.addEditForm.patchValue({
@@ -189,6 +193,7 @@ export class UceniciDetailComponent implements OnInit {
         this._ucenikService.updateUcenik(kartica)
         .subscribe(
           response => {
+            alert('Izmena uspesna! ');
             this.getByIdAndSetValues(this.addEditParam);
           },
           error => {

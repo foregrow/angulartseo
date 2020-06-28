@@ -24,12 +24,12 @@ import { PolozeniIspitiComponent } from './components/ispiti/polozeni-ispiti/pol
 import { NepolozeniIspitiComponent } from './components/ispiti/nepolozeni-ispiti/nepolozeni-ispiti.component';
 import { PrijavaIspitaComponent } from './components/ispiti/prijava-ispita/prijava-ispita.component';
 
-import { SmerAddComponent } from './components/smerovi/smer-add/smer-add.component';
 import { SmerDetailComponent } from './components/smerovi/smer-detail/smer-detail.component';
 import { NastavniciDetailComponent } from './components/nastavnici/nastavnici-detail/nastavnici-detail.component';
 import { NastavniciAddComponent } from './components/nastavnici/nastavnici-add/nastavnici-add.component';
 import { UceniciDetailComponent } from './components/ucenici/ucenici-detail/ucenici-detail.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { PredmetiDetailComponent } from './components/predmeti/predmeti-detail/predmeti-detail.component';
 const routes: Routes = [
     {path: '', redirectTo: 'ucenik', pathMatch: 'full'},
     {path: 'login', component: LoginComponent},
@@ -92,15 +92,15 @@ const routes: Routes = [
     data: {
         roles: ['ROLE_ADMIN']
       }},
-    {path: 'smerovi-add', component: SmerAddComponent, canActivate: [AuthGuard,RoleGuard],
-    data: {
-        roles: ['ROLE_ADMIN']
-      }},
     
     {path: 'predmeti', component: PredmetiComponent, canActivate: [AuthGuard,RoleGuard],
     data: {
         roles: ['ROLE_ADMIN']
       }},
+      {path: 'predmeti-detail/:id', component: PredmetiDetailComponent, canActivate: [AuthGuard,RoleGuard],
+      data: {
+          roles: ['ROLE_ADMIN']
+        }},
 
     {path: 'ispiti', component: IspitiComponent, canActivate: [AuthGuard,RoleGuard],
     data: {
@@ -127,6 +127,7 @@ const routes: Routes = [
     data: {
         roles: ['ROLE_UCENIK']
       }},
+    {path: 'not-found', component: PageNotFoundComponent},
       {path: '**', redirectTo: 'ucenik', pathMatch: 'full'},
     
 ];
@@ -142,7 +143,7 @@ export class AppRoutingModule{}
 export const routingComponents = [PageNotFoundComponent,LoginComponent,
 UcenikComponent, NastavnikComponent, AdminComponent, 
 KorisniciComponent,NastavniciComponent,NastavniciDetailComponent,NastavniciAddComponent,UceniciComponent,
-SmeroviComponent,PredmetiComponent,IspitiComponent,SmerAddComponent,SmerDetailComponent,
+SmeroviComponent,PredmetiComponent,IspitiComponent,SmerDetailComponent,
 KorisniciDetailComponent,KorisniciAddComponent,
 ProfilUcenikComponent,FinansijskaKarticaComponent,PolozeniIspitiComponent,NepolozeniIspitiComponent,PrijavaIspitaComponent,
-UceniciDetailComponent]
+UceniciDetailComponent,PredmetiDetailComponent]
