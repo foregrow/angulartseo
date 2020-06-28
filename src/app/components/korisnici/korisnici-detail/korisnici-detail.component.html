@@ -1,7 +1,7 @@
 <div class="container-fluid" *ngIf="this._korisnikService.getRole()==='ROLE_ADMIN'">
    
-    <h4 class="mt-5 mb-3" *ngIf="this.addEditParam === 'add'">Dodavanje novog ucenika</h4>
-    <h4 class="mt-5 mb-3" *ngIf="this.addEditParam !== 'add'">Podaci ucenika</h4>
+    <h4 class="mt-5 mb-3" *ngIf="this.addEditParam === 'add'">Dodavanje novog korisnika</h4>
+    <h4 class="mt-5 mb-3" *ngIf="this.addEditParam !== 'add'">Podaci korisnika</h4>
     <form [formGroup]="addEditForm" class="w-25">
 
         <div class="form-group">
@@ -22,13 +22,13 @@
             <small [class.d-none]="uloge.valid || uloge.untouched" class="text-danger">Uloga je obavezna!</small> 
         </div> 
 
-        <div class="form-group" *ngIf="this.korisnik.uloga === 'ROLE_KORISNIK' && this.korisnik !== undefined">
+        <div class="form-group" *ngIf="uloge.value === 'ucenik' || uloge.value === 'nastavnik'">
             <label>Ime</label>
             <input formControlName="ime" type="text" class="form-control">
             <small [class.d-none]="ime.valid || ime.untouched" class="text-danger">Uloga je obavezna!</small> 
         </div>
 
-        <div class="form-group" *ngIf="this.korisnik.uloga === 'ROLE_KORISNIK' && this.korisnik !== undefined">
+        <div class="form-group" *ngIf="uloge.value === 'ucenik' || uloge.value === 'nastavnik'">
             <label>Prezime</label>
             <input formControlName="prezime" type="text" class="form-control">
             <small [class.d-none]="prezime.valid || prezime.untouched" class="text-danger">Uloga je obavezna!</small> 
