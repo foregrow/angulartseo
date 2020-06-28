@@ -14,7 +14,7 @@
           <tbody *ngFor="let predmet of nepolozeniPredmeti; index as i">
             <tr>
               <td>
-                <input type="checkbox" id="{{i+1}}" name="{{predmet.id}}" (change)="izabran($event,predmet.id)">
+                <input type="checkbox" (change)="izabran($event,predmet.id)">
               </td>
               <td>{{predmet.naziv}}</td>
               <td *ngIf="predmet.profesor !== undefined && predmet.profesor !== null;else elseBlock">{{predmet.profesor.ime}} {{predmet.profesor.prezime}}</td>

@@ -18,7 +18,7 @@ export class PrijavaIspitaComponent implements OnInit {
 
   cekiran = false;
   finansijskaKartica;
-  selectedItems: string[];
+  selectedItems = [];
   idUcenika;
   nepolozeniPredmeti = [];
   ukCena = 0;
@@ -52,14 +52,14 @@ export class PrijavaIspitaComponent implements OnInit {
       this.kor = data;
       this.idUcenika = this.kor.ucenik.id;
       this.smerId = this.kor.ucenik.smer.id;
-      this.getNepolozeniPredmeti(this.smerId,this.idUcenika);
+      this.getNeprijavljeniNepolozeni(this.smerId,this.idUcenika);
       this.getFinansijskaKartica(this.idUcenika);
     });
 
   }
 
-  getNepolozeniPredmeti(smerId,idUcenika){
-    this._predmetService.getNepolozeniPredmeti(smerId,idUcenika)
+  getNeprijavljeniNepolozeni(smerId,idUcenika){
+    this._predmetService.getNeprijavljeniNepolozeni(smerId,idUcenika)
     .subscribe(
       data=>{
         this.nepolozeniPredmeti = data;
@@ -94,9 +94,7 @@ export class PrijavaIspitaComponent implements OnInit {
     if(e.target.checked)
     { 
       this.selectedItems.push(predmetId);
-      this.ukCena += 200;
-    
-      
+      this.ukCena += 200; 
     }
     else
     {
@@ -118,25 +116,24 @@ export class PrijavaIspitaComponent implements OnInit {
       alert('Nedovoljno sredstava na kartici');
     }else{
       alert('Prijava uspesno obavljena');
-      var sumaNaKartici = this.finansijskaKartica.suma - this.ukCena;
-      console.log('Suma na kartici: ' + sumaNaKartici); //Moram update sumu na finKartici
+      //treba poslati this.ukCenu na backend da se oduzme;
       
       this.addIspit();
     }
   }
 
 addIspit(){
-  for (let item of this.selectedItems) {
-      
-      var ispit: Ispit = new Ispit(null,null,null,null,null,false,null,null,null,null,null)
-      this._ispitService.addIspit(ispit,this.ispitniRok.id,this.selectedItems[item],this.idUcenika)
+  var ispit: Ispit = new Ispit(null,null,null,null,null,false,null,null,null,null,null,this.selectedItems)
+  this._ispitService.addIspit(ispit,this.ispitniRok.id,this.idUcenika,this.ukCena)
       .subscribe(
-        data =>{
-          this._router.navigate(['ucenik']);
+        response =>{
+          this.getUcenikAndSmerId(this._korisnikService.getLoggedInUserKorIme())
+        },
+        error => {
+          console.log(error);
         }
       );
-
-  }
+  
 
 }
   

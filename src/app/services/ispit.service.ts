@@ -16,8 +16,8 @@ export class IspitService {
     return this._http.get<Ispit[]>(this._urlGetAll);
   }
 
-  addIspit(ispitData:Ispit,ispitniRokId, predmetId, ucenikId){
-    return this._http.post<any>(`${this._urlGetAll}/${ispitniRokId}/${predmetId}/${ucenikId}`,ispitData);
+  addIspit(ispitData:Ispit,ispitniRokId, ucenikId,suma){
+    return this._http.post<any>(`${this._urlGetAll}/${+ispitniRokId}/${+ucenikId}/${+suma}`,ispitData);
   }
 
 }
