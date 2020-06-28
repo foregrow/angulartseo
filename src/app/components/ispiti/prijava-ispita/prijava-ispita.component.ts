@@ -14,6 +14,8 @@ import { IspitniRokService } from 'src/app/services/ispitni-rok.service';
 })
 export class PrijavaIspitaComponent implements OnInit {
 
+  cekiran = false;
+  selectedItems: string[];
   idUcenika;
   nepolozeniPredmeti = [];
   ukCena = 0;
@@ -34,6 +36,8 @@ export class PrijavaIspitaComponent implements OnInit {
     this.getTrenutniRok();
     var korIme = this._korisnikService.getLoggedInUserKorIme();
     this.getUcenikAndSmerId(korIme);
+
+    this.selectedItems = new Array<string>();
 
   }
 
@@ -67,6 +71,23 @@ export class PrijavaIspitaComponent implements OnInit {
         }
       }
     )
+  }
+
+  izabran(e: any,id:string){
+    if(e.target.checked)
+    { 
+      
+      this.selectedItems.push(id);
+      this.ukCena += 200;
+    }
+    else
+    {
+      
+      this.selectedItems = this.selectedItems.filter(m=>m!=id);
+      this.ukCena -= 200;
+    }
+
+    console.log(this.selectedItems);
   }
 
 
