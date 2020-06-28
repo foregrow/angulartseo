@@ -190,7 +190,7 @@ export class KorisniciAddComponent implements OnInit {
       email = 'null';
       index = 'null';
     }
-    var kor: Korisnik = new Korisnik(korIme,lozinka,
+    var kor: Korisnik = new Korisnik(null,korIme,lozinka,
       uloga,null,null);
 
     this._korisnikService.addKorisnik(kor,index,email)

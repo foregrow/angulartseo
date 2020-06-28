@@ -9,8 +9,9 @@ export class Korisnik{
     ucenik: Ucenik;
     nastavnik: Nastavnik;
 
-    constructor(korisnickoIme:string,lozinka:string,
+    constructor(id:number,korisnickoIme:string,lozinka:string,
         uloga:any, ucenik: Ucenik,nastavnik:Nastavnik){
+        this.id = id;
         this.korisnickoIme = korisnickoIme;
         this.lozinka = lozinka;
         this.uloga = uloga;

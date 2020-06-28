@@ -51,6 +51,10 @@ export class KorisnikService {
     return this._http.post<any>(`${this._urlGetAll}/${uceIndex}/${nasEmail}`,korData);
   }
 
+  updateKorisnik(korData:Korisnik){
+    return this._http.put<any>(`${this._urlGetAll}`,korData);
+  }
+
   deleteKorisnik(id): Observable<any>{
     var numbid = +id;
     return this._http.delete(`${this._urlGetAll}/${numbid}`);
