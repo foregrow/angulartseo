@@ -10,10 +10,14 @@ export class IspitService {
 
   private _urlGetAll: string = "http://localhost:8080/api/ispiti";
 
-  constructor(private http: HttpClient) { }
+  constructor(private _http: HttpClient) { }
 
   getIspiti() : Observable<Ispit[]>{
-    return this.http.get<Ispit[]>(this._urlGetAll);
+    return this._http.get<Ispit[]>(this._urlGetAll);
+  }
+
+  addIspit(ispitData:Ispit,ispitniRokId, predmetId, ucenikId){
+    return this._http.post<any>(`${this._urlGetAll}/${ispitniRokId}/${predmetId}/${ucenikId}`,ispitData);
   }
 
 }

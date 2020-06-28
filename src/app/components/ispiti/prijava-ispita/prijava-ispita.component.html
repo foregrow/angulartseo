@@ -25,7 +25,7 @@
             </tr>
           </tbody>
         </table>
-        <button style="margin-right: 16cm;" type="button" class="btn btn-primary btn-lg">Prijavi</button>
+        <button style="margin-right: 16cm;" type="button" class="btn btn-primary btn-lg" (click) = "prijavi()" [disabled]="!cekiran ? 'disabled': null">Prijavi</button>
         Ukupna cena: <input type="text" value="{{ukCena}}" disabled>
       </div>
     </div>
