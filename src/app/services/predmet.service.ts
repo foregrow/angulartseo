@@ -18,6 +18,9 @@ export class PredmetService {
   getPredmeti() : Observable<Predmet[]>{
     return this.http.get<Predmet[]>(this._urlGetAll);
   }
+  addPredmet(predmet:Predmet){
+    return this.http.post<any>(this._urlGetAll,predmet);
+  }
   /*getPredmetiNotInSmer(idSmera) : Observable<Predmet[]>{
     return this.http.get<Predmet[]>(`${this._urlGetPredmetiNotInSmer}/${+idSmera}`);
   }*/

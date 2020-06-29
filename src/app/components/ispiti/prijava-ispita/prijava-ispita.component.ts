@@ -8,6 +8,7 @@ import { UcenikService } from 'src/app/services/ucenik.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PredmetService } from 'src/app/services/predmet.service';
 import { IspitniRokService } from 'src/app/services/ispitni-rok.service';
+import { Predmet } from 'src/app/model/predmet';
 
 @Component({
   selector: 'app-prijava-ispita',
@@ -91,36 +92,40 @@ export class PrijavaIspitaComponent implements OnInit {
   }
   
 
-  izabran(e: any,predmetId:string){
-    /*
-    var diff = Math.abs(new Date().getTime() - new Date("2020-07-05T12:00:00.00Z").getTime());
-    //var time = new Date().getTime() - new Date("2020-07-01T12:00:00.00Z").getTime();
-    const diffDays = Math.ceil(diff / (1000 * 60 * 60 * 24)); 
-    */
-    /*for(var i=0;i<this.nepolozeniPredmeti.length;i++){
-      if(+predmetId == this.nepolozeniPredmeti[i].id){
-        var diff = new Date().getTime() -  new Date(this.nepolozeniPredmeti[i].datumPolaganja);
-        var diffDays = Math.ceil(diff / (1000 * 60 * 60 * 24)); 
-        console.log(diffDays);
-      }
-    }*/
-    if(e.target.checked)
-    { 
-      this.selectedItems.push(predmetId);
-      this.ukCena += 200; 
-    }
-    else
-    {
-      this.selectedItems = this.selectedItems.filter(m=>m!=predmetId);
-
-      this.ukCena -= 200;
-    }
-    console.log(this.selectedItems);
-    if(this.selectedItems.length > 0){  //Proveravam da li je je cekirano neko od polja u tabeli
-      this.cekiran = true;
+  izabran(e: any,predmet:Predmet){
+    var predmetDate = new Date(predmet.datumPolaganja);
+    const diff = predmetDate.getTime()-  new Date().getTime();
+    const diffHours = Math.ceil(diff / (1000 * 60 * 60)); 
+    //console.log('diffHours:' +diffHours);
+    /*const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(predmetDate)
+    const mo = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(predmetDate)
+    const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(predmetDate)
+    console.log(`${ye}-${mo}-${da}`)*/
+    console.log(diffHours);
+    //ne sme da se cekira ako je manje od 24 casa!
+    if(diffHours < 24){
+      alert('Datum za prijavu ovog ispita je istekao! ');
     }else{
-      this.cekiran = false;
+      if(e.target.checked)
+      { 
+        this.selectedItems.push(predmet.id);
+        this.ukCena += 200; 
+      }
+      else
+      {
+        this.selectedItems = this.selectedItems.filter(m=>m!=predmet.id);
+  
+        this.ukCena -= 200;
+      }
+      console.log(this.selectedItems);
+      if(this.selectedItems.length > 0){  //Proveravam da li je je cekirano neko od polja u tabeli
+        this.cekiran = true;
+      }else{
+        this.cekiran = false;
+      }
     }
+    
+    
   }
   
 

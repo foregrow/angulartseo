@@ -1,1 +1,53 @@
-<p>predmeti-detail works!</p>
+<div class="container-fluid">
+    <h4 class="mt-5 mb-3" *ngIf="this.addEditParam === 'add'">Dodavanje novog predmeta</h4>
+    <h4 class="mt-5 mb-3" *ngIf="this.addEditParam !== 'add'">Podaci predmeta</h4>
+    <form [formGroup]="addEditForm" class="w-25">
+        <div class="form-group">
+            <label>Naziv predmeta</label>
+            <input formControlName="naziv" type="text" class="form-control">
+            <small [class.d-none]="naziv.valid || naziv.untouched" class="text-danger">Naziv predmeta je obavezan!</small>
+        </div>
+        <div class="form-group">
+            <label>Broj ECTS bodova</label>
+            <input formControlName="bodovi" type="text" class="form-control">
+            <small [class.d-none]="bodovi.valid || bodovi.untouched" class="text-danger">Molimo vas unesite BROJ bodova!</small>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Smer</label>
+            <select class="form-control" formControlName="smer" (change)="chosenSmer()">
+                <option [ngValue]="null" disabled>Izaberite smer</option>
+                <option *ngFor="let s of smeroviArray" [ngValue]="s">
+                {{ s }}
+                </option>
+            </select> 
+        </div>
+        <!--
+        <small *ngIf="!predmetPostoji" class="text-danger">Uneti predmet nije validan!</small><br>
+        <button *ngIf="this.addOrId !== 'add'" (click)="addPredmet()" class="btn btn-primary mr-3" type="submit">Dodaj</button>
+        <button *ngIf="this.addOrId !== 'add'" (click)="removePredmet()" class="btn btn-danger" type="submit">Ukloni</button>
+        <div class="form-group mt-3">
+            <label class="control-label">Dodati predmeti:</label>
+            <input formControlName="dodatiPred" type="text" class="form-control">
+            
+        </div>-->
+        <button *ngIf="this.addEditParam === 'add'" (click)="addPredmet('add')" class="btn btn-primary" [disabled]="addEditForm.invalid || !smerChosen" type="submit">Dodaj</button>
+        <button *ngIf="this.addEditParam !== 'add'" (click)="addPredmet('edit')" class="btn btn-primary" [disabled]="addEditForm.invalid" type="submit">Izmeni</button>
+    </form>
+    <!-- <div class="container-fluid" *ngIf="smer != undefined">
+        <h2 class="mt-3">Predmeti smera</h2>
+        <table class="table table-hover w-50">
+            <thead>
+                <tr>
+                <th>#</th>
+                <th>Naziv predmeta</th>
+                <th>Oznaka smera</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let predmet of smer.predmeti; index as i">
+                <tr>
+                <td>{{i+1}}</td><td>{{predmet.naziv}}</td><td>{{predmet.smer.oznakaSmera}}</td>
+                </tr>
+            </tbody>
+            </table>
+    </div> -->
+</div>

@@ -27,7 +27,7 @@ export class SmerDetailComponent implements OnInit {
   filteredPredmeti: Observable<string[]>;
   dodatiPredmeti = [];
   constructor(private fb: FormBuilder,
-    public _korisnikService: KorisnikService,
+    private _korisnikService: KorisnikService,
     private _nastavnikService: NastavnikService,
     private _router: Router,
     private _smerService: SmerService,

@@ -1,5 +1,6 @@
 <div class="container-fluid">
-    <h4 class="mt-5 mb-3">Dodavanje novog smera</h4>
+    <h4 class="mt-5 mb-3" *ngIf="this.addOrId === 'add'">Dodavanje novog smera</h4>
+    <h4 class="mt-5 mb-3" *ngIf="this.addOrId !== 'add'">Podaci smera</h4>
     <form [formGroup]="addEditForm" class="w-25">
         <div class="form-group">
             <label>Naziv smera</label>
