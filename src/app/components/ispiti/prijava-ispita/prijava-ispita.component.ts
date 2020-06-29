@@ -37,6 +37,7 @@ export class PrijavaIspitaComponent implements OnInit {
 
   ngOnInit(): void {
     
+    
     this.getTrenutniRok();
     var korIme = this._korisnikService.getLoggedInUserKorIme();
     this.getUcenikAndSmerId(korIme);
@@ -91,6 +92,18 @@ export class PrijavaIspitaComponent implements OnInit {
   
 
   izabran(e: any,predmetId:string){
+    /*
+    var diff = Math.abs(new Date().getTime() - new Date("2020-07-05T12:00:00.00Z").getTime());
+    //var time = new Date().getTime() - new Date("2020-07-01T12:00:00.00Z").getTime();
+    const diffDays = Math.ceil(diff / (1000 * 60 * 60 * 24)); 
+    */
+    /*for(var i=0;i<this.nepolozeniPredmeti.length;i++){
+      if(+predmetId == this.nepolozeniPredmeti[i].id){
+        var diff = new Date().getTime() -  new Date(this.nepolozeniPredmeti[i].datumPolaganja);
+        var diffDays = Math.ceil(diff / (1000 * 60 * 60 * 24)); 
+        console.log(diffDays);
+      }
+    }*/
     if(e.target.checked)
     { 
       this.selectedItems.push(predmetId);
@@ -123,7 +136,7 @@ export class PrijavaIspitaComponent implements OnInit {
   }
 
 addIspit(){
-  var ispit: Ispit = new Ispit(null,null,null,null,null,false,null,null,null,null,null,this.selectedItems)
+  var ispit: Ispit = new Ispit(null,null,null,null,null,false,null,null,null,null,null,this.selectedItems,null)
   this._ispitService.addIspit(ispit,this.ispitniRok.id,this.idUcenika,this.ukCena)
       .subscribe(
         response =>{

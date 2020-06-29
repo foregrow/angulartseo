@@ -167,7 +167,7 @@ export class UceniciDetailComponent implements OnInit {
     
     if(addOrEdit==='add'){
       var uc = new Ucenik(null,ime,prezime,null,godinaUpisa,godinaStudija,new Smer(null,null,null,null,smerOznaka,null,null),
-      null,null,null,null,null,drzavaRodjenja,mestoRodjenja,datumRodjenja,pol,nacinFinansiranja,email,adresa,null,null,null);
+      null,null,null,null,null,drzavaRodjenja,mestoRodjenja,datumRodjenja,pol,nacinFinansiranja,email,adresa,null,null,null,null);
   
       var fk = new FinansijskaKartica(null,null,null,uc,ziroRacun,pozivNaBroj,brojModela);
       console.log(fk);
@@ -185,7 +185,7 @@ export class UceniciDetailComponent implements OnInit {
       console.log('uslo u edit');
       var uc = new Ucenik(this.kartica.ucenik.id,ime,prezime,this.kartica.ucenik.index,godinaUpisa,godinaStudija,new Smer(null,null,null,null,smerOznaka,null,null),
       null,null,null,null,null,drzavaRodjenja,mestoRodjenja,datumRodjenja,pol,nacinFinansiranja,email,adresa,this.kartica.ucenik.ukupnoECTSBodova,
-      this.kartica.ucenik.prosecnaOcena,null);
+      this.kartica.ucenik.prosecnaOcena,null,null);
 
       var kartica = new FinansijskaKartica(this.kartica.id,this.kartica.brojKartice,this.kartica.suma,
         uc,ziroRacun,pozivNaBroj,brojModela);
