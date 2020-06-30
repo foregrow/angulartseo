@@ -18,6 +18,7 @@ import { Predmet } from 'src/app/model/predmet';
 export class PrijavaIspitaComponent implements OnInit {
 
   cekiran = false;
+  cekiranOdjava = false;
   finansijskaKartica;
   selectedItems = [];
   idUcenika;
@@ -139,6 +140,39 @@ export class PrijavaIspitaComponent implements OnInit {
       alert('Prijava uspesno obavljena');  
       this.addIspit();
     }
+  }
+
+  izabranOdjava(e: any,predmet:Predmet){
+    var predmetDate = new Date(predmet.datumPolaganja);
+    const diff = predmetDate.getTime() -  new Date().getTime();
+    const diffHours = Math.ceil(diff / (1000 * 60 * 60)); 
+    //diff razlika izmedju datuma predmeta i trenutnog datuma, diffHours razlika u satima
+    if(diffHours < 24){
+      alert('Ispit se moze odjaviti najkasnije 2 dana pred isti! ');
+      e.target.checked = false;
+    }else{
+      if(e.target.checked)
+      { 
+        this.selectedItems.push(predmet.id);
+
+      }
+      else
+      {
+        this.selectedItems = this.selectedItems.filter(m=>m!=predmet.id);
+
+      }
+      if(this.selectedItems.length > 0){  //Proveravam da li je je cekirano neko od polja u tabeli
+        this.cekiranOdjava = true;
+      }else{
+        this.cekiranOdjava = false;
+      }
+    }
+    
+    
+  }
+
+  odjavi(){
+    alert('Odjava uspesno obavljena');  
   }
 
 addIspit(){

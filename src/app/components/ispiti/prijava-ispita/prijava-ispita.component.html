@@ -36,6 +36,7 @@
         <table class="table table-bordered" >
           <thead>
             <tr>
+              <th scope="col">Izaberi</th>
               <th scope="col">Naziv predmeta</th>
               <th scope="col">Profesor</th>
               <th scope="col">Datum odrzavanja ispita</th>
@@ -43,6 +44,9 @@
           </thead>
           <tbody *ngFor="let predmet of prijavljeniPredmeti; index as i">
             <tr>
+              <td>
+                <input type="checkbox" (change)="izabranOdjava($event,predmet)">
+              </td>
               <td>{{predmet.naziv}}</td>
               <td *ngIf="predmet.profesor !== undefined && predmet.profesor !== null;else elseBlock">{{predmet.profesor.ime}} {{predmet.profesor.prezime}}</td>
               <ng-template #elseBlock>
@@ -52,6 +56,7 @@
             </tr>
           </tbody>
         </table>
+        <button style="margin-right: 16cm;" type="button" class="btn btn-primary btn-lg" (click) = "odjavi()" [disabled]="!cekiranOdjava ? 'disabled': null">Odjavi</button>
       </div>
     </div>
 </div>
