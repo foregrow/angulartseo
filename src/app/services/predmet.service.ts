@@ -10,7 +10,8 @@ export class PredmetService {
   private _urlGetAll: string = "http://localhost:8080/api/predmeti";
   private _urlGetAllNastavnikNePredaje: string = "http://localhost:8080/api/predmeti/nastavnikNePredaje";
   private _urlGetNepolozeniPredmeti: string = "http://localhost:8080/api/predmeti/nepolozeniPredmeti";
-  private _urlGetNeprijavljeniNepolozeni: string = "http://localhost:8080/api/predmeti/neprijavljeniNepolozeni";
+  private _urlGetPredmetiZaPrijavu: string = "http://localhost:8080/api/predmeti/predmetiZaPrijavu";
+  private _urlGetPrijavljeniPredmetiZaIspit: string = "http://localhost:8080/api/predmeti/prijavljeniPredmetiZaIspit";
   //private _urlGetPredmetiNotInSmer: string = "http://localhost:8080/api/predmeti/notInSmer";
   
   constructor(private http: HttpClient) { }
@@ -30,8 +31,11 @@ export class PredmetService {
   getNepolozeniPredmeti(smerId,ucenikId) : Observable<Predmet[]>{
     return this.http.get<Predmet[]>(`${this._urlGetNepolozeniPredmeti}/${+smerId}/${+ucenikId}`);
   }
-  getNeprijavljeniNepolozeni(smerId,ucenikId) : Observable<Predmet[]>{
-    return this.http.get<Predmet[]>(`${this._urlGetNeprijavljeniNepolozeni}/${+smerId}/${+ucenikId}`);
+  getPredmetiZaPrijavu(smerId,ucenikId) : Observable<Predmet[]>{
+    return this.http.get<Predmet[]>(`${this._urlGetPredmetiZaPrijavu}/${+smerId}/${+ucenikId}`);
+  }
+  getPrijavljeniPredmetiZaIspit(ucenikId) : Observable<Predmet[]>{
+    return this.http.get<Predmet[]>(`${this._urlGetPrijavljeniPredmetiZaIspit}/${+ucenikId}`);
   }
   deletePredmet(id): Observable<any>{
     var numbid = +id;

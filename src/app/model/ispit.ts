@@ -16,11 +16,12 @@ export class Ispit{
     ispitniRok: IspitniRok;
     prijavljeniPredmeti: any = [];
     kolokvijumi: any = [];
+    status;
     constructor(id: number,datumPolaganja:any,
         ocena:number,bodoviTeorija:number, bodoviVezbe:number,
         polozen:boolean,cena:number,predmet:Predmet,
         ucenik:Ucenik,ispitniRok:IspitniRok,datumPrijave: any,prijavljeniPredmeti:any[],
-        kolokvijumi: any[]){
+        kolokvijumi: any[], status: any){
         this.id = id;
         this.datumPolaganja = datumPolaganja;
         this.ocena = ocena;
@@ -34,5 +35,6 @@ export class Ispit{
         this.datumPrijave = datumPrijave;
         this.prijavljeniPredmeti = prijavljeniPredmeti;
         this.kolokvijumi = kolokvijumi;
+        this.status = status;
     }
 }

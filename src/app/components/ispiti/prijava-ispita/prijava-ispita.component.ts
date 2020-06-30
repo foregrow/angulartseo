@@ -22,6 +22,7 @@ export class PrijavaIspitaComponent implements OnInit {
   selectedItems = [];
   idUcenika;
   nepolozeniPredmeti = [];
+  prijavljeniPredmeti = [];
   ukCena = 0;
   kor;
   smerId;
@@ -54,17 +55,25 @@ export class PrijavaIspitaComponent implements OnInit {
       this.kor = data;
       this.idUcenika = this.kor.ucenik.id;
       this.smerId = this.kor.ucenik.smer.id;
-      this.getNeprijavljeniNepolozeni(this.smerId,this.idUcenika);
+      this.getPredmetiZaPrijavu(this.smerId,this.idUcenika);
+      this.getPrijavljeniPredmetiZaIspit(this.idUcenika);
       this.getFinansijskaKartica(this.idUcenika);
     });
 
   }
 
-  getNeprijavljeniNepolozeni(smerId,idUcenika){
-    this._predmetService.getNeprijavljeniNepolozeni(smerId,idUcenika)
+  getPredmetiZaPrijavu(smerId,idUcenika){
+    this._predmetService.getPredmetiZaPrijavu(smerId,idUcenika)
     .subscribe(
       data=>{
         this.nepolozeniPredmeti = data;
+      });
+  }
+  getPrijavljeniPredmetiZaIspit(idUcenika){
+    this._predmetService.getPrijavljeniPredmetiZaIspit(idUcenika)
+    .subscribe(
+      data=>{
+        this.prijavljeniPredmeti = data;
       });
   }
 
@@ -94,17 +103,12 @@ export class PrijavaIspitaComponent implements OnInit {
 
   izabran(e: any,predmet:Predmet){
     var predmetDate = new Date(predmet.datumPolaganja);
-    const diff = predmetDate.getTime()-  new Date().getTime();
+    const diff = predmetDate.getTime() -  new Date().getTime();
     const diffHours = Math.ceil(diff / (1000 * 60 * 60)); 
-    //console.log('diffHours:' +diffHours);
-    /*const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(predmetDate)
-    const mo = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(predmetDate)
-    const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(predmetDate)
-    console.log(`${ye}-${mo}-${da}`)*/
-    console.log(diffHours);
-    //ne sme da se cekira ako je manje od 24 casa!
+    //diff razlika izmedju datuma predmeta i trenutnog datuma, diffHours razlika u satima
     if(diffHours < 24){
       alert('Datum za prijavu ovog ispita je istekao! ');
+      e.target.checked = false;
     }else{
       if(e.target.checked)
       { 
@@ -117,7 +121,6 @@ export class PrijavaIspitaComponent implements OnInit {
   
         this.ukCena -= 200;
       }
-      console.log(this.selectedItems);
       if(this.selectedItems.length > 0){  //Proveravam da li je je cekirano neko od polja u tabeli
         this.cekiran = true;
       }else{
@@ -133,18 +136,17 @@ export class PrijavaIspitaComponent implements OnInit {
     if(this.finansijskaKartica.suma < this.ukCena){
       alert('Nedovoljno sredstava na kartici');
     }else{
-      alert('Prijava uspesno obavljena');
-      //treba poslati this.ukCenu na backend da se oduzme;
-      
+      alert('Prijava uspesno obavljena');  
       this.addIspit();
     }
   }
 
 addIspit(){
-  var ispit: Ispit = new Ispit(null,null,null,null,null,false,null,null,null,null,null,this.selectedItems,null)
+  var ispit: Ispit = new Ispit(null,null,null,null,null,false,null,null,null,null,null,this.selectedItems,null,null)
   this._ispitService.addIspit(ispit,this.ispitniRok.id,this.idUcenika,this.ukCena)
       .subscribe(
         response =>{
+          this.ukCena = 0;
           this.getUcenikAndSmerId(this._korisnikService.getLoggedInUserKorIme())
         },
         error => {

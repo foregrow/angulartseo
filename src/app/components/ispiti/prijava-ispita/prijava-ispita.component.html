@@ -29,7 +29,32 @@
         Ukupna cena: <input type="text" value="{{ukCena}}" disabled>
       </div>
     </div>
-  </div>
-  <div *ngIf="!ispitniRokUtoku && ispitniRokUtoku !== undefined">
-    <h1>Trenutno nije aktivan nijedan ispitni rok!</h1>
-  </div>
+    <!---->
+    <h3 class="mt-5">Prijavljeni ispiti</h3>
+    <div class="row">
+      <div class="col-12">
+        <table class="table table-bordered" >
+          <thead>
+            <tr>
+              <th scope="col">Naziv predmeta</th>
+              <th scope="col">Profesor</th>
+              <th scope="col">Datum odrzavanja ispita</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let predmet of prijavljeniPredmeti; index as i">
+            <tr>
+              <td>{{predmet.naziv}}</td>
+              <td *ngIf="predmet.profesor !== undefined && predmet.profesor !== null;else elseBlock">{{predmet.profesor.ime}} {{predmet.profesor.prezime}}</td>
+              <ng-template #elseBlock>
+                <td>/</td>
+              </ng-template>
+              <td>{{predmet.datumPolaganja}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>
+<div *ngIf="!ispitniRokUtoku && ispitniRokUtoku !== undefined">
+  <h1>Trenutno nije aktivan nijedan ispitni rok!</h1>
+</div>
