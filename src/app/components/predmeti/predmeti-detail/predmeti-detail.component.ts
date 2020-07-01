@@ -21,6 +21,7 @@ export class PredmetiDetailComponent implements OnInit {
   smerChosen = false;
   smeroviArray = [];
   predmet;
+  smeroviByNazivPredmetaArray = [];
   constructor(private fb: FormBuilder,
     private _korisnikService: KorisnikService,
     private _predmetService: PredmetService,
@@ -33,6 +34,7 @@ export class PredmetiDetailComponent implements OnInit {
       naziv: ['',Validators.required],
       bodovi: ['',[Validators.required,Validators.pattern("^[0-9]*$")]],
       smer: [this.fb.array(this.smeroviArray)],
+      smerInput: ['']
     });
     this.getAllSmerovi();
     this.addEditParam = this._route.snapshot.paramMap.get('id');
@@ -40,7 +42,7 @@ export class PredmetiDetailComponent implements OnInit {
     if(this.addEditParam !== 'add'){
       this.getPredmetByIdAndSetValues(this.addEditParam);
       this.addEditForm.controls['naziv'].disable();
-      this.addEditForm.controls['smer'].disable();
+      this.addEditForm.controls['smerInput'].disable();
     }
     
     
@@ -51,13 +53,12 @@ export class PredmetiDetailComponent implements OnInit {
     .subscribe(
       data=>{
         this.predmet = data;
-        var smerCombo = this.smeroviArray.indexOf(`Oznaka:${this.predmet.smer.oznakaSmera},Naziv:${this.predmet.smer.naziv}`);
-
         this.addEditForm.patchValue({
           naziv : this.predmet.naziv,
           bodovi : this.predmet.brojECTSBodova,
-          smer : this.smeroviArray[smerCombo]
+          smerInput : `${this.predmet.smer.naziv},${this.predmet.smer.oznakaSmera}`
         });
+        this.getByNazivPredmeta(this.predmet.naziv);
       }
     )
   }
@@ -73,6 +74,14 @@ export class PredmetiDetailComponent implements OnInit {
         }  
       });
   }
+
+  getByNazivPredmeta(naziv){
+    this._smerService.getByNazivPredmeta(naziv).subscribe(
+      data=>{
+        this.smeroviByNazivPredmetaArray = data;
+      }
+    )
+  }
   
 
 
@@ -87,8 +96,9 @@ export class PredmetiDetailComponent implements OnInit {
     var naziv = this.naziv.value;
     var bodovi = this.bodovi.value;
     var smer = this.smer.value;
-    var smerOznaka = smer.split(',')[0].substring(7);
+    console.log(naziv);
     if(param === 'add'){
+      var smerOznaka = smer.split(',')[0].substring(7);
       var predmet = new Predmet(null,naziv,null,null,null,null,new Smer(null,null,null,null,smerOznaka,null,null),
       bodovi,null,null);
       this._predmetService.addPredmet(predmet).subscribe(
@@ -126,6 +136,9 @@ export class PredmetiDetailComponent implements OnInit {
   }
   get bodovi() {
     return this.addEditForm.get('bodovi');
+  }
+  get smerInput() {
+    return this.addEditForm.get('smerInput');
   }
 
 }

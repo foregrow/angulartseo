@@ -9,7 +9,7 @@ import { Smer } from '../model/smer';
 export class SmerService {
 
   private _urlGetAll: string = "http://localhost:8080/api/smerovi";
-  
+  private _urlGetByNazivPredmeta: string = "http://localhost:8080/api/smerovi/nazivPredmeta"
   constructor(private http: HttpClient) { }
 
   getById(id){
@@ -19,6 +19,10 @@ export class SmerService {
 
   getSmerovi() : Observable<Smer[]>{
     return this.http.get<Smer[]>(this._urlGetAll);
+  }
+
+  getByNazivPredmeta(naziv: string) : Observable<Smer[]>{
+    return this.http.get<Smer[]>(`${this._urlGetByNazivPredmeta}/${naziv}`);
   }
 
   addSmer(smerData:Smer,emailNas){
