@@ -25,5 +25,9 @@ export class IspitniRokService {
     return this._http.get(`${this._urlGetAll}/${+id}`);
   }
 
+  update(data: IspitniRok){
+    return this._http.put<any>(this._urlGetAll,data);
+  }
+
   
 }

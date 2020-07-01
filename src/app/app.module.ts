@@ -18,6 +18,7 @@ import { UcenikService } from './services/ucenik.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IspitniRokService } from './services/ispitni-rok.service';
 import { DatePipe } from '@angular/common';
+import { KolokvijumService } from './services/kolokvijum.service';
 
 
 
@@ -34,7 +35,7 @@ import { DatePipe } from '@angular/common';
     ReactiveFormsModule,
     BrowserAnimationsModule
   ],
-  providers: [DatePipe,PredmetService,KorisnikService,AuthGuard,SmerService,FinansijskaKarticaService,IspitService,NastavnikService,PredmetService,UcenikService,IspitniRokService,
+  providers: [KolokvijumService,DatePipe,PredmetService,KorisnikService,AuthGuard,SmerService,FinansijskaKarticaService,IspitService,NastavnikService,PredmetService,UcenikService,IspitniRokService,
   {
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptorService,

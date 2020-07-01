@@ -12,7 +12,7 @@ export class PredmetService {
   private _urlGetNepolozeniPredmeti: string = "http://localhost:8080/api/predmeti/nepolozeniPredmeti";
   private _urlGetPredmetiZaPrijavu: string = "http://localhost:8080/api/predmeti/predmetiZaPrijavu";
   private _urlGetPrijavljeniPredmetiZaIspit: string = "http://localhost:8080/api/predmeti/prijavljeniPredmetiZaIspit";
-  //private _urlGetPredmetiNotInSmer: string = "http://localhost:8080/api/predmeti/notInSmer";
+  private _urlGetPredmetiUcenici: string = "http://localhost:8080/api/predmeti/predmetiUcenici";
   
   constructor(private http: HttpClient) { }
 
@@ -36,6 +36,9 @@ export class PredmetService {
   }
   getPrijavljeniPredmetiZaIspit(ucenikId,iRok) : Observable<Predmet[]>{
     return this.http.get<Predmet[]>(`${this._urlGetPrijavljeniPredmetiZaIspit}/${+ucenikId}/${+iRok}`);
+  }
+  getPredmetiUcenici(korIme) : Observable<Predmet[]>{
+    return this.http.get<Predmet[]>(`${this._urlGetPredmetiUcenici}/${korIme}`);
   }
   deletePredmet(id): Observable<any>{
     var numbid = +id;

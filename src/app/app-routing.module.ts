@@ -32,7 +32,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { PredmetiDetailComponent } from './components/predmeti/predmeti-detail/predmeti-detail.component';
 import { IspitniRokoviComponent } from './components/ispitni-rokovi/ispitni-rokovi.component';
 import { IspitniRokoviDetailComponent } from './components/ispitni-rokovi/ispitni-rokovi-detail/ispitni-rokovi-detail.component';
-
+import { KolokvijumUpisComponent } from './components/kolokvijum-upis/kolokvijum-upis.component';
 
 const routes: Routes = [
     {path: '', redirectTo: 'ucenik', pathMatch: 'full'},
@@ -105,9 +105,14 @@ const routes: Routes = [
       data: {
           roles: ['ROLE_ADMIN']
         }},
+          
+      {path: 'kolokvijum-upis', component: KolokvijumUpisComponent, canActivate: [AuthGuard,RoleGuard],
+      data: {
+          roles: ['ROLE_ASISTENT']
+        }},
 
-    {path: 'ispiti', component: IspitiComponent, canActivate: [AuthGuard,RoleGuard],
-    data: {
+      {path: 'ispiti', component: IspitiComponent, canActivate: [AuthGuard,RoleGuard],
+      data: {
         roles: ['ROLE_ADMIN']
       }},
 
@@ -159,4 +164,5 @@ KorisniciComponent,NastavniciComponent,NastavniciDetailComponent,NastavniciAddCo
 SmeroviComponent,PredmetiComponent,IspitiComponent,SmerDetailComponent,
 KorisniciDetailComponent,KorisniciAddComponent,
 ProfilUcenikComponent,FinansijskaKarticaComponent,PolozeniIspitiComponent,NepolozeniIspitiComponent,PrijavaIspitaComponent,
-UceniciDetailComponent,PredmetiDetailComponent,IspitniRokoviComponent,IspitniRokoviDetailComponent]
+UceniciDetailComponent,PredmetiDetailComponent,IspitniRokoviComponent,IspitniRokoviDetailComponent,
+KolokvijumUpisComponent]

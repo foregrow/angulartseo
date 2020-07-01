@@ -62,6 +62,35 @@
             <button *ngIf="this.param !== 'add'" (click)="submitPredmete()" class="btn btn-primary" [disabled]="addDateForm.invalid || !smerSelected || !predmetSelected" type="submit">Dodaj datume polaganja</button>
         </form>
     </div>
+
+    <div class="mb-5" *ngIf="this.param !== 'add'">
+    <h2 class="mt-5">Svi prijavljeni ispiti ovog roka</h2>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Ucenik</th>
+        <th>Smer</th>
+        <th>Predmet</th>
+        <th>Datum polaganja</th>
+        <th>Datum prijave</th>
+        <th>Status</th>
+        <th>Polozen</th>
+        <th>Ocena</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let ispit of sviIspitiRoka; index as i">
+      <tr>
+        <td>{{i+1}}</td><td>{{ispit.ucenik.ime}} {{ispit.ucenik.prezime}}</td><td>{{ispit.predmet.smer.oznakaSmera}}</td>
+        <td>{{ispit.predmet.naziv}}</td><td>{{ispit.datumPolaganja}}</td><td>{{ispit.datumPrijave}}</td><td>{{ispit.status}}</td>
+            <td *ngIf="ispit.polozen">DA</td>
+            <td *ngIf="ispit.polozen">{{ispit.ocena}}</td>
+            <td *ngIf="!ispit.polozen">NE</td>
+            <td *ngIf="!ispit.polozen">/</td>
+      </tr>
+    </tbody>
+  </table>
+    </div>
     
 </div>  
 

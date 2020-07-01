@@ -10,6 +10,7 @@ import { Predmet } from 'src/app/model/predmet';
 import { IfStmt } from '@angular/compiler';
 import { Ispit } from 'src/app/model/ispit';
 import { IspitService } from 'src/app/services/ispit.service';
+import { IspitniRok } from 'src/app/model/ispitnirok';
 
 @Component({
   selector: 'app-ispitni-rokovi-detail',
@@ -27,6 +28,7 @@ export class IspitniRokoviDetailComponent implements OnInit {
   dodatiPredmetiArray: Predmet[] = [];
   smerSelected = false;
   predmetSelected = false;
+  sviIspitiRoka = [];
   constructor(private _route: ActivatedRoute,
     private _ispitniRokService: IspitniRokService,
     private _ispitService: IspitService,
@@ -47,6 +49,7 @@ export class IspitniRokoviDetailComponent implements OnInit {
       this.addEditForm.controls['nazivRoka'].disable();
       this.getByIdAndSetValues(this.param);
       this.getSmerovi();
+      
       this.addDateForm = this.fb.group({
         smerovi: [[null,this.fb.array(this.smeroviArray)]],
         predmeti: [[null,this.fb.array(this.predmetiArray)]],
@@ -75,7 +78,7 @@ export class IspitniRokoviDetailComponent implements OnInit {
     this._ispitniRokService.getById(param).subscribe(
       data => {
         this.ispitniRok = data;
-    
+        this.sviIspitiRoka = this.ispitniRok.ispiti;
         this.addEditForm.patchValue({
           nazivRoka: this.ispitniRok.nazivRoka,
           pocetakRoka: this.datePipe.transform(this.ispitniRok.pocetakRoka,"yyyy-MM-ddTHH:mm:ss.SSS"),
@@ -136,6 +139,7 @@ export class IspitniRokoviDetailComponent implements OnInit {
       var ispit = new Ispit(null,null,null,null,null,null,null,null,null,null,null,null,this.dodatiPredmetiArray,null,null)
       this._ispitService.addDatumPolaganjaPredmetima(ispit).subscribe(
         data =>{
+          this.dodatiPredmeti.setValue('');
           alert('Uspesno ste dodali datum polaganja!');
           this.getByIdAndSetValues(this.param);
         },error =>{
@@ -148,9 +152,27 @@ export class IspitniRokoviDetailComponent implements OnInit {
   }
 
   submit(param){
-    if(param === 'edit'){
-      
+    var pocetakRoka = this.pocetakRoka.value;
+    var krajRoka = this.krajRoka.value;
+
+    const diff = new Date(krajRoka).getTime() -  new Date(pocetakRoka).getTime();
+    const diffHours = Math.ceil(diff / (1000 * 60 * 60)); 
+    if(diffHours <= 0){
+      alert('Pocetak ispitnog roka mora biti pre kraja ispitnog roka')
+    }else{
+      if(param === 'edit'){
+        var irok = new IspitniRok(this.ispitniRok.id,null,pocetakRoka,krajRoka,null);
+        this._ispitniRokService.update(irok).subscribe(
+        data =>{
+          this.ispitniRok = data;
+        },error =>{
+          console.log(error);
+        });
+      }else if(param === 'add'){
+  
+      }
     }
+    
   }
 
   get nazivRoka() {

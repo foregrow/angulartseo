@@ -30,6 +30,7 @@ export class Ucenik{
     prosecnaOcena: number;
     redniBrojUpisa: string;
     kolokvijumi: any = [];
+    
     constructor(id: number,ime:string,prezime:string,
         index:string,godinaUpisa:number,godinaStudija:number,
         smer:Smer,kartica:FinansijskaKartica,korisnik:Korisnik,
@@ -61,4 +62,5 @@ export class Ucenik{
         this.redniBrojUpisa = redniBrojUpisa;
         this.kolokvijumi =kolokvijumi;
     }
+    
 }

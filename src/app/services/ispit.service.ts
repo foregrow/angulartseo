@@ -11,12 +11,16 @@ export class IspitService {
   private _urlGetAll: string = "http://localhost:8080/api/ispiti";
   private _urlOdjavaIspita: string = "http://localhost:8080/api/ispiti/odjavaIspita";
   private _urlAddDatumPolaganja: string = "http://localhost:8080/api/ispiti/addDatumPolaganja";
-  ////odjavaIspita/{uid}/{irid}
+  private _urlGetAllUIspitnomRoku: string = "http://localhost:8080/api/ispiti/uIspitnomRoku";
+  ////uIspitnomRoku
 
   constructor(private _http: HttpClient) { }
 
   getIspiti() : Observable<Ispit[]>{
     return this._http.get<Ispit[]>(this._urlGetAll);
+  }
+  getAllUIspitnomRoku(irid) : Observable<Ispit[]>{
+    return this._http.get<Ispit[]>(`${this._urlGetAllUIspitnomRoku}/${+irid}`);
   }
 
   addIspit(ispitData:Ispit,ispitniRokId, ucenikId,suma){
