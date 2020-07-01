@@ -26,7 +26,7 @@ export class RoleGuard implements CanActivate {
             }else if(roleUlogovanog === "ROLE_UCENIK"){
               this._router.navigate(['ucenik']);
               return false;
-            }else if(roleUlogovanog === "ROLE_NASTAVNIK"){
+            }else if(roleUlogovanog === "ROLE_NASTAVNIK" || roleUlogovanog === "ROLE_ASISTENT" || roleUlogovanog === "ROLE_DEMONSTRATOR"){
               this._router.navigate(['nastavnik']);
               return false;
             }

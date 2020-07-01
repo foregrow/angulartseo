@@ -28,7 +28,7 @@
           <i class="fa fa-book" aria-hidden="true"></i> Predmeti</a>        
       </ul> 
       <ul class="navbar-nav">
-        <a class="nav-link" style="cursor:pointer" routerLink="/ispiti" routerLinkActive="active">
+        <a class="nav-link" style="cursor:pointer" routerLink="/ispitniRokovi" routerLinkActive="active">
           <i class="fa fa-calendar-check-o" aria-hidden="true"></i> Rokovi</a>        
       </ul> 
       
@@ -70,8 +70,8 @@
           <i class="fa fa-sign-out ml-5" aria-hidden="true"></i> Logout</a>          
       </ul>
     </div>
-
-    <div *ngIf="korisnikService.getRole() === 'ROLE_NASTAVNIK'" class="collapse navbar-collapse" id="navbarSupportedContent">
+<!--|| roleUlogovanog === "ROLE_ASISTENT" || roleUlogovanog === "ROLE_DEMONSTRATOR"-->
+    <div *ngIf="korisnikService.getRole() === 'ROLE_NASTAVNIK' || korisnikService.getRole() === 'ROLE_ASISTENT' || korisnikService.getRole() === 'ROLE_DEMONSTRATOR'" class="collapse navbar-collapse" id="navbarSupportedContent">
       
       <ul class="navbar-nav ml-auto">
         <a class="nav-link" style="cursor:pointer" routerLink="/nastavnik" routerLinkActive="active">

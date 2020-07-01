@@ -30,6 +30,10 @@ import { NastavniciAddComponent } from './components/nastavnici/nastavnici-add/n
 import { UceniciDetailComponent } from './components/ucenici/ucenici-detail/ucenici-detail.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { PredmetiDetailComponent } from './components/predmeti/predmeti-detail/predmeti-detail.component';
+import { IspitniRokoviComponent } from './components/ispitni-rokovi/ispitni-rokovi.component';
+import { IspitniRokoviDetailComponent } from './components/ispitni-rokovi/ispitni-rokovi-detail/ispitni-rokovi-detail.component';
+
+
 const routes: Routes = [
     {path: '', redirectTo: 'ucenik', pathMatch: 'full'},
     {path: 'login', component: LoginComponent},
@@ -40,7 +44,7 @@ const routes: Routes = [
       }},
     {path: 'nastavnik', component: NastavnikComponent, canActivate: [AuthGuard,RoleGuard],
     data: {
-        roles: ['ROLE_NASTAVNIK']
+        roles: ['ROLE_NASTAVNIK','ROLE_ASISTENT','ROLE_DEMONSTRATOR']
       }},
 
     {path: 'admin', component: AdminComponent, canActivate: [AuthGuard,RoleGuard],
@@ -68,7 +72,7 @@ const routes: Routes = [
       }},
     {path: 'nastavnici-detail/:id', component: NastavniciDetailComponent, canActivate: [AuthGuard,RoleGuard],
     data: {
-        roles: ['ROLE_ADMIN','ROLE_NASTAVNIK']
+        roles: ['ROLE_ADMIN','ROLE_NASTAVNIK','ROLE_ASISTENT','ROLE_DEMONSTRATOR']
       }},
     {path: 'nastavnici-add', component: NastavniciAddComponent, canActivate: [AuthGuard,RoleGuard],
     data: {
@@ -104,6 +108,15 @@ const routes: Routes = [
 
     {path: 'ispiti', component: IspitiComponent, canActivate: [AuthGuard,RoleGuard],
     data: {
+        roles: ['ROLE_ADMIN']
+      }},
+
+      {path: 'ispitniRokovi', component: IspitniRokoviComponent, canActivate: [AuthGuard,RoleGuard],
+      data: {
+        roles: ['ROLE_ADMIN']
+      }},
+      {path: 'ispitniRokovi-detail/:id', component: IspitniRokoviDetailComponent, canActivate: [AuthGuard,RoleGuard],
+      data: {
         roles: ['ROLE_ADMIN']
       }},
 
@@ -146,4 +159,4 @@ KorisniciComponent,NastavniciComponent,NastavniciDetailComponent,NastavniciAddCo
 SmeroviComponent,PredmetiComponent,IspitiComponent,SmerDetailComponent,
 KorisniciDetailComponent,KorisniciAddComponent,
 ProfilUcenikComponent,FinansijskaKarticaComponent,PolozeniIspitiComponent,NepolozeniIspitiComponent,PrijavaIspitaComponent,
-UceniciDetailComponent,PredmetiDetailComponent]
+UceniciDetailComponent,PredmetiDetailComponent,IspitniRokoviComponent,IspitniRokoviDetailComponent]

@@ -17,6 +17,8 @@ import { NastavnikService } from './services/nastavnik.service';
 import { UcenikService } from './services/ucenik.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IspitniRokService } from './services/ispitni-rok.service';
+import { DatePipe } from '@angular/common';
+
 
 
 //routingComponents = sve komponente
@@ -32,7 +34,7 @@ import { IspitniRokService } from './services/ispitni-rok.service';
     ReactiveFormsModule,
     BrowserAnimationsModule
   ],
-  providers: [PredmetService,KorisnikService,AuthGuard,SmerService,FinansijskaKarticaService,IspitService,NastavnikService,PredmetService,UcenikService,IspitniRokService,
+  providers: [DatePipe,PredmetService,KorisnikService,AuthGuard,SmerService,FinansijskaKarticaService,IspitService,NastavnikService,PredmetService,UcenikService,IspitniRokService,
   {
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptorService,

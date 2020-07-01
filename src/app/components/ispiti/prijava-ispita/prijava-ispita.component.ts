@@ -21,10 +21,13 @@ export class PrijavaIspitaComponent implements OnInit {
   cekiranOdjava = false;
   finansijskaKartica;
   selectedItems = [];
+  selectedItemsOdjava = [];
   idUcenika;
   nepolozeniPredmeti = [];
   prijavljeniPredmeti = [];
+  odjavljeniPredmeti = [];
   ukCena = 0;
+  ukCenaOdjava = 0;
   kor;
   smerId;
   ispitniRok;
@@ -39,12 +42,7 @@ export class PrijavaIspitaComponent implements OnInit {
     private _finansijskaKarticaService: FinansijskaKarticaService) { }
 
   ngOnInit(): void {
-    
-    
     this.getTrenutniRok();
-    var korIme = this._korisnikService.getLoggedInUserKorIme();
-    this.getUcenikAndSmerId(korIme);
-
     this.selectedItems = new Array<string>();
   
 
@@ -56,22 +54,22 @@ export class PrijavaIspitaComponent implements OnInit {
       this.kor = data;
       this.idUcenika = this.kor.ucenik.id;
       this.smerId = this.kor.ucenik.smer.id;
-      this.getPredmetiZaPrijavu(this.smerId,this.idUcenika);
-      this.getPrijavljeniPredmetiZaIspit(this.idUcenika);
+      this.getPredmetiZaPrijavu(this.smerId,this.idUcenika,this.ispitniRok.id);
+      this.getPrijavljeniPredmetiZaIspit(this.idUcenika,this.ispitniRok.id);
       this.getFinansijskaKartica(this.idUcenika);
     });
 
   }
 
-  getPredmetiZaPrijavu(smerId,idUcenika){
-    this._predmetService.getPredmetiZaPrijavu(smerId,idUcenika)
+  getPredmetiZaPrijavu(smerId,idUcenika,iRok){
+    this._predmetService.getPredmetiZaPrijavu(smerId,idUcenika,iRok)
     .subscribe(
       data=>{
         this.nepolozeniPredmeti = data;
       });
   }
-  getPrijavljeniPredmetiZaIspit(idUcenika){
-    this._predmetService.getPrijavljeniPredmetiZaIspit(idUcenika)
+  getPrijavljeniPredmetiZaIspit(idUcenika,iRok){
+    this._predmetService.getPrijavljeniPredmetiZaIspit(idUcenika,iRok)
     .subscribe(
       data=>{
         this.prijavljeniPredmeti = data;
@@ -87,6 +85,8 @@ export class PrijavaIspitaComponent implements OnInit {
           this.ispitniRokUtoku = false;
         }else{
           this.ispitniRokUtoku = true;
+          var korIme = this._korisnikService.getLoggedInUserKorIme();
+          this.getUcenikAndSmerId(korIme);
         }
       }
     )
@@ -148,20 +148,19 @@ export class PrijavaIspitaComponent implements OnInit {
     const diffHours = Math.ceil(diff / (1000 * 60 * 60)); 
     //diff razlika izmedju datuma predmeta i trenutnog datuma, diffHours razlika u satima
     if(diffHours < 24){
-      alert('Ispit se moze odjaviti najkasnije 2 dana pred isti! ');
+      alert('Ispit se moze odjaviti najkasnije 1 dan pred isti! ');
       e.target.checked = false;
     }else{
       if(e.target.checked)
       { 
-        this.selectedItems.push(predmet.id);
-
+        this.selectedItemsOdjava.push(predmet.id);
+    
       }
       else
       {
-        this.selectedItems = this.selectedItems.filter(m=>m!=predmet.id);
-
+        this.selectedItemsOdjava = this.selectedItemsOdjava.filter(m=>m!=predmet.id);
       }
-      if(this.selectedItems.length > 0){  //Proveravam da li je je cekirano neko od polja u tabeli
+      if(this.selectedItemsOdjava.length > 0){  //Proveravam da li je je cekirano neko od polja u tabeli
         this.cekiranOdjava = true;
       }else{
         this.cekiranOdjava = false;
@@ -172,16 +171,30 @@ export class PrijavaIspitaComponent implements OnInit {
   }
 
   odjavi(){
-    alert('Odjava uspesno obavljena');  
+    var ispit: Ispit = new Ispit(null,null,null,null,null,false,null,null,null,null,null,this.selectedItemsOdjava,null,null,null)
+    this._ispitService.odjavaIspita(ispit,this.idUcenika,this.ispitniRok.id)
+        .subscribe(
+          response => { 
+            this.selectedItemsOdjava = [];
+            this.cekiranOdjava = false;
+            this.getTrenutniRok();
+          },
+          error => {
+            console.log(error);
+          }
+        );
   }
 
 addIspit(){
-  var ispit: Ispit = new Ispit(null,null,null,null,null,false,null,null,null,null,null,this.selectedItems,null,null)
+  var ispit: Ispit = new Ispit(null,null,null,null,null,false,null,null,null,null,null,this.selectedItems,null,null,null)
   this._ispitService.addIspit(ispit,this.ispitniRok.id,this.idUcenika,this.ukCena)
       .subscribe(
         response =>{
           this.ukCena = 0;
-          this.getUcenikAndSmerId(this._korisnikService.getLoggedInUserKorIme())
+          this.selectedItems = [];
+          this.cekiran = false;
+          this.getTrenutniRok();
+          
         },
         error => {
           console.log(error);

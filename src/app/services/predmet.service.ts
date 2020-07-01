@@ -31,11 +31,11 @@ export class PredmetService {
   getNepolozeniPredmeti(smerId,ucenikId) : Observable<Predmet[]>{
     return this.http.get<Predmet[]>(`${this._urlGetNepolozeniPredmeti}/${+smerId}/${+ucenikId}`);
   }
-  getPredmetiZaPrijavu(smerId,ucenikId) : Observable<Predmet[]>{
-    return this.http.get<Predmet[]>(`${this._urlGetPredmetiZaPrijavu}/${+smerId}/${+ucenikId}`);
+  getPredmetiZaPrijavu(smerId,ucenikId,iRok) : Observable<Predmet[]>{
+    return this.http.get<Predmet[]>(`${this._urlGetPredmetiZaPrijavu}/${+smerId}/${+ucenikId}/${+iRok}`);
   }
-  getPrijavljeniPredmetiZaIspit(ucenikId) : Observable<Predmet[]>{
-    return this.http.get<Predmet[]>(`${this._urlGetPrijavljeniPredmetiZaIspit}/${+ucenikId}`);
+  getPrijavljeniPredmetiZaIspit(ucenikId,iRok) : Observable<Predmet[]>{
+    return this.http.get<Predmet[]>(`${this._urlGetPrijavljeniPredmetiZaIspit}/${+ucenikId}/${+iRok}`);
   }
   deletePredmet(id): Observable<any>{
     var numbid = +id;

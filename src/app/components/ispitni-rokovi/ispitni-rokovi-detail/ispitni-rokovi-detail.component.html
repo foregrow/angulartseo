@@ -1,0 +1,67 @@
+<div class="container-fluid">
+   
+    <h2 class="mt-5 mb-3" *ngIf="this.param === 'add'">Dodavanje novog ispitnog roka</h2>
+    <h2 class="mt-5 mb-3" *ngIf="this.param !== 'add'">Izmena datuma ispitnog roka</h2>
+    <form [formGroup]="addEditForm" class="w-25">
+
+        <div class="form-group">
+            <label>Naziv roka</label>
+            <input formControlName="nazivRoka" type="text" class="form-control">
+            <small [class.d-none]="nazivRoka.valid || nazivRoka.untouched" class="text-danger">Naziv roka je obavezno!</small> 
+        </div>
+
+        <div class="form-group">
+            <label>Pocetak roka</label>
+            <input formControlName="pocetakRoka" type="datetime-local" class="form-control">
+            <small [class.d-none]="pocetakRoka.valid || pocetakRoka.untouched" class="text-danger">Molimo vas izaberite pocetak roka!</small> 
+        </div>
+
+        <div class="form-group">
+            <label>Kraj roka</label>
+            <input formControlName="krajRoka" type="datetime-local" class="form-control">
+            <small [class.d-none]="krajRoka.valid || krajRoka.untouched" class="text-danger">Molimo vas izaberite kraj roka!</small> 
+        </div>
+        <button *ngIf="this.param !== 'add'" (click)="submit('edit')" class="btn btn-primary" [disabled]="addEditForm.invalid" type="submit">Izmeni</button>
+        <button *ngIf="this.param === 'add'" (click)="submit('add')" class="btn btn-primary" [disabled]="addEditForm.invalid" type="submit">Dodaj</button>
+    </form>
+   
+    <!--druga forma-->
+    <div >
+        <h1 class="mt-5 mb-3" *ngIf="this.param !== 'add'">Dodavanje datuma polaganja predmetima u izabranom roku</h1>
+        <form *ngIf="this.param !== 'add'" class="w-50" [formGroup]="addDateForm">
+            <div class="form-group">
+                <label class="control-label">Smer</label>
+                <select class="form-control" formControlName="smerovi">
+                    <option [value]="null" disabled>Izaberite smer</option>
+                    <option *ngFor="let smer of smeroviArray" [ngValue]="smer" >
+                      {{smer.naziv}}, {{smer.oznakaSmera}}
+                    </option>
+                  </select> 
+            </div>
+            <div class="form-group">
+                <label class="control-label">Predmet</label>
+                <select class="form-control" formControlName="predmeti" >
+                    <option [value]="null" disabled>Izaberite predmet</option>
+                    <option *ngFor="let pred of predmetiArray" [ngValue]="pred">
+                        {{pred.naziv}}, {{pred.brojECTSBodova}}
+                    </option>
+                  </select> 
+            </div>
+            <div class="form-group">
+                <label>Datum polaganja </label>
+                <input formControlName="datumPolaganja" type="datetime-local" class="form-control">
+            </div>
+            <div class="row">
+                <button class="btn btn-primary col-sm-1 ml-3 mt-1" [disabled]="addDateForm.invalid || !smerSelected || !predmetSelected" (click)="izaberiPredmet()" type="submit">Izaberi</button>
+                <button class="btn btn-danger col-sm-1 ml-3 mt-1" [disabled]="addDateForm.invalid || !smerSelected || !predmetSelected" (click)="removePredmet()"  type="submit">Ukloni</button>   
+            </div>
+            <div class="form-group mt-1">
+                <label class="control-label">Dodati predmeti:</label>
+                <input formControlName="dodatiPredmeti" type="text" class="form-control">
+            </div>
+            <button *ngIf="this.param !== 'add'" (click)="submitPredmete()" class="btn btn-primary" [disabled]="addDateForm.invalid || !smerSelected || !predmetSelected" type="submit">Dodaj datume polaganja</button>
+        </form>
+    </div>
+    
+</div>  
+

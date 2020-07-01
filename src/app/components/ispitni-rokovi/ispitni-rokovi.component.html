@@ -1,0 +1,24 @@
+<div class="container">
+    <h2 class="mt-5 mb-5">Ispitni rokovi<a class="btn btn-sm text-white btn-success ml-3" (click)="navigateToAddRok('add')">Dodaj novi ispitni rok</a></h2>
+    <!-- w-25,75,50.. klasa za width tabele  -->
+    <table class="table table-hover w-75">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Naziv</th>
+            <th>Pocetak roka</th>
+            <th>Kraj roka</th>
+            <th>Info</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let ir of rokovi; index as i">
+          <tr>
+            <td>{{i+1}}</td>
+            <td>{{ir.nazivRoka}}</td>
+            <td>{{ir.pocetakRoka}}</td>
+            <td>{{ir.krajRoka}}</td>
+            <td><a class="btn btn-sm text-white btn-primary" (click)="detaljiRoka(ir)">Detalji</a></td>
+        </tr>
+        </tbody>
+      </table>
+</div>

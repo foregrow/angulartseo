@@ -100,7 +100,7 @@ export class KorisnikService {
         this._router.navigate(['admin']);
       }else if(role == 'ROLE_UCENIK'){
         this._router.navigate(['ucenik']);
-      }else if(role == 'ROLE_NASTAVNIK'){
+      }else if(role == 'ROLE_NASTAVNIK' || role == 'ROLE_ASISTENT' || role == 'ROLE_DEMONSTRATOR'){
         this._router.navigate(['nastavnik']);
       }
     }
