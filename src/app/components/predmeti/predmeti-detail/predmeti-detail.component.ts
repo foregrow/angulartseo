@@ -20,6 +20,7 @@ export class PredmetiDetailComponent implements OnInit {
   filteredPredmeti: Observable<string[]>;
   smerChosen = false;
   smeroviArray = [];
+  predmet;
   constructor(private fb: FormBuilder,
     private _korisnikService: KorisnikService,
     private _predmetService: PredmetService,
@@ -35,10 +36,30 @@ export class PredmetiDetailComponent implements OnInit {
     });
     this.getAllSmerovi();
     this.addEditParam = this._route.snapshot.paramMap.get('id');
+
     if(this.addEditParam !== 'add'){
+      this.getPredmetByIdAndSetValues(this.addEditParam);
+      this.addEditForm.controls['naziv'].disable();
+      this.addEditForm.controls['smer'].disable();
     }
     
     
+  }
+
+  getPredmetByIdAndSetValues(predmetId){
+    this._predmetService.getByPredmetId(predmetId)
+    .subscribe(
+      data=>{
+        this.predmet = data;
+        var smerCombo = this.smeroviArray.indexOf(`Oznaka:${this.predmet.smer.oznakaSmera},Naziv:${this.predmet.smer.naziv}`);
+
+        this.addEditForm.patchValue({
+          naziv : this.predmet.naziv,
+          bodovi : this.predmet.brojECTSBodova,
+          smer : this.smeroviArray[smerCombo]
+        });
+      }
+    )
   }
 
   getAllSmerovi(){
@@ -52,6 +73,8 @@ export class PredmetiDetailComponent implements OnInit {
         }  
       });
   }
+  
+
 
   chosenSmer(){
     if(this.smeroviArray.includes(this.smer.value))
@@ -79,7 +102,18 @@ export class PredmetiDetailComponent implements OnInit {
       }
       );
     }else if(param === 'edit'){
+      var predmet = new Predmet(this.predmet.id,null,null,null,null,null,null,bodovi,null,null);
+      this._predmetService.updatePredmet(predmet).subscribe(
+        response => {
+          alert('Izmena uspesna! ');
+          this.getPredmetByIdAndSetValues(this.addEditParam);
+          this._router.navigate(['predmeti']);
+        },
+        error => {
+          alert('Doslo je do greske!');
+        }
 
+      );
     }
   }
 

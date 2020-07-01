@@ -44,4 +44,11 @@ export class PredmetService {
     var numbid = +id;
     return this.http.delete(`${this._urlGetAll}/${numbid}`);
   }
+
+  getByPredmetId(id){
+    return this.http.get(`${this._urlGetAll}/${id}`);
+  }
+  updatePredmet(predmetDTO:Predmet){
+    return this.http.put<any>(`${this._urlGetAll}`,predmetDTO);
+  }
 }
