@@ -22,6 +22,8 @@ import { KolokvijumService } from './services/kolokvijum.service';
 
 
 
+
+
 //routingComponents = sve komponente
 @NgModule({
   declarations: [

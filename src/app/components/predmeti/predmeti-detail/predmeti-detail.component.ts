@@ -100,7 +100,7 @@ export class PredmetiDetailComponent implements OnInit {
     if(param === 'add'){
       var smerOznaka = smer.split(',')[0].substring(7);
       var predmet = new Predmet(null,naziv,null,null,null,null,new Smer(null,null,null,null,smerOznaka,null,null),
-      bodovi,null,null);
+      bodovi,null,null,null);
       this._predmetService.addPredmet(predmet).subscribe(
         data =>{
           var predmet = data;
@@ -112,7 +112,7 @@ export class PredmetiDetailComponent implements OnInit {
       }
       );
     }else if(param === 'edit'){
-      var predmet = new Predmet(this.predmet.id,null,null,null,null,null,null,bodovi,null,null);
+      var predmet = new Predmet(this.predmet.id,null,null,null,null,null,null,bodovi,null,null,null);
       this._predmetService.updatePredmet(predmet).subscribe(
         response => {
           alert('Izmena uspesna! ');

@@ -140,6 +140,7 @@ export class IspitniRokoviDetailComponent implements OnInit {
       this._ispitService.addDatumPolaganjaPredmetima(ispit).subscribe(
         data =>{
           this.dodatiPredmeti.setValue('');
+          this.dodatiPredmetiArray = [];
           alert('Uspesno ste dodali datum polaganja!');
           this.getByIdAndSetValues(this.param);
         },error =>{
@@ -165,6 +166,7 @@ export class IspitniRokoviDetailComponent implements OnInit {
         this._ispitniRokService.update(irok).subscribe(
         data =>{
           this.ispitniRok = data;
+          alert('Uspesna izmena!');
         },error =>{
           console.log(error);
         });

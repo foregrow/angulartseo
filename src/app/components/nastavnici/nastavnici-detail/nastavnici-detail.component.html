@@ -12,7 +12,7 @@
               <input formControlName="prezime" type="text" class="form-control" >
               <small [class.d-none]="prezime.valid || prezime.untouched" class="text-danger">Prezime je obavezno!</small>
           </div>
-          <div class="form-group" *ngIf="this.korisnikService.getRole()==='ROLE_ADMIN'">
+          <div class="form-group">
             <label>Email</label>
             <input formControlName="email" type="text" class="form-control" >
             <small [class.d-none]="email.valid || email.untouched" class="text-danger">Email je obavezan i mora biti u ispravnom formatu!</small>
@@ -35,21 +35,43 @@
                 <label class="control-label">Sef smera:</label>
                 <input formControlName="smer" type="text" class="form-control">
             </div>
-                <div class="form-group" *ngIf="this.korisnikService.getRole()==='ROLE_ADMIN'">
-                <label>Naziv predmeta</label>
-                <input formControlName="predmeti" type="text" class="form-control">
-                <small *ngIf="!predmetAddIsValid" class="text-danger">Uneti predmet nije validan!</small>
-                <div class="row">
-                    <button class="btn btn-primary col-sm-1 ml-3 mt-1" (click)="addPredmet()" type="submit">Dodaj</button>
-                    <button class="btn btn-danger col-sm-1 ml-3 mt-1" (click)="removePredmet()"  type="submit">Ukloni</button>   
-                </div>
-                <div class="form-group" *ngIf="this.korisnikService.getRole()==='ROLE_ADMIN'">
-                    <label class="control-label">Dodati predmeti:</label>
-                    <input formControlName="dodatiPredmeti" type="text" class="form-control">
-                </div>
-            </div>
-            <button *ngIf="this.korisnikService.getRole()==='ROLE_ADMIN'" class="btn btn-primary mt-5" [disabled]="editForm.invalid || emailExists" (click)="editNastavnik()" type="submit">Sazuvaj izmene</button>
+            <button class="btn btn-primary mt-1" [disabled]="editForm.invalid || emailExists" (click)="editNastavnik()" type="submit">Sazuvaj izmene</button>
         </form>
+
+        <!--druga forma-->
+    <div *ngIf="this.id !== 'add' && this.korisnikService.getRole()==='ROLE_ADMIN'">
+        <h1 class="mt-5 mb-3">Dodavanje predmeta nastavniku</h1>
+        <form class="w-50" [formGroup]="addPredmetForm">
+            <div class="form-group">
+                <label class="control-label">Smer</label>
+                <select class="form-control" formControlName="smerovi">
+                    <option [value]="null" disabled>Izaberite smer</option>
+                    <option *ngFor="let smer of smeroviArray" [ngValue]="smer" >
+                      {{smer.naziv}}, {{smer.oznakaSmera}}
+                    </option>
+                  </select> 
+            </div>
+            <div class="form-group">
+                <label class="control-label">Predmet</label>
+                <select class="form-control" formControlName="predmeti" >
+                    <option [value]="null" disabled>Izaberite predmet</option>
+                    <option *ngFor="let pred of predmetiArray" [ngValue]="pred">
+                        {{pred.naziv}}, {{pred.brojECTSBodova}}
+                    </option>
+                  </select> 
+            </div>
+    
+            <div class="row">
+                <button class="btn btn-primary col-sm-1 ml-3 mt-1" [disabled]="addPredmetForm.invalid || !smerSelected || !predmetSelected" (click)="addPredmet()" type="submit">Izaberi</button>
+                <button class="btn btn-danger col-sm-1 ml-3 mt-1" [disabled]="addPredmetForm.invalid || !smerSelected || !predmetSelected" (click)="removePredmet()"  type="submit">Ukloni</button>   
+            </div>
+            <div class="form-group mt-1">
+                <label class="control-label">Dodati predmeti:</label>
+                <input formControlName="dodatiPredmeti" type="text" class="form-control">
+            </div>
+            <button (click)="submitPredmete()" class="btn btn-primary" [disabled]="addPredmetForm.invalid || !smerSelected || !predmetSelected" type="submit">Dodaj predmete</button>
+        </form>
+    </div>
       
     <div class="container-fluid" *ngIf="nastavnik != undefined">
         <h2 class="mt-5 mb-5">Predmeti koje predaje</h2>

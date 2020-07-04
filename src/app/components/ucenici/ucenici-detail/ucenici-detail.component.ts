@@ -26,10 +26,13 @@ export class UceniciDetailComponent implements OnInit {
   smerChosen = false;
   constructor(private fb: FormBuilder,private _ucenikService: UcenikService,
     private _router: Router,private _smerService:SmerService,
-    private _route: ActivatedRoute, private _karticaService: FinansijskaKarticaService) { }
+    private _route: ActivatedRoute, private _karticaService: FinansijskaKarticaService) { 
+      
+    }
 
     //[0-3][0-9]\/[0-1][0-9]\/[0-9]{4}
   ngOnInit(): void {
+    this.getAllSmerovi();
     this.addEditForm = this.fb.group({
       ime: ['',Validators.required],
       prezime: ['',Validators.required],
@@ -43,15 +46,18 @@ export class UceniciDetailComponent implements OnInit {
       email: ['',[Validators.required,Validators.email]],
       smer: [this.fb.array(this.smerArray)],
       nacinFinansiranja: [this.fb.array(this.finansiranjeArray)],
-      ziroRacun: ['',Validators.required],
-      pozivNaBroj: ['',Validators.required],
-      brojModela: ['',Validators.required]
+      ziroRacun: ['',[Validators.required,Validators.pattern("^[0-9]\*")]],
+      pozivNaBroj: ['',[Validators.required,Validators.pattern("^[0-9]\*")]],
+      brojModela: ['',[Validators.required,Validators.pattern("^[0-9]\*")]],
+      trenutniSmer: [''],
+      suma: ['',[Validators.pattern("^[0-9]\*")]]
     });
-    this.getAllSmerovi();
+    
     this.addEditParam = this._route.snapshot.paramMap.get('id');
     if(this.addEditParam !== 'add' && this.addEditParam !== undefined){
       //znaci da je edit..
       this.addEditForm.controls['godinaUpisa'].disable();
+      this.addEditForm.controls['trenutniSmer'].disable();
       this.getByIdAndSetValues(this.addEditParam);
     }
   }
@@ -74,12 +80,7 @@ export class UceniciDetailComponent implements OnInit {
            }else if(this.kartica.ucenik.nacinFinansiranja === 'SAMOFINANSIRANJE'){
             positionFinan = 1;
           }
-          if(this.kartica.ucenik.smer.id === 0 || this.kartica.ucenik.smer.oznakaSmera === null){
-            this.smerChosen = false;
-          }else{
-            this.smerChosen = true;
-            positionSmer=this.smerArray.indexOf(`Oznaka:${this.kartica.ucenik.smer.oznakaSmera},Naziv:${this.kartica.ucenik.smer.naziv}`)
-          }
+          
           
          }
          
@@ -94,11 +95,12 @@ export class UceniciDetailComponent implements OnInit {
           datumRodjenja: this.kartica.ucenik.datumRodjenja,
           pol: this.polArray[positionPol],
           email: this.kartica.ucenik.email,
-          smer: this.smerArray[positionSmer],
+          trenutniSmer:  this.kartica.ucenik.smer.naziv,
           nacinFinansiranja: this.finansiranjeArray[positionFinan],
           ziroRacun: this.kartica.ziroRacun,
           pozivNaBroj: this.kartica.pozivNaBroj,
-          brojModela: this.kartica.brojModela
+          brojModela: this.kartica.brojModela,
+          suma: this.kartica.suma
         });
 
         
@@ -126,16 +128,14 @@ export class UceniciDetailComponent implements OnInit {
   }
 
   getAllSmerovi(){
-    this._smerService.getSmerovi()
-    .subscribe(
+    this._smerService.getSmerovi().subscribe(
       data => {
-        var smerovi;
-        smerovi = data
+        var smerovi = data
         for (var i = 0; i < smerovi.length; i++) {
-          var concat = `Oznaka:${smerovi[i].oznakaSmera},Naziv:${smerovi[i].naziv}`
-          this.smerArray.push(concat);
-        }  
-      });
+            this.smerArray.push(smerovi[i]); 
+        }
+      }
+    );
   }
 
 
@@ -158,16 +158,15 @@ export class UceniciDetailComponent implements OnInit {
 
     var pol = this.pol.value;
     var smer = this.smer.value;
-    var smerOznaka = smer.split(',')[0].substring(7);
     var nacinFinansiranja = this.nacinFinansiranja.value;
 
     var ziroRacun = this.ziroRacun.value;
     var pozivNaBroj = this.pozivNaBroj.value;
     var brojModela = this.brojModela.value;
-    
+    var suma = this.suma.value;
     if(addOrEdit==='add'){
-      var uc = new Ucenik(null,ime,prezime,null,godinaUpisa,godinaStudija,new Smer(null,null,null,null,smerOznaka,null,null),
-      null,null,null,null,null,drzavaRodjenja,mestoRodjenja,datumRodjenja,pol,nacinFinansiranja,email,adresa,null,null,null,null);
+      var uc = new Ucenik(null,ime,prezime,null,godinaUpisa,godinaStudija,new Smer(null,null,null,null,smer.oznakaSmera,null,null),
+      null,null,null,null,null,drzavaRodjenja,mestoRodjenja,datumRodjenja,pol,nacinFinansiranja,email,adresa,null,null,null,null,null);
   
       var fk = new FinansijskaKartica(null,null,null,uc,ziroRacun,pozivNaBroj,brojModela);
       console.log(fk);
@@ -183,18 +182,18 @@ export class UceniciDetailComponent implements OnInit {
         );
     }else if(addOrEdit==='edit'){
       console.log('uslo u edit');
-      var uc = new Ucenik(this.kartica.ucenik.id,ime,prezime,this.kartica.ucenik.index,godinaUpisa,godinaStudija,new Smer(null,null,null,null,smerOznaka,null,null),
+      var uc = new Ucenik(this.kartica.ucenik.id,ime,prezime,this.kartica.ucenik.index,godinaUpisa,godinaStudija,new Smer(null,null,null,null,smer.oznakaSmera,null,null),
       null,null,null,null,null,drzavaRodjenja,mestoRodjenja,datumRodjenja,pol,nacinFinansiranja,email,adresa,this.kartica.ucenik.ukupnoECTSBodova,
-      this.kartica.ucenik.prosecnaOcena,null,null);
+      this.kartica.ucenik.prosecnaOcena,null,null,null);
 
-      var kartica = new FinansijskaKartica(this.kartica.id,this.kartica.brojKartice,this.kartica.suma,
+      var kartica = new FinansijskaKartica(this.kartica.id,this.kartica.brojKartice,suma,
         uc,ziroRacun,pozivNaBroj,brojModela);
 
         this._ucenikService.updateUcenik(kartica)
         .subscribe(
           response => {
-            alert('Izmena uspesna! ');
             this.getByIdAndSetValues(this.addEditParam);
+            alert('Izmena uspesna! ');
           },
           error => {
             alert('Doslo je do greske!');
@@ -205,6 +204,9 @@ export class UceniciDetailComponent implements OnInit {
     
   }
 
+  get suma() {
+    return this.addEditForm.get('suma');
+  }
   get ime() {
     return this.addEditForm.get('ime');
   }
@@ -231,6 +233,9 @@ export class UceniciDetailComponent implements OnInit {
   }
   get email() {
     return this.addEditForm.get('email');
+  }
+  get trenutniSmer() {
+    return this.addEditForm.get('trenutniSmer');
   }
   get ziroRacun() {
     return this.addEditForm.get('ziroRacun');

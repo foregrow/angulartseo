@@ -4,6 +4,7 @@ import { Korisnik } from './korisnik';
 import { Dokument } from './dokument';
 import { Predmet } from './predmet';
 import { Ispit } from './ispit';
+import { SpisakUplata } from './spisakUplata';
 
 export class Ucenik{
     
@@ -30,6 +31,7 @@ export class Ucenik{
     prosecnaOcena: number;
     redniBrojUpisa: string;
     kolokvijumi: any = [];
+    uplate: SpisakUplata[] = [];
     
     constructor(id: number,ime:string,prezime:string,
         index:string,godinaUpisa:number,godinaStudija:number,
@@ -37,7 +39,7 @@ export class Ucenik{
         dokumenti:Dokument[],predmeti:Predmet[],ispiti:Ispit[],
         drzavaRodjenja: string,mestoRodjenja: string,datumRodjenja: any,pol: string,
         nacinFinansiranja: string,email: string,adresa: string,ukupnoECTSBodova: number,prosecnaOcena: number,
-        redniBrojUpisa:string,kolokvijumi:any[]){
+        redniBrojUpisa:string,kolokvijumi:any[],uplate:SpisakUplata[]){
         this.id = id;
         this.ime = ime;
         this.prezime = prezime;
@@ -61,6 +63,7 @@ export class Ucenik{
         this.prosecnaOcena = prosecnaOcena;
         this.redniBrojUpisa = redniBrojUpisa;
         this.kolokvijumi =kolokvijumi;
+        this.uplate = uplate;
     }
     
 }

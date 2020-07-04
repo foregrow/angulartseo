@@ -64,7 +64,14 @@
         <a class="nav-link" style="cursor:pointer" routerLink="/prijava-ispita" routerLinkActive="active">
           <i class="fa fa-book" aria-hidden="true"></i> Prijava ispita</a>        
       </ul> 
-      
+      <ul class="navbar-nav">
+        <a class="nav-link" style="cursor:pointer" routerLink="/istorija-polaganja" routerLinkActive="active">
+          <i class="fa fa-history" aria-hidden="true"></i> Istorija polaganja</a>        
+      </ul> 
+      <ul class="navbar-nav">
+        <a class="nav-link" style="cursor:pointer" routerLink="/spisak-uplata" routerLinkActive="active">
+          <i class="fa fa-credit-card-alt" aria-hidden="true"></i> Uplate</a>        
+      </ul> 
       <ul class="navbar-nav">
           <a class="nav-link" style="cursor:pointer" (click)="korisnikService.logout()">
           <i class="fa fa-sign-out ml-5" aria-hidden="true"></i> Logout</a>          
@@ -76,6 +83,11 @@
       <ul class="navbar-nav ml-auto">
         <a class="nav-link" style="cursor:pointer" routerLink="/nastavnik" routerLinkActive="active">
           <i class="fa fa-home" aria-hidden="true"></i> Pocetna</a>        
+      </ul> 
+      
+      <ul *ngIf="korisnikService.getRole() === 'ROLE_NASTAVNIK'" class="navbar-nav">
+        <a class="nav-link" style="cursor:pointer" routerLink="/ispit-upis" routerLinkActive="active">
+          <i class="fa fa-pencil-square" aria-hidden="true"></i> Ispit ocene</a>        
       </ul> 
       <ul *ngIf="korisnikService.getRole() === 'ROLE_ASISTENT'" class="navbar-nav">
         <a class="nav-link" style="cursor:pointer" routerLink="/kolokvijum-upis" routerLinkActive="active">

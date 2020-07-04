@@ -12,6 +12,7 @@ export class UcenikService {
   private _urlGetAll: string = "http://localhost:8080/api/ucenici";
   private _urlGetUceniciWithoutAccount: string = "http://localhost:8080/api/ucenici/notInKorisnik";
   private _urlGetByKorisnickoIme = 'http://localhost:8080/api/korisnici/korIme';
+  private _urlSpisakUplata: string = "http://localhost:8080/api/ucenici/spisakUplata";
 
   constructor(private http: HttpClient) { }
 
@@ -24,6 +25,9 @@ export class UcenikService {
   }
   getByKorisnickoIme(korisnickoIme){
     return this.http.get(`${this._urlGetByKorisnickoIme}/${korisnickoIme}`);
+  }
+  getSpisakUplata(uid){
+    return this.http.get(`${this._urlSpisakUplata}/${+uid}`);
   }
   //finansijska kartica sadrzi ucenika
   addUcenik(fkdto:FinansijskaKartica){

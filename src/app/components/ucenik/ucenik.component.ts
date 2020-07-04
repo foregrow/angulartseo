@@ -52,5 +52,8 @@ export class UcenikComponent implements OnInit {
   prijavaIspita(){
     this._router.navigate(['prijava-ispita'])
   }
+  istorijaPolaganja(){
+    this._router.navigate(['istorija-polaganja'])
+  }
 
 }

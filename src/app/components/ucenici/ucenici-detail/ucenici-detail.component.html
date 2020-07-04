@@ -57,12 +57,16 @@
         <small [class.d-none]="email.valid || email.untouched" class="text-danger">Email je obavezan i mora biti u ispravnom formatu!</small>
         <!-- <small *ngIf="emailExists" class="text-danger">Uneti email je zauzet!</small> -->
       </div>
+      <div *ngIf="this.addEditParam !== 'add'" class="form-group">
+        <label>Trenutni smer ucenika</label>
+        <input formControlName="trenutniSmer" type="text" class="form-control">    
+    </div>
     <div class="form-group">
         <label class="control-label">Smer</label>
         <select class="form-control" formControlName="smer" (change)="chosenSmer()">
             <option [ngValue]="null" disabled>Izaberite smer</option>
             <option *ngFor="let sm of smerArray" [ngValue]="sm">
-            {{ sm }}
+                {{sm.naziv}}, {{sm.oznakaSmera}}
             </option>
         </select> 
     </div>
@@ -90,8 +94,14 @@
         <input formControlName="brojModela" type="text" class="form-control">
         <small [class.d-none]="brojModela.valid || brojModela.untouched" class="text-danger">Broj modela upisa je obavezan!</small> 
     </div>
+    <div *ngIf="this.addEditParam !== 'add'" class="form-group">
+        <label>Suma</label>
+        <input formControlName="suma" type="text" class="form-control">
+        
+    </div>
         <button *ngIf="this.addEditParam === 'add'" class="btn btn-primary" (click)="submitUcenik('add')" [disabled]="addEditForm.invalid || !polChosen || !smerChosen || !finanChosen" type="submit">Dodaj</button>
         <button *ngIf="this.addEditParam !== 'add' && this.addEditParam !== undefined" (click)="submitUcenik('edit')" class="btn btn-primary" [disabled]="addEditForm.invalid || !smerChosen" type="submit">Izmeni</button>
+
 
     </form>
     <div class="container-fluid" *ngIf="kartica != undefined && kartica.ucenik != undefined">

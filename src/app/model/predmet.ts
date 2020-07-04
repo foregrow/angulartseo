@@ -15,10 +15,11 @@ export class Predmet {
     kolokvijumi: Kolokvijum[] = [];
     smer: Smer;
     profesor: Nastavnik;
+    uceniciPrijaviliIspit: Ucenik[] = [];
 
     constructor(id: number,naziv:string,ucenici:Ucenik[],
         nastavnici:Nastavnik[],ispiti:Ispit[],
-        kolokvijumi:Kolokvijum[],smer:Smer, brojECTSBodova:number,datumPolaganja:any,profesor:Nastavnik){
+        kolokvijumi:Kolokvijum[],smer:Smer, brojECTSBodova:number,datumPolaganja:any,profesor:Nastavnik, uceniciPrijaviliIspit: Ucenik[]){
         this.id = id;
         this.naziv = naziv;
         this.brojECTSBodova = brojECTSBodova;
@@ -29,5 +30,6 @@ export class Predmet {
         this.smer = smer;
         this.datumPolaganja = datumPolaganja;
         this.profesor = profesor;
+        this.uceniciPrijaviliIspit = uceniciPrijaviliIspit;
     }
 }

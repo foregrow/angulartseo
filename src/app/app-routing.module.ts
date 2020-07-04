@@ -33,7 +33,9 @@ import { PredmetiDetailComponent } from './components/predmeti/predmeti-detail/p
 import { IspitniRokoviComponent } from './components/ispitni-rokovi/ispitni-rokovi.component';
 import { IspitniRokoviDetailComponent } from './components/ispitni-rokovi/ispitni-rokovi-detail/ispitni-rokovi-detail.component';
 import { KolokvijumUpisComponent } from './components/kolokvijum-upis/kolokvijum-upis.component';
-
+import { IstorijaPolaganjaComponent } from './components/ispiti/istorija-polaganja/istorija-polaganja.component';
+import { SpisakUplataComponent } from './components/ucenici/spisak-uplata/spisak-uplata.component';
+import { IspitUpisComponent } from './components/ispiti/ispit-upis/ispit-upis.component';
 const routes: Routes = [
     {path: '', redirectTo: 'ucenik', pathMatch: 'full'},
     {path: 'login', component: LoginComponent},
@@ -115,6 +117,14 @@ const routes: Routes = [
       data: {
         roles: ['ROLE_ADMIN']
       }},
+      {path: 'ispit-upis', component: IspitUpisComponent, canActivate: [AuthGuard,RoleGuard],
+      data: {
+        roles: ['ROLE_NASTAVNIK']
+      }},
+      {path: 'istorija-polaganja', component: IstorijaPolaganjaComponent, canActivate: [AuthGuard,RoleGuard],
+      data: {
+        roles: ['ROLE_UCENIK']
+      }},
 
       {path: 'ispitniRokovi', component: IspitniRokoviComponent, canActivate: [AuthGuard,RoleGuard],
       data: {
@@ -126,6 +136,10 @@ const routes: Routes = [
       }},
 
     {path: 'profil-ucenik', component: ProfilUcenikComponent, canActivate: [AuthGuard,RoleGuard],
+    data: {
+        roles: ['ROLE_UCENIK']
+      }},
+      {path: 'spisak-uplata', component: SpisakUplataComponent, canActivate: [AuthGuard,RoleGuard],
     data: {
         roles: ['ROLE_UCENIK']
       }},
@@ -165,4 +179,4 @@ SmeroviComponent,PredmetiComponent,IspitiComponent,SmerDetailComponent,
 KorisniciDetailComponent,KorisniciAddComponent,
 ProfilUcenikComponent,FinansijskaKarticaComponent,PolozeniIspitiComponent,NepolozeniIspitiComponent,PrijavaIspitaComponent,
 UceniciDetailComponent,PredmetiDetailComponent,IspitniRokoviComponent,IspitniRokoviDetailComponent,
-KolokvijumUpisComponent]
+KolokvijumUpisComponent, IstorijaPolaganjaComponent,SpisakUplataComponent,IspitUpisComponent]

@@ -42,4 +42,7 @@ export class NastavnikComponent implements OnInit {
   detaljiNastavnika(){
     this.router.navigate(['nastavnici-detail',this.id])
   }
+  upisOcena(){
+    this.router.navigate(['ispit-upis'])
+  }
 }

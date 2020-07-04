@@ -6,6 +6,10 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { PredmetService } from 'src/app/services/predmet.service';
 import { Nastavnik } from 'src/app/model/nastavnik';
 import { PageNotFoundComponent } from '../../page-not-found/page-not-found.component';
+import { SmerService } from 'src/app/services/smer.service';
+import { Smer } from 'src/app/model/smer';
+import { Predmet } from 'src/app/model/predmet';
+import { Ispit } from 'src/app/model/ispit';
 
 @Component({
   selector: 'app-nastavnici-detail',
@@ -18,16 +22,23 @@ export class NastavniciDetailComponent implements OnInit {
   ulogovanUloga;
   nastavnik;
   editForm: FormGroup;
+  addPredmetForm: FormGroup;
   ulogeArray = ['PROFESOR','ASISTENT','DEMONSTRATOR'];
   isSefSmera = false;
   hasKorAcc = false;
   emailExists = false;
   nastavniciEmailovi: string[] = [];
-  predmetiNastavnikNePredajeStr: string[]=[];
-  addedPredmeti: string[] = [];
-  predmetAddIsValid = true;
+  
+  smeroviArray = [];
+  predmetiArray = [];
+  predmetiNastavniciPredaju = [];
+  predmetiNastavnikPredaje = [];
+  dodatiPredmetiArray = [];
+  smerSelected = false;
+  predmetSelected = false;
   constructor(private _route: ActivatedRoute,
     public korisnikService:KorisnikService,
+    public _smerService:SmerService,
     private router: Router,
     private _nastavnikService: NastavnikService, private fb: FormBuilder, private _predmetService: PredmetService
     ) { }
@@ -35,7 +46,7 @@ export class NastavniciDetailComponent implements OnInit {
   ngOnInit(): void {
     this.id = this._route.snapshot.paramMap.get('id');
     if(this.korisnikService.getRole() ==="ROLE_ADMIN"){
-      this.ulogovanUloga = "ROLE_ADMIN"
+      this.ulogovanUloga = "ROLE_ADMIN";
     }
     if(this.id !== 'add'){
       if(this.korisnikService.getRole() === 'ROLE_NASTAVNIK'){
@@ -54,17 +65,32 @@ export class NastavniciDetailComponent implements OnInit {
       email: ['',[Validators.required,Validators.email]],
       uloga: [this.fb.array(this.ulogeArray)],
       korisnik: [{value: '', disabled: true}],
-      smer: [{value: '', disabled: true}],
-      predmeti: [''],
-      dodatiPredmeti:[{value: '', disabled: true}]
+      smer: [{value: '', disabled: true}]
     });
 
     if(this.ulogovanUloga !== "ROLE_ADMIN"){
-      this.editForm.get('ime').disable();
-      this.editForm.get('prezime').disable();
-      this.editForm.get('email').disable();
       this.editForm.get('uloga').disable();
-    } 
+    }else if(this.ulogovanUloga === "ROLE_ADMIN"){
+      this.addPredmetForm = this.fb.group({
+        smerovi: [[null,this.fb.array(this.smeroviArray)]],
+        predmeti: [[null,this.fb.array(this.predmetiArray)]],
+        dodatiPredmeti:[{value: '', disabled: true}]
+      });
+
+      this.smerovi.valueChanges.subscribe(
+        data=>{
+          //na biranje smera setujemo predmete tog smera u drugi combobox
+          var smer: Smer = this.smerovi.value;
+          this.smerSelected = true;
+          this.predmetiArray = smer.predmeti;
+          if(this.predmetiArray.length > 0){
+            this.predmetSelected = true;
+            this.predmeti.setValue(this.predmetiArray[0])
+          }else{
+            this.predmetSelected = false;
+          }
+        });
+    }
 
     
     this.getByIdAndSetValues(this.id);
@@ -74,7 +100,12 @@ export class NastavniciDetailComponent implements OnInit {
         this.existingEmail();
       }
     )
-    this.getPredmetiNastavnikNePredaje();
+    this.getPredmetiNastavniciPredaju();
+    this.getPredmetiNastavnikPredaje(this.id);
+    this.getSmerovi();
+
+    
+
   }
 
   getByIdAndSetValues(id){
@@ -82,7 +113,6 @@ export class NastavniciDetailComponent implements OnInit {
        data => {
          this.nastavnik = data;
          var position;
-         //console.log(this.nastavnik.predaje);
          if(this.nastavnik.uloga === 'PROFESOR'){
           position = 0;
          }else if(this.nastavnik.uloga === 'ASISTENT'){
@@ -112,56 +142,88 @@ export class NastavniciDetailComponent implements OnInit {
        });
        
    }
+   getSmerovi(){
+    this._smerService.getSmerovi().subscribe(
+      data => {
+        var smerovi = data
+        for (var i = 0; i < smerovi.length; i++) {
+          this.smeroviArray.push(smerovi[i]); 
+        }
+      }
+    );
+  }
 
-   getPredmetiNastavnikNePredaje(){
-     this._predmetService.getPredmetiNastavnikNePredaje(this.id).subscribe(
+  counter = 0;
+  addPredmet(){
+    var predmet : Predmet = this.predmeti.value;
+    if (this.dodatiPredmetiArray.filter(p => p.id === predmet.id).length > 0) {
+      alert('Izabrani predmet ste vec dodali!!')
+    }else {
+      if(this.predmetiNastavniciPredaju.find(o => o.id === predmet.id) && this.nastavnik.uloga === 'PROFESOR'){
+        alert('Izabrani predmet vec ima profesora! ');
+      }else if(this.predmetiNastavnikPredaje.find(o => o.id === predmet.id)){
+        alert('Ovaj predmet vec predaje izabrani asistent! ');
+      }else{
+        var prikazPredmeta;
+        this.dodatiPredmetiArray.push(predmet);
+        if(this.counter === 0)
+          prikazPredmeta = `${predmet.naziv} `;
+        else
+          prikazPredmeta = `${this.dodatiPredmeti.value} ${predmet.naziv}`;
+        this.dodatiPredmeti.setValue(prikazPredmeta);
+        this.counter++;
+      }
+      
+    }
+   }
+   removePredmet(){
+    this.dodatiPredmetiArray = [];
+    this.dodatiPredmeti.setValue('');
+    this.counter = 0;
+   }
+
+   submitPredmete(){
+    if(this.dodatiPredmetiArray.length > 0){
+      
+      
+      var nastavnik: Nastavnik = new Nastavnik(+this.id,null,null,null,null,null,null,this.dodatiPredmetiArray);
+      this._nastavnikService.addPredmeteNastavniku(nastavnik).subscribe(
+        data =>{
+          this.dodatiPredmeti.setValue('');
+          this.dodatiPredmetiArray = [];
+          alert('Uspesno ste dodali predmete!');
+          this.getByIdAndSetValues(this.id);
+        },error =>{
+          console.log(error);
+        }
+      );
+    }else{
+      alert('Niste izabrali nijedan predmet!');
+    }
+   }
+
+   getPredmetiNastavniciPredaju(){
+     this._predmetService.getPredmetiNastavniciPredaju().subscribe(
       data=>{
         var predmeti = data;
         for(var i =0;i<predmeti.length;i++){
-          this.predmetiNastavnikNePredajeStr.push(predmeti[i].naziv);
+          this.predmetiNastavniciPredaju.push(predmeti[i]);
         }
       }
      );
    }
-   counter = 0;
-   dodatiPredmetiStr;
-   izbrisaniItemi: string[]=[];
-   addPredmet(){
-     this.predmetAddIsValid = false;
-     var addedPredmetZaBrisanje: number = -1;
-     for(var i=0;i<this.predmetiNastavnikNePredajeStr.length;i++){
-       if(this.predmetiNastavnikNePredajeStr[i].toLowerCase() === this.predmeti.value.trim().toLowerCase()){
-        addedPredmetZaBrisanje = i;
-        this.addedPredmeti.push(this.predmetiNastavnikNePredajeStr[i]);
-        this.predmetAddIsValid = true;
-        this.predmeti.setValue('');
-        if(this.counter === 0){
-          this.dodatiPredmetiStr = this.predmetiNastavnikNePredajeStr[i];
-        }else{
-          this.dodatiPredmetiStr = this.dodatiPredmetiStr + ' ' + this.predmetiNastavnikNePredajeStr[i];
-        }
-        this.dodatiPredmeti.setValue(this.dodatiPredmetiStr);
-        this.counter++;
-        this.getByIdAndSetValues(this.id);
-        break;
+   getPredmetiNastavnikPredaje(id){
+    this._predmetService.getPredmetiNastavnikPredaje(id).subscribe(
+     data=>{
+       var predmeti = data;
+       for(var i =0;i<predmeti.length;i++){
+         this.predmetiNastavnikPredaje.push(predmeti[i]);
        }
      }
-     if(addedPredmetZaBrisanje != -1){
-       //brise se ajtem iz liste
-       //selectedCategory = this.predmetiNastavnikNePredajeStr.find(item => item. === addedPredmetZaBrisanje);
-       this.izbrisaniItemi.push(this.predmetiNastavnikNePredajeStr[addedPredmetZaBrisanje]);
-       this.predmetiNastavnikNePredajeStr.splice(addedPredmetZaBrisanje,1);
-       
-     }
-   }
-   removePredmet(){
-    this.dodatiPredmeti.setValue('');
-    //puni se lista ponovo
-    this.predmetiNastavnikNePredajeStr = this.predmetiNastavnikNePredajeStr.concat(this.izbrisaniItemi);  
-    this.counter = 0;
-    this.izbrisaniItemi = [];
-    this.addedPredmeti = [];
-   }
+    );
+  }
+   
+   
    getAllEmailovi(){
     this._nastavnikService.getNastavnici()
       .subscribe(
@@ -185,7 +247,6 @@ export class NastavniciDetailComponent implements OnInit {
       this.emailExists = true;
     else
     this.emailExists = false;
-    
   }
 
    editNastavnik(){
@@ -194,23 +255,14 @@ export class NastavniciDetailComponent implements OnInit {
     var prezime = this.prezime.value;
     var email = this.email.value;
     var uloga = this.uloga.value;
-    var predmeti: string;
-    if(this.addedPredmeti.length<=0){
-      predmeti = 'null';
-    }else if(this.addedPredmeti.length === 1){
-      predmeti = this.addedPredmeti.join(',');
-      predmeti = `${predmeti},`
-    }
-    else{ 
-      predmeti = this.addedPredmeti.join(',');
-    }
     var nastavnik: Nastavnik = new Nastavnik(numbId,ime,prezime,email,uloga,null,null,null);
-      this._nastavnikService.updateNastavnik(nastavnik,predmeti)
+      this._nastavnikService.updateNastavnik(nastavnik)
       .subscribe(
         data =>{
           this.nastavnik = data;
-          this.dodatiPredmeti.setValue(''); 
           this.getByIdAndSetValues(this.id);
+          alert('Uspesna izmena podataka! ');
+         
         }
       );
    }
@@ -230,14 +282,20 @@ export class NastavniciDetailComponent implements OnInit {
   get korisnik() {
     return this.editForm.get('korisnik');
   }
-  get smer() {
-    return this.editForm.get('smer');
+
+  get smerovi() {
+    if(this.korisnikService.getRole() === 'ROLE_ADMIN')
+      return this.addPredmetForm.get('smerovi')  as FormArray;
+    
+    
   }
   get predmeti() {
-    return this.editForm.get('predmeti');
+    if(this.korisnikService.getRole() === 'ROLE_ADMIN')
+      return this.addPredmetForm.get('predmeti')  as FormArray;
   }
   get dodatiPredmeti() {
-    return this.editForm.get('dodatiPredmeti');
+    if(this.korisnikService.getRole() === 'ROLE_ADMIN') 
+      return this.addPredmetForm.get('dodatiPredmeti');
   }
 
 }

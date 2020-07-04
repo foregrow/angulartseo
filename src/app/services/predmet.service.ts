@@ -9,6 +9,8 @@ export class PredmetService {
 
   private _urlGetAll: string = "http://localhost:8080/api/predmeti";
   private _urlGetAllNastavnikNePredaje: string = "http://localhost:8080/api/predmeti/nastavnikNePredaje";
+  private _urlGetAllNastavnikPredaje: string = "http://localhost:8080/api/predmeti/nastavnikPredaje";
+  private _urlGetAllNastavniciPredaju: string = "http://localhost:8080/api/predmeti/nastavniciPredaju";
   private _urlGetNepolozeniPredmeti: string = "http://localhost:8080/api/predmeti/nepolozeniPredmeti";
   private _urlGetPredmetiZaPrijavu: string = "http://localhost:8080/api/predmeti/predmetiZaPrijavu";
   private _urlGetPrijavljeniPredmetiZaIspit: string = "http://localhost:8080/api/predmeti/prijavljeniPredmetiZaIspit";
@@ -27,6 +29,12 @@ export class PredmetService {
   }*/
   getPredmetiNastavnikNePredaje(id) : Observable<Predmet[]>{
     return this.http.get<Predmet[]>(`${this._urlGetAllNastavnikNePredaje}/${+id}`);
+  }
+  getPredmetiNastavnikPredaje(nid) : Observable<Predmet[]>{
+    return this.http.get<Predmet[]>(`${this._urlGetAllNastavnikPredaje}/${+nid}`);
+  }
+  getPredmetiNastavniciPredaju() : Observable<Predmet[]>{
+    return this.http.get<Predmet[]>(this._urlGetAllNastavniciPredaju);
   }
   getNepolozeniPredmeti(smerId,ucenikId) : Observable<Predmet[]>{
     return this.http.get<Predmet[]>(`${this._urlGetNepolozeniPredmeti}/${+smerId}/${+ucenikId}`);

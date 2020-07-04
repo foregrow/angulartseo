@@ -12,12 +12,17 @@ export class IspitService {
   private _urlOdjavaIspita: string = "http://localhost:8080/api/ispiti/odjavaIspita";
   private _urlAddDatumPolaganja: string = "http://localhost:8080/api/ispiti/addDatumPolaganja";
   private _urlGetAllUIspitnomRoku: string = "http://localhost:8080/api/ispiti/uIspitnomRoku";
-  ////uIspitnomRoku
+  private _urlIstorijaPolaganja: string = "http://localhost:8080/api/ispiti/istorijaPolaganja";
+  private _urlGetUceniciPrijaviliIspit: string = "http://localhost:8080/api/ispiti/uceniciPrijaviliIspit";
+  //////uceniciPrijaviliIspit/{irid}/{nid}
 
   constructor(private _http: HttpClient) { }
 
   getIspiti() : Observable<Ispit[]>{
     return this._http.get<Ispit[]>(this._urlGetAll);
+  }
+  getIstorijaPolaganja(uid) : Observable<Ispit[]>{
+    return this._http.get<Ispit[]>(`${this._urlIstorijaPolaganja}/${+uid}`);
   }
   getAllUIspitnomRoku(irid) : Observable<Ispit[]>{
     return this._http.get<Ispit[]>(`${this._urlGetAllUIspitnomRoku}/${+irid}`);
@@ -32,5 +37,8 @@ export class IspitService {
   }
   addDatumPolaganjaPredmetima(ispitData: Ispit){
     return this._http.put<any>(this._urlAddDatumPolaganja,ispitData);
+  }
+  getUceniciPrijaviliIspit(irid,nid){
+    return this._http.get<Ispit[]>(`${this._urlGetUceniciPrijaviliIspit}/${+irid}/${+nid}`);
   }
 }
