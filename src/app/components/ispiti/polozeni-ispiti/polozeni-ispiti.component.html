@@ -8,6 +8,7 @@
             <th>Profesor</th>
             <th>Datum polaganja</th>
             <th>Ocena</th>
+            <th>Broj ECTS Bodova</th>
           </tr>
         </thead>
         <tbody *ngFor="let ispit of polozeniIspiti; index as i">
@@ -17,8 +18,11 @@
               <ng-template #elseBlock>
                 <td>/</td>
               </ng-template>
-            <td>{{ispit.datumPolaganja}}</td><td>{{ispit.ocena}}</td>
+            <td>{{ispit.datumPolaganja}}</td><td>{{ispit.ocena}}</td><td>{{ispit.predmet.brojECTSBodova}}</td>
           </tr>
         </tbody>
+        <tfoot>
+          <tr *ngIf="ucenik !== undefined"><td></td><td></td><td></td><td></td><td>Ukupno ECTS Bodova:</td><td>{{ucenik.ukupnoECTSBodova}}</td></tr>
+        </tfoot>
       </table>
 </div>

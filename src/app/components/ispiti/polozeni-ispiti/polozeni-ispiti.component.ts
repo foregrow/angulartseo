@@ -12,6 +12,7 @@ import { KorisnikService } from 'src/app/services/korisnik.service';
 export class PolozeniIspitiComponent implements OnInit {
 
   idUcenika;
+  ucenik;
   polozeniIspiti = [];
   kor;
   constructor(private _ispitService: IspitService,
@@ -28,6 +29,7 @@ export class PolozeniIspitiComponent implements OnInit {
     .subscribe(data => {
       this.kor = data;
       this.idUcenika = this.kor.ucenik.id;
+      this.ucenik = this.kor.ucenik;
     });
 
     this._ispitService.getIspiti()
