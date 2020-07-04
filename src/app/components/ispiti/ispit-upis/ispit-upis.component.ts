@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { IspitService } from 'src/app/services/ispit.service';
 import { IspitniRokService } from 'src/app/services/ispitni-rok.service';
 import { KorisnikService } from 'src/app/services/korisnik.service';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { Predmet } from 'src/app/model/predmet';
+import { Ispit } from 'src/app/model/ispit';
 
 @Component({
   selector: 'app-ispit-upis',
@@ -10,14 +13,37 @@ import { KorisnikService } from 'src/app/services/korisnik.service';
 })
 export class IspitUpisComponent implements OnInit {
 
-  predmeti;
   irok;
+  addForm: FormGroup;
+  predmetiArray = [];
+  uceniciArray = [];
+  predmetSelected = false;
+  ucenikSelected = false;
   constructor(private _ispitService: IspitService,
+    private fb: FormBuilder,
     private _irokService: IspitniRokService,
     private _korService: KorisnikService) { }
 
   ngOnInit(): void {
     this.getUlogovanNastavnik();
+    this.addForm = this.fb.group({
+      predmeti: [[null,this.fb.array(this.predmetiArray)]],
+      ucenici: [[null,this.fb.array(this.uceniciArray)]],
+      brojBodova: ['',[Validators.required,Validators.pattern("^[0-9]\*")]]
+    }); 
+
+    this.predmeti.valueChanges.subscribe(
+      data=>{
+        var predmet: Predmet = this.predmeti.value;
+        this.predmetSelected = true;
+        this.uceniciArray = predmet.uceniciPrijaviliIspit;
+        if(this.uceniciArray.length > 0){
+          this.ucenikSelected = true;
+          this.ucenici.setValue(this.uceniciArray[0])
+        }else{
+          this.ucenikSelected = false;
+        }
+      });
   }
   getUlogovanNastavnik(){
     this._korService.getByKorisnickoIme(this._korService.getLoggedInUserKorIme()).subscribe(
@@ -39,10 +65,42 @@ export class IspitUpisComponent implements OnInit {
   getUceniciPrijaviliIspit(irid,nid){
     this._ispitService.getUceniciPrijaviliIspit(irid,nid).subscribe(
       data =>{
-        this.predmeti = data;
-        console.log(this.predmeti);
+        this.predmetiArray = data;
       }
     )
+  }
+
+
+  submit(){
+    var predmet = this.predmeti.value;
+    var datumPolaganja = new Date(predmet.datumPolaganja).getTime();
+    const diff = datumPolaganja -  new Date().getTime();
+    const diffHours = Math.ceil(diff / (1000 * 60 * 60)); 
+    console.log(diffHours);
+    if(diffHours >= 0){
+      alert('Morate sacekati da se prodje datum i vreme ispita! ');
+    }else{
+      var ucenik = this.ucenici.value;
+      var bodovi = this.brojBodova.value;
+      var rok = this.irok;
+      var ispit= new Ispit(null,null,null,bodovi,null,null,null,predmet,ucenik,rok,null,null,null,null,null);
+      this._ispitService.proslediOcenu(ispit).subscribe(
+        data =>{
+          this.getUlogovanNastavnik();
+          alert('Uspesno prosledjivanje ocene! ');
+        }
+      )
+    }
+  }
+
+  get ucenici() {
+    return this.addForm.get('ucenici') as FormArray;
+  }
+  get predmeti() {
+    return this.addForm.get('predmeti') as FormArray;
+  }
+  get brojBodova() {
+    return this.addForm.get('brojBodova');
   }
 
 }

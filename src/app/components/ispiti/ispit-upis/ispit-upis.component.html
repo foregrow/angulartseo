@@ -1,1 +1,56 @@
-<p>ispit-upis works!</p>
+a<div class="container-fluid">
+    <div >
+        <h1 class="mt-5 mb-3">Prosledjivanje rezultata ispita</h1>
+        <form class="w-50" [formGroup]="addForm">
+            <div class="form-group">
+                <label class="control-label">Predmet</label>
+                <select class="form-control" formControlName="predmeti" >
+                    <option [value]="null" disabled>Izaberite predmet</option>
+                    <option *ngFor="let pred of predmetiArray" [ngValue]="pred">
+                        {{pred.naziv}}, Smer:{{pred.smer.oznakaSmera}}
+                    </option>
+                  </select> 
+            </div>
+            <div class="form-group">
+                <label class="control-label">Ucenik</label>
+                <select class="form-control" formControlName="ucenici" >
+                    <option [value]="null" disabled>Izaberite ucenika</option>
+                    <option *ngFor="let ucenik of uceniciArray" [ngValue]="ucenik">
+                        {{ucenik.ime}} {{ucenik.prezime}},{{ucenik.index}}
+                    </option>
+                  </select> 
+            </div>
+            <div class="form-group">
+                <label class="control-label">Broj osvojenih bodova na ispitu</label>
+                <input formControlName="brojBodova" type="text" class="form-control">
+                <small [class.d-none]="brojBodova.valid || brojBodova.untouched" class="text-danger">Molimo vas unesite BROJ osvojenih bodova!</small> 
+            </div>
+            <button (click)="submit()" class="btn btn-primary" [disabled]="addForm.invalid || !ucenikSelected || !predmetSelected" type="submit">Posalji</button>
+        </form>
+    </div>
+
+    <!--<div class="w-50">
+        <h2 class="mt-5">Rezultati svih kolokvijuma</h2>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Ucenik</th>
+        <th>Broj indexa</th>
+        <th>Predmet</th>
+        <th>Broj kolokvijuma</th>
+        <th>Datum polaganja</th>
+        <th>Bodovi</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let klk of rezultatiSvihKlk; index as i">
+      <tr>
+        <td>{{i+1}}</td><td>{{klk.ucenik.ime}} {{klk.ucenik.prezime}}</td><td>{{klk.ucenik.index}}</td><td>{{klk.predmet.naziv}}</td>
+        <td>{{klk.naziv}}</td><td>{{klk.datumPolaganja}}</td><td>{{klk.bodovi}}</td>
+      </tr>
+    </tbody>
+  </table>
+    </div>-->
+    
+</div>  
+

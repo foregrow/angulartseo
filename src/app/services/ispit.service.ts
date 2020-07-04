@@ -14,6 +14,7 @@ export class IspitService {
   private _urlGetAllUIspitnomRoku: string = "http://localhost:8080/api/ispiti/uIspitnomRoku";
   private _urlIstorijaPolaganja: string = "http://localhost:8080/api/ispiti/istorijaPolaganja";
   private _urlGetUceniciPrijaviliIspit: string = "http://localhost:8080/api/ispiti/uceniciPrijaviliIspit";
+  private _urlProslediOcenu: string = "http://localhost:8080/api/ispiti/posledjivanjeOcene"
   //////uceniciPrijaviliIspit/{irid}/{nid}
 
   constructor(private _http: HttpClient) { }
@@ -27,7 +28,9 @@ export class IspitService {
   getAllUIspitnomRoku(irid) : Observable<Ispit[]>{
     return this._http.get<Ispit[]>(`${this._urlGetAllUIspitnomRoku}/${+irid}`);
   }
-
+  proslediOcenu(ispit: Ispit){
+    return this._http.put<any>(this._urlProslediOcenu,ispit);
+  }
   addIspit(ispitData:Ispit,ispitniRokId, ucenikId,suma){
     return this._http.post<any>(`${this._urlGetAll}/${+ispitniRokId}/${+ucenikId}/${+suma}`,ispitData);
   }
