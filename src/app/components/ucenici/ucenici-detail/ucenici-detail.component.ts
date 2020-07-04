@@ -140,7 +140,6 @@ export class UceniciDetailComponent implements OnInit {
 
 
   submitUcenik(addOrEdit){
-    console.log(addOrEdit);
     var ime = this.ime.value;
     var prezime = this.prezime.value;
     var godinaUpisa = this.godinaUpisa.value;
@@ -169,7 +168,6 @@ export class UceniciDetailComponent implements OnInit {
       null,null,null,null,null,drzavaRodjenja,mestoRodjenja,datumRodjenja,pol,nacinFinansiranja,email,adresa,null,null,null,null,null);
   
       var fk = new FinansijskaKartica(null,null,null,uc,ziroRacun,pozivNaBroj,brojModela);
-      console.log(fk);
       this._ucenikService.addUcenik(fk)
         .subscribe(
           response => {
@@ -181,7 +179,6 @@ export class UceniciDetailComponent implements OnInit {
   
         );
     }else if(addOrEdit==='edit'){
-      console.log('uslo u edit');
       var uc = new Ucenik(this.kartica.ucenik.id,ime,prezime,this.kartica.ucenik.index,godinaUpisa,godinaStudija,new Smer(null,null,null,null,smer.oznakaSmera,null,null),
       null,null,null,null,null,drzavaRodjenja,mestoRodjenja,datumRodjenja,pol,nacinFinansiranja,email,adresa,this.kartica.ucenik.ukupnoECTSBodova,
       this.kartica.ucenik.prosecnaOcena,null,null,null);

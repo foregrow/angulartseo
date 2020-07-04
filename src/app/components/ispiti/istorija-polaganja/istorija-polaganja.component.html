@@ -9,6 +9,7 @@
             <th>Datum polaganja</th>
             <th>Bodovi</th>
             <th>Ocena</th>
+            <th>Ispitni rok</th>
           </tr>
         </thead>
         <tbody *ngFor="let ispit of istorijaPolaganja; index as i">
@@ -18,7 +19,7 @@
               <ng-template #elseBlock>
                 <td>/</td>
               </ng-template>
-            <td>{{ispit.datumPolaganja}}</td><td>{{ispit.bodoviTeorija + ispit.bodoviVezbe}}</td><td>{{ispit.ocena}}</td>
+            <td>{{ispit.datumPolaganja}}</td><td>{{ispit.bodoviTeorija + ispit.bodoviVezbe}}</td><td>{{ispit.ocena}}</td><td>{{ispit.ispitniRok.nazivRoka}}</td>
           </tr>
         </tbody>
       </table>

@@ -12,9 +12,9 @@
           <tr>
             <td>{{i+1}}</td>
             <td>{{su.svrha}}</td>
-            <td *ngIf="su.dodato;else elseBlock">-{{su.suma}}</td>
+            <td *ngIf="su.dodato;else elseBlock">+{{su.suma}}</td>
               <ng-template #elseBlock>
-                <td>+{{su.suma}}</td>
+                <td>-{{su.suma}}</td>
               </ng-template>
           </tr>
         </tbody>
