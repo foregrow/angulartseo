@@ -204,6 +204,41 @@ export class IspitniRokoviDetailComponent implements OnInit {
     
   }
 
+  searchTerm;
+  searchTerm2;
+  searchTerm3;
+  field;
+  order;
+  counterSort = 0;
+  sort(param){
+    if(param === 'ucenik.ime'){
+      this.field = 'ucenik.ime'
+    }else if(param === 'smer.oznaka'){
+      this.field = 'smer.oznaka'
+    }else if(param === 'predmet.naziv'){
+      this.field = 'predmet.naziv'
+    }else if(param === 'datumPolaganja'){
+      this.field = 'datumPolaganja'
+    }else if(param === 'datumPrijave'){
+      this.field = 'datumPrijave'
+    }else if(param === 'status'){
+      this.field = 'status'
+    }else if(param === 'polozen'){
+      this.field = 'polozen'
+    }else if(param === 'ocena'){
+      this.field = 'ocena'
+    }
+    if(this.counterSort === 0){
+      //desc
+      this.order = 'asc';
+      this.counterSort = 1;
+    }else if(this.counterSort === 1){
+      //asc
+      this.order = 'desc';
+      this.counterSort = 0;
+    }
+  }
+
   get nazivRoka() {
     return this.addEditForm.get('nazivRoka');
   }

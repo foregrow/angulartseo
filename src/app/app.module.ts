@@ -32,6 +32,8 @@ import { PredmetSortByPipe } from './filters/pred-sort.pipe';
 import { PredmetFilterPipe } from './filters/pred-filter.pipe';
 import { IspitniRokFilterPipe } from './filters/irok-filter-pipe';
 import { IspitniRokSortPipe } from './filters/irok-sort-pipe';
+import { IspitFilterPipe } from './filters/ispit-filter.pipe';
+import { IspitSortByPipe } from './filters/ispit-sort-pipe';
 
 
 
@@ -46,7 +48,8 @@ import { IspitniRokSortPipe } from './filters/irok-sort-pipe';
     UcenikFilterPipe,UcenikSortByPipe,
     SmerSortByPipe,SmerFilterPipe,
     PredmetSortByPipe,PredmetFilterPipe,
-    IspitniRokFilterPipe,IspitniRokSortPipe
+    IspitniRokFilterPipe,IspitniRokSortPipe,
+    IspitFilterPipe,IspitSortByPipe
 
   ],
   imports: [
@@ -57,7 +60,8 @@ import { IspitniRokSortPipe } from './filters/irok-sort-pipe';
     BrowserAnimationsModule,
     FormsModule
   ],
-  providers: [IspitniRokFilterPipe,IspitniRokSortPipe,
+  providers: [IspitFilterPipe,IspitSortByPipe,
+    IspitniRokFilterPipe,IspitniRokSortPipe,
     PredmetSortByPipe,PredmetFilterPipe,
     SmerSortByPipe,SmerFilterPipe,
     UcenikFilterPipe,UcenikSortByPipe,

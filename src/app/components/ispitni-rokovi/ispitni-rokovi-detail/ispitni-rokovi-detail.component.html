@@ -67,17 +67,39 @@
     <thead>
       <tr>
         <th>#</th>
-        <th>Ucenik</th>
-        <th>Smer</th>
-        <th>Predmet</th>
-        <th>Datum polaganja</th>
-        <th>Datum prijave</th>
-        <th>Status</th>
-        <th>Polozen</th>
-        <th>Ocena</th>
+        <th (click)="sort('ucenik.ime')"><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i>
+          <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Ucenik</th>
+        <th (click)="sort('smer.oznakaSmera')"><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i>
+          <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Smer</th>
+        <th (click)="sort('predmet.naziv')"><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i>
+          <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Predmet</th>
+        <th (click)="sort('datumPolaganja')"><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i>
+          <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Datum polaganja</th>
+        <th (click)="sort('datumPrijave')"><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i>
+          <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Datum prijave</th>
+        <th (click)="sort('status')"><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i>
+          <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Status</th>
+        <th (click)="sort('polozen')"><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i>
+          <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Polozen</th>
+        <th (click)="sort('ocena')"><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i>
+          <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Ocena</th>
       </tr>
+      <tr class="form-group">
+        <th colspan="4">
+          <input type="text" placeholder="Pretraga po uceniku,smeru i predmetu" class="form-control"
+          [(ngModel)]="searchTerm">
+        </th>
+        <th colspan="2">
+          <input type="datetime-local" placeholder="Datum:" class="form-control"
+          [(ngModel)]="searchTerm2">
+        </th>
+        <th colspan="3">
+          <input type="text" placeholder="Pretraga po oceni" class="form-control"
+          [(ngModel)]="searchTerm3">
+        </th>
+        </tr>
     </thead>
-    <tbody *ngFor="let ispit of sviIspitiRoka; index as i">
+    <tbody *ngFor="let ispit of sviIspitiRoka|ispitSortBy:this.order:this.field | ispitFilter:searchTerm:searchTerm2:searchTerm3; index as i">
       <tr>
         <td>{{i+1}}</td><td>{{ispit.ucenik.ime}} {{ispit.ucenik.prezime}}</td><td>{{ispit.predmet.smer.oznakaSmera}}</td>
         <td>{{ispit.predmet.naziv}}</td><td>{{ispit.datumPolaganja}}</td><td>{{ispit.datumPrijave}}</td><td>{{ispit.status}}</td>
@@ -99,17 +121,39 @@
     <thead>
       <tr>
         <th>#</th>
-        <th>Ucenik</th>
-        <th>Smer</th>
-        <th>Predmet</th>
-        <th>Datum polaganja</th>
-        <th>Datum prijave</th>
-        <th>Status</th>
-        <th>Polozen</th>
-        <th>Ocena</th>
+        <th (click)="sort('ucenik.ime')"><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i>
+          <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Ucenik</th>
+        <th (click)="sort('smer.oznakaSmera')"><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i>
+          <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Smer</th>
+        <th (click)="sort('predmet.naziv')"><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i>
+          <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Predmet</th>
+        <th (click)="sort('datumPolaganja')"><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i>
+          <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Datum polaganja</th>
+        <th (click)="sort('datumPrijave')"><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i>
+          <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Datum prijave</th>
+        <th (click)="sort('status')"><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i>
+          <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Status</th>
+        <th (click)="sort('polozen')"><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i>
+          <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Polozen</th>
+        <th (click)="sort('ocena')"><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i>
+          <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Ocena</th>
       </tr>
+      <tr class="form-group">
+        <th colspan="4">
+          <input type="text" placeholder="Pretraga po uceniku,smeru i predmetu" class="form-control"
+          [(ngModel)]="searchTerm">
+        </th>
+        <th colspan="2">
+          <input type="datetime-local" placeholder="Datum:" class="form-control"
+          [(ngModel)]="searchTerm2">
+        </th>
+        <th colspan="3">
+          <input type="text" placeholder="Pretraga po oceni" class="form-control"
+          [(ngModel)]="searchTerm3">
+        </th>
+        </tr>
     </thead>
-    <tbody *ngFor="let ispit of sviIspitiRoka; index as i">
+    <tbody *ngFor="let ispit of sviIspitiRoka|ispitSortBy:this.order:this.field | ispitFilter:searchTerm:searchTerm2:searchTerm3; index as i">
       <tr>
         <td>{{i+1}}</td><td>{{ispit.ucenik.ime}} {{ispit.ucenik.prezime}}</td><td>{{ispit.predmet.smer.oznakaSmera}}</td>
         <td>{{ispit.predmet.naziv}}</td><td>{{ispit.datumPolaganja}}</td><td>{{ispit.datumPrijave}}</td><td>{{ispit.status}}</td>

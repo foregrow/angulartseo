@@ -33,8 +33,8 @@ export class AdminComponent implements OnInit {
   prikazPredmeta(){
     this._router.navigate(['/predmeti']);
   }
-  prikazIspita(){
-    this._router.navigate(['/ispiti']);
+  prikazRokova(){
+    this._router.navigate(['/ispitniRokovi']);
   }
 
 
