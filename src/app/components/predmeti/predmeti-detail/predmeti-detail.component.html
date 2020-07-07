@@ -38,6 +38,8 @@
                 <th>Oznaka smera</th>
                 <th>Broj ECTS bodova</th>
                 <th>Sef katedre</th>
+                <th *ngIf="this.korisnikService.getRole()==='ROLE_ADMIN'">Info</th>
+        
                 </tr>
             </thead>
             <tbody *ngFor="let smer of smeroviByNazivPredmetaArray; index as i">
@@ -45,6 +47,7 @@
                 <td>{{i+1}}</td><td>{{smer.naziv}}</td><td>{{smer.oznakaSmera}}</td><td>{{smer.brojECTSBodova}}</td>
                 <td *ngIf="smer.nastavnik !== null">{{smer.nastavnik.ime}} {{smer.nastavnik.prezime}}</td>
                 <td *ngIf="smer.nastavnik === null">/</td>
+                <td *ngIf="this.korisnikService.getRole()==='ROLE_ADMIN'" ><a class="btn btn-sm text-white btn-primary" (click)="detalji(smer)">Detalji</a></td>
                 </tr>
             </tbody>
             </table>

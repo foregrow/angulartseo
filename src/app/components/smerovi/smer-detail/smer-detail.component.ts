@@ -27,7 +27,7 @@ export class SmerDetailComponent implements OnInit {
   filteredPredmeti: Observable<string[]>;
   dodatiPredmeti = [];
   constructor(private fb: FormBuilder,
-    private _korisnikService: KorisnikService,
+    public korisnikService: KorisnikService,
     private _nastavnikService: NastavnikService,
     private _router: Router,
     private _smerService: SmerService,
@@ -50,54 +50,10 @@ export class SmerDetailComponent implements OnInit {
       this.getByIdAndSetValues(this.addOrId);
       this.addEditForm.controls['oznakaSmera'].disable();
       this.addEditForm.controls['sefKatedre'].disable();
-      /*this.filteredPredmeti = this.predmeti.valueChanges.pipe(
-        startWith(''),
-        map(value => this._filter(value))
-      );*/
+
     }
     
   }
-  /*private _filter(value: string): string[]{
-    const filterValue= value.toLowerCase();
-    
-    return this.sviPredmeti.filter
-    (pred => pred.naziv.toLowerCase().includes(filterValue));
-      
-  }*/
-
-  /*dodatiPredmetiString = "";
-  izbrisaniPredmeti: Predmet[] = [];
-  predmetPostoji = true;
-  addPredmet(){
-    this.predmetPostoji = false;
-    var dodatPredmet = this.predmeti.value.trim();
-    var dodatZaBrisanje: number = -1;
-    for(var i=0;i<this.sviPredmeti.length;i++){
-      if(this.sviPredmeti[i].naziv === dodatPredmet){
-        dodatZaBrisanje = i;
-        this.dodatiPredmeti.push(this.sviPredmeti[i]);
-        this.predmeti.setValue('');
-        this.dodatiPredmetiString = `${this.dodatiPredmetiString}${dodatPredmet} `
-        this.dodatiPred.setValue(this.dodatiPredmetiString);
-        this.predmetPostoji = true;
-        break;
-      }
-    }
-    if(dodatZaBrisanje != -1){
-      //brise se ajtem iz liste
-      this.izbrisaniPredmeti.push(this.sviPredmeti[dodatZaBrisanje]);
-      this.sviPredmeti.splice(dodatZaBrisanje,1);  
-    }
-    
-  }
-
-  removePredmet(){
-    this.dodatiPred.setValue('');
-    //puni se lista ponovo
-    this.sviPredmeti = this.sviPredmeti.concat(this.izbrisaniPredmeti);  
-    this.izbrisaniPredmeti = [];
-    this.dodatiPredmeti = [];
-  }*/
 
   getNastavniciWhereSefKatedreNull(){
     this._nastavnikService.getNastavniciWhereSefKatedreNull().subscribe(
@@ -117,10 +73,10 @@ export class SmerDetailComponent implements OnInit {
     );
   }
 
-  /*displayFn(obj){
-    //prikaz u autocomplete ce biti naziv predmeta a ne Object [object]
-    return obj ? obj.naziv : undefined;
-  }*/
+  detalji(obj){
+    this._router.navigate(['predmeti-detail',obj.id]);
+  }
+
 
   get naziv() {
     return this.addEditForm.get('naziv');

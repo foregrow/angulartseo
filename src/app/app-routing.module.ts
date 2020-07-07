@@ -36,6 +36,7 @@ import { KolokvijumUpisComponent } from './components/kolokvijum-upis/kolokvijum
 import { IstorijaPolaganjaComponent } from './components/ispiti/istorija-polaganja/istorija-polaganja.component';
 import { SpisakUplataComponent } from './components/ucenici/spisak-uplata/spisak-uplata.component';
 import { IspitUpisComponent } from './components/ispiti/ispit-upis/ispit-upis.component';
+import { NanGuardGuard } from './nan-guard.guard';
 const routes: Routes = [
     {path: '', redirectTo: 'ucenik', pathMatch: 'full'},
     {path: 'login', component: LoginComponent},
@@ -128,11 +129,11 @@ const routes: Routes = [
 
       {path: 'ispitniRokovi', component: IspitniRokoviComponent, canActivate: [AuthGuard,RoleGuard],
       data: {
-        roles: ['ROLE_ADMIN']
+        roles: ['ROLE_ADMIN','ROLE_NASTAVNIK','ROLE_ASISTENT','ROLE_DEMONSTRATOR']
       }},
       {path: 'ispitniRokovi-detail/:id', component: IspitniRokoviDetailComponent, canActivate: [AuthGuard,RoleGuard],
       data: {
-        roles: ['ROLE_ADMIN']
+        roles: ['ROLE_ADMIN','ROLE_NASTAVNIK','ROLE_ASISTENT','ROLE_DEMONSTRATOR']
       }},
 
     {path: 'profil-ucenik', component: ProfilUcenikComponent, canActivate: [AuthGuard,RoleGuard],

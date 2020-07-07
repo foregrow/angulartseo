@@ -7,6 +7,9 @@ import { UcenikService } from 'src/app/services/ucenik.service';
 import { SmerService } from 'src/app/services/smer.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FinansijskaKarticaService } from 'src/app/services/finansijska-kartica.service';
+import { KorisnikService } from 'src/app/services/korisnik.service';
+import { Dokument } from 'src/app/model/dokument';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-ucenici-detail',
@@ -24,14 +27,22 @@ export class UceniciDetailComponent implements OnInit {
   polChosen = false;
   finanChosen = false;
   smerChosen = false;
-  constructor(private fb: FormBuilder,private _ucenikService: UcenikService,
+  dokumentiArray = [];
+  uploadForm : FormGroup;
+  constructor(public korisnikService: KorisnikService,
+    private fb: FormBuilder,private _ucenikService: UcenikService,
     private _router: Router,private _smerService:SmerService,
-    private _route: ActivatedRoute, private _karticaService: FinansijskaKarticaService) { 
+    private _route: ActivatedRoute, private _karticaService: FinansijskaKarticaService,
+    private _http: HttpClient) { 
       
     }
 
     //[0-3][0-9]\/[0-1][0-9]\/[0-9]{4}
   ngOnInit(): void {
+    this.addEditParam = this._route.snapshot.paramMap.get('id');
+    if(isNaN(this.addEditParam) && this.addEditParam !== 'add'){
+      this._router.navigate(['not-found']);
+    }
     this.getAllSmerovi();
     this.addEditForm = this.fb.group({
       ime: ['',Validators.required],
@@ -53,7 +64,8 @@ export class UceniciDetailComponent implements OnInit {
       suma: ['',[Validators.pattern("^[0-9]\*")]]
     });
     
-    this.addEditParam = this._route.snapshot.paramMap.get('id');
+    
+    
     if(this.addEditParam !== 'add' && this.addEditParam !== undefined){
       //znaci da je edit..
       this.addEditForm.controls['godinaUpisa'].disable();
@@ -81,7 +93,7 @@ export class UceniciDetailComponent implements OnInit {
             positionFinan = 1;
           }
           
-          
+          this.dokumentiArray = this.kartica.ucenik.dokumenti;
          }
          
          this.addEditForm.patchValue({
@@ -103,10 +115,52 @@ export class UceniciDetailComponent implements OnInit {
           suma: this.kartica.suma
         });
 
-        
+        console.log(this.kartica.ucenik.dokumenti);
        });
+
+       this.uploadForm = this.fb.group({
+        files: ['']
+      });
        
    }
+   detalji(obj){
+    this._router.navigate(['predmeti-detail',obj.id]);
+  }
+
+  preuzmiDokumente(){
+    if(this.dokumentiArray.length <= 0){
+      alert('Ucenik nema ni jedan elektronski dokument! ');
+    }else{
+      var fk = new FinansijskaKartica(null,null,null,new Ucenik(this.kartica.ucenik.id,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
+        null,null,null,null,null,null,null),null,null,null);
+      this._ucenikService.download(this.kartica.ucenik.id).subscribe(
+        data=>{
+          console.log('uspeh');
+        }
+      );
+    }
+  }
+
+  fileName;
+  selectedFile;
+  onFileChanged(e: any){
+
+    this.selectedFile = e.target.files[0];
+  }
+
+  
+  onUpload(){  
+    const fileData = new FormData();
+    fileData.append('file', this.selectedFile, this.selectedFile.name);
+    fileData.append('uid', this.kartica.ucenik.id);
+    this._ucenikService.upload(fileData).subscribe(
+      data=>{
+        alert('Uspesno dodat fajl!');
+      }
+    )
+    
+  }
+
 
   chosenSmer(){
     if(this.smerArray.includes(this.smer.value))
@@ -138,6 +192,9 @@ export class UceniciDetailComponent implements OnInit {
     );
   }
 
+  get files(){
+    return this.uploadForm.get('files');
+  }
 
   submitUcenik(addOrEdit){
     var ime = this.ime.value;

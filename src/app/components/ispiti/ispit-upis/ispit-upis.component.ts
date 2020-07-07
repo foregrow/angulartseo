@@ -5,6 +5,7 @@ import { KorisnikService } from 'src/app/services/korisnik.service';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Predmet } from 'src/app/model/predmet';
 import { Ispit } from 'src/app/model/ispit';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-ispit-upis',
@@ -22,7 +23,8 @@ export class IspitUpisComponent implements OnInit {
   constructor(private _ispitService: IspitService,
     private fb: FormBuilder,
     private _irokService: IspitniRokService,
-    private _korService: KorisnikService) { }
+    private _korService: KorisnikService,
+    private _router: Router) { }
 
   ngOnInit(): void {
     this.getUlogovanNastavnik();
@@ -86,8 +88,18 @@ export class IspitUpisComponent implements OnInit {
       var ispit= new Ispit(null,null,null,bodovi,null,null,null,predmet,ucenik,rok,null,null,null,null,null);
       this._ispitService.proslediOcenu(ispit).subscribe(
         data =>{
-          this.getUlogovanNastavnik();
+         //this.getUlogovanNastavnik();
+         this.uceniciArray.splice(this.uceniciArray.findIndex(uc => uc.id === ucenik.id), 1);
+         if(this.uceniciArray.length <= 0)
+           this.ucenikSelected = false;
+         else
+          this.ucenici.setValue(this.uceniciArray[0]);
+         
           alert('Uspesno prosledjivanje ocene! ');
+          
+        },
+        error =>{
+          alert('Zeljenom uceniku ste vec prosledili ocenu! ');
         }
       )
     }

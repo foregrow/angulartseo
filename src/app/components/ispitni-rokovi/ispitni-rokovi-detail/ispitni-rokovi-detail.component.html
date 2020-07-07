@@ -1,6 +1,5 @@
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="korisnikService.getRole() === 'ROLE_ADMIN'">
    
-    <h2 class="mt-5 mb-3" *ngIf="this.param === 'add'">Dodavanje novog ispitnog roka</h2>
     <h2 class="mt-5 mb-3" *ngIf="this.param !== 'add'">Izmena datuma ispitnog roka</h2>
     <form [formGroup]="addEditForm" class="w-25">
 
@@ -22,7 +21,6 @@
             <small [class.d-none]="krajRoka.valid || krajRoka.untouched" class="text-danger">Molimo vas izaberite kraj roka!</small> 
         </div>
         <button *ngIf="this.param !== 'add'" (click)="submit('edit')" class="btn btn-primary" [disabled]="addEditForm.invalid" type="submit">Izmeni</button>
-        <button *ngIf="this.param === 'add'" (click)="submit('add')" class="btn btn-primary" [disabled]="addEditForm.invalid" type="submit">Dodaj</button>
     </form>
    
     <!--druga forma-->
@@ -93,4 +91,35 @@
     </div>
     
 </div>  
+
+<div  class="container-fluid" *ngIf="korisnikService.getRole() === 'ROLE_NASTAVNIK' || korisnikService.getRole() === 'ROLE_ASISTENT' || korisnikService.getRole() === 'ROLE_DEMONSTRATOR'">
+  <div class="mb-5">
+    <h2 class="mt-5">Svi prijavljeni ispiti ovog roka</h2>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Ucenik</th>
+        <th>Smer</th>
+        <th>Predmet</th>
+        <th>Datum polaganja</th>
+        <th>Datum prijave</th>
+        <th>Status</th>
+        <th>Polozen</th>
+        <th>Ocena</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let ispit of sviIspitiRoka; index as i">
+      <tr>
+        <td>{{i+1}}</td><td>{{ispit.ucenik.ime}} {{ispit.ucenik.prezime}}</td><td>{{ispit.predmet.smer.oznakaSmera}}</td>
+        <td>{{ispit.predmet.naziv}}</td><td>{{ispit.datumPolaganja}}</td><td>{{ispit.datumPrijave}}</td><td>{{ispit.status}}</td>
+            <td *ngIf="ispit.polozen">DA</td>
+            <td *ngIf="ispit.polozen">{{ispit.ocena}}</td>
+            <td *ngIf="!ispit.polozen">NE</td>
+            <td *ngIf="!ispit.polozen">/</td>
+      </tr>
+    </tbody>
+  </table>
+    </div>
+</div>
 

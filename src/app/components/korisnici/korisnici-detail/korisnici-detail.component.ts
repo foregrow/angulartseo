@@ -36,7 +36,9 @@ export class KorisniciDetailComponent implements OnInit {
       prezime: ['',Validators.required ]
     })
     this.addEditParam = this._route.snapshot.paramMap.get('id');
-   
+    if(isNaN(this.addEditParam)){
+      this.router.navigate(['not-found']);
+    }
       this.addEditForm.controls['korisnickoIme'].disable();
       this.addEditForm.controls['uloge'].disable();
       this.addEditForm.controls['ime'].disable();

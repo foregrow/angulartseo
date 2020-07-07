@@ -38,7 +38,9 @@ export class NastavnikComponent implements OnInit {
 
   }
 
-
+  rokovi(){
+    this.router.navigate(['ispitniRokovi'])
+  }
   detaljiNastavnika(){
     this.router.navigate(['nastavnici-detail',this.id])
   }

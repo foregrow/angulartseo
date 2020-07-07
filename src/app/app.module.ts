@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PredmetService } from './services/predmet.service';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { KorisnikService } from './services/korisnik.service';
 import { AuthGuard } from './auth.guard';
 import { TokenInterceptorService } from './services/token-interceptor.service';
@@ -19,6 +19,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IspitniRokService } from './services/ispitni-rok.service';
 import { DatePipe } from '@angular/common';
 import { KolokvijumService } from './services/kolokvijum.service';
+import { NanGuardGuard } from './nan-guard.guard';
 
 
 
@@ -35,14 +36,15 @@ import { KolokvijumService } from './services/kolokvijum.service';
     HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FormsModule
   ],
   providers: [KolokvijumService,DatePipe,PredmetService,KorisnikService,AuthGuard,SmerService,FinansijskaKarticaService,IspitService,NastavnikService,PredmetService,UcenikService,IspitniRokService,
   {
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptorService,
     multi: true //za multiple interceptors ako su potrebni
-  },RoleGuard],
+  },RoleGuard,NanGuardGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -45,20 +45,24 @@ export class NastavniciDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this._route.snapshot.paramMap.get('id');
+    if(isNaN(this.id)){
+      this.router.navigate(['not-found']);
+    }
     if(this.korisnikService.getRole() ==="ROLE_ADMIN"){
       this.ulogovanUloga = "ROLE_ADMIN";
     }
-    if(this.id !== 'add'){
-      if(this.korisnikService.getRole() === 'ROLE_NASTAVNIK'){
-        this.korisnikService.proveraPristupaNastavnika(this.id,this.korisnikService.getLoggedInUserKorIme()).subscribe(
-          response =>{},
-          error => {
-            this.router.navigate([PageNotFoundComponent]);
-            return;
-          }
-        )
-      }
+    
+    if(this.korisnikService.getRole() === 'ROLE_NASTAVNIK' || this.korisnikService.getRole() === 'ROLE_ASISTENT' || this.korisnikService.getRole() === 'ROLE_DEMONSTRATOR'){
+      this.korisnikService.proveraPristupaNastavnika(this.id,this.korisnikService.getLoggedInUserKorIme()).subscribe(
+        response =>{},
+        error => {
+          this.router.navigate([PageNotFoundComponent]);
+          return;
+        }
+      )
     }
+    
+    
     this.editForm = this.fb.group({
       ime: ['',Validators.required],
       prezime: ['',Validators.required],
@@ -106,6 +110,10 @@ export class NastavniciDetailComponent implements OnInit {
 
     
 
+  }
+
+  detalji(obj){
+    this.router.navigate(['predmeti-detail',obj.id])
   }
 
   getByIdAndSetValues(id){

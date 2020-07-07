@@ -11,6 +11,7 @@ import { IfStmt } from '@angular/compiler';
 import { Ispit } from 'src/app/model/ispit';
 import { IspitService } from 'src/app/services/ispit.service';
 import { IspitniRok } from 'src/app/model/ispitnirok';
+import { KorisnikService } from 'src/app/services/korisnik.service';
 
 @Component({
   selector: 'app-ispitni-rokovi-detail',
@@ -29,8 +30,10 @@ export class IspitniRokoviDetailComponent implements OnInit {
   smerSelected = false;
   predmetSelected = false;
   sviIspitiRoka = [];
+  kor;
   constructor(private _route: ActivatedRoute,
     private _ispitniRokService: IspitniRokService,
+    public korisnikService : KorisnikService,
     private _ispitService: IspitService,
     private _smerService: SmerService,
     private _router: Router,
@@ -45,33 +48,59 @@ export class IspitniRokoviDetailComponent implements OnInit {
     });
 
     this.param = this._route.snapshot.paramMap.get('id');
-    if(this.param !== 'add'){
-      this.addEditForm.controls['nazivRoka'].disable();
-      this.getByIdAndSetValues(this.param);
-      this.getSmerovi();
-      
-      this.addDateForm = this.fb.group({
-        smerovi: [[null,this.fb.array(this.smeroviArray)]],
-        predmeti: [[null,this.fb.array(this.predmetiArray)]],
-        datumPolaganja: ['',Validators.required],
-        dodatiPredmeti:[{value: '', disabled: true}]
-      });
-      this.smerovi.valueChanges.subscribe(
-        data=>{
-          //na biranje smera setujemo predmete tog smera u drugi combobox
-          var smer: Smer = this.smerovi.value;
-          this.smerSelected = true;
-          this.predmetiArray = smer.predmeti;
-          if(this.predmetiArray.length > 0){
-            this.predmetSelected = true;
-            this.predmeti.setValue(this.predmetiArray[0])
-          }else{
-            this.predmetSelected = false;
-          }
+    if(isNaN(this.param)){
+      this._router.navigate(['not-found']);
+    }else{
+      if(this.param !== 'add' && this.korisnikService.getRole() === 'ROLE_ADMIN'){
+        this.addEditForm.controls['nazivRoka'].disable();
+        this.getByIdAndSetValues(this.param);
+        this.getSmerovi();
+        
+        this.addDateForm = this.fb.group({
+          smerovi: [[null,this.fb.array(this.smeroviArray)]],
+          predmeti: [[null,this.fb.array(this.predmetiArray)]],
+          datumPolaganja: ['',Validators.required],
+          dodatiPredmeti:[{value: '', disabled: true}]
         });
+        this.smerovi.valueChanges.subscribe(
+          data=>{
+            //na biranje smera setujemo predmete tog smera u drugi combobox
+            var smer: Smer = this.smerovi.value;
+            this.smerSelected = true;
+            this.predmetiArray = smer.predmeti;
+            if(this.predmetiArray.length > 0){
+              this.predmetSelected = true;
+              this.predmeti.setValue(this.predmetiArray[0])
+            }else{
+              this.predmetSelected = false;
+            }
+          });
+        
+        }
+        if(this.korisnikService.getRole() === 'ROLE_NASTAVNIK' || this.korisnikService.getRole() === 'ROLE_ASISTENT' || this.korisnikService.getRole() === 'ROLE_DEMONSTRATOR'){
+          this.getUlogovanaOsoba(this.param);
+    
+        }
+    }
+    
       
+  }
+  
+  getUlogovanaOsoba(irid){
+    this.korisnikService.getByKorisnickoIme(this.korisnikService.getLoggedInUserKorIme()).subscribe(
+      data =>{
+        this.kor = data;
+        var osoba = this.kor.nastavnik;
+        this.getIspitiNastavnikovihPredmeta(irid,osoba.id);
       }
-      
+    )
+  }
+  getIspitiNastavnikovihPredmeta(irid,nid){
+    this._ispitService.getIspitiNastavnikovihPredmeta(irid,nid).subscribe(
+      data =>{
+        this.sviIspitiRoka = data;
+      }
+    )
   }
 
   getByIdAndSetValues(param){

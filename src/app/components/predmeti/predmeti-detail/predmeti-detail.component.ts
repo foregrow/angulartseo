@@ -23,7 +23,7 @@ export class PredmetiDetailComponent implements OnInit {
   predmet;
   smeroviByNazivPredmetaArray = [];
   constructor(private fb: FormBuilder,
-    private _korisnikService: KorisnikService,
+    public korisnikService: KorisnikService,
     private _predmetService: PredmetService,
     private _router: Router,
     private _route: ActivatedRoute,
@@ -36,9 +36,12 @@ export class PredmetiDetailComponent implements OnInit {
       smer: [this.fb.array(this.smeroviArray)],
       smerInput: ['']
     });
+    
+    this.addEditParam = this._route.snapshot.paramMap.get('id');  
+    if(isNaN(this.addEditParam) && this.addEditParam !== 'add'){
+      this._router.navigate(['not-found']);
+    }
     this.getAllSmerovi();
-    this.addEditParam = this._route.snapshot.paramMap.get('id');
-
     if(this.addEditParam !== 'add'){
       this.getPredmetByIdAndSetValues(this.addEditParam);
       this.addEditForm.controls['naziv'].disable();
@@ -61,6 +64,9 @@ export class PredmetiDetailComponent implements OnInit {
         this.getByNazivPredmeta(this.predmet.naziv);
       }
     )
+  }
+  detalji(obj){
+    this._router.navigate(['smerovi-detail',obj.id]);
   }
 
   getAllSmerovi(){

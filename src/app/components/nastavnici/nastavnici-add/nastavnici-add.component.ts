@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { NastavnikService } from 'src/app/services/nastavnik.service';
 import { Nastavnik } from 'src/app/model/nastavnik';
 import { Router } from '@angular/router';
+import { KorisnikService } from 'src/app/services/korisnik.service';
 
 @Component({
   selector: 'app-nastavnici-add',
@@ -17,9 +18,12 @@ export class NastavniciAddComponent implements OnInit {
   nastavniciEmailovi: string[] = [];
   ulogeArray = ['PROFESOR','ASISTENT','DEMONSTRATOR']
   constructor(private fb: FormBuilder,private _nastavnikService: NastavnikService,
-    private _router: Router) { }
+    private _router: Router,
+    private _korisnikService: KorisnikService) { }
 
   ngOnInit(): void {
+    var ulogovan = this._korisnikService.getRole();
+    
     this.addForm = this.fb.group({
       ime: ['',Validators.required],
       prezime: ['',Validators.required],

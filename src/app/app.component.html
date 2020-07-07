@@ -94,9 +94,14 @@
           <i class="fa fa-pencil-square" aria-hidden="true"></i> Kolokvijum ocene</a>        
       </ul> 
       <ul class="navbar-nav">
+        <a class="nav-link" style="cursor:pointer" routerLink="/ispitniRokovi" routerLinkActive="active">
+          <i class="fa fa-calendar-check-o" aria-hidden="true"></i> Rokovi</a>        
+      </ul> 
+      <ul class="navbar-nav">
           <a class="nav-link" style="cursor:pointer" (click)="korisnikService.logout()">
           <i class="fa fa-sign-out ml-5" aria-hidden="true"></i> Logout</a>          
       </ul>
+      
     </div>
   </nav>  
   
