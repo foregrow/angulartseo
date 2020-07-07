@@ -13,6 +13,11 @@ export class IstorijaPolaganjaComponent implements OnInit {
   istorijaPolaganja;
   idUcenika;
   kor;
+  searchTerm;
+  searchTerm2;
+  searchTerm3;
+  order;
+  field;
   constructor(private _ispitService: IspitService,
     private _korService: KorisnikService) { }
 
@@ -36,6 +41,34 @@ export class IstorijaPolaganjaComponent implements OnInit {
       data =>{
         this.istorijaPolaganja = data;
       });
+  }
+
+  counterNaziv = 0;
+
+  sort(param){
+    if(param === 'predmet.naziv'){
+      this.field = 'predmet.naziv'; 
+    }else if(param === 'predmet.profesor.ime'){
+      this.field = 'predmet.profesor.ime';
+    }else if(param === 'predmet.datumPolaganja'){
+      this.field = 'predmet.datumPolaganja';
+    }else if(param === 'bodoviTeorija'){
+      this.field = 'bodoviTeorija';
+    }else if(param === 'ocena'){
+      this.field = 'ocena';
+    }else if(param === 'ispitniRok.nazivRoka'){
+      this.field = 'ispitniRok.nazivRoka';
+    }
+    
+    if(this.counterNaziv === 0){
+      //desc
+      this.order = 'asc';
+      this.counterNaziv = 1;
+    }else if(this.counterNaziv === 1){
+      //asc
+      this.order = 'desc';
+      this.counterNaziv = 0;
+    } 
   }
 
 }

@@ -4,14 +4,35 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Naziv predmeta</th>
-            <th>Profesor</th>
-            <th>Datum polaganja</th>
-            <th>Ocena</th>
-            <th>Broj ECTS Bodova</th>
+            <th (click)="sort('predmet.naziv')"><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i> 
+              <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i>Naziv predmeta</th>
+              <th (click)="sort('predmet.profesor.ime')"><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i>
+                <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Nastavnik</th>
+                <th (click)="sort('predmet.datumPolaganja')"><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i>
+                  <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Datum polaganja</th>
+                  <th (click)="sort('ocena')"><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i> 
+                    <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Ocena</th>
+                    <th (click)="sort('predmet.brojECTSBodova')"><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i> 
+                      <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Broj ECTS bodova</th>
           </tr>
+          <tr class="form-group">
+            <th colspan="2">
+              <input type="text" placeholder="Pretraga po nazivu predmeta" class="form-control"
+              [(ngModel)]="searchTerm">
+            </th>
+            <th>
+              <input type="text" placeholder="Pretraga po oceni" class="form-control"
+              [(ngModel)]="searchTerm2">
+            </th>
+            <th>
+              <input type="text" placeholder="Pretraga po broju ECTS bodova" class="form-control"
+              [(ngModel)]="searchTerm3">
+            </th>
+            
+              </tr>
+
         </thead>
-        <tbody *ngFor="let ispit of polozeniIspiti; index as i">
+        <tbody *ngFor="let ispit of polozeniIspiti|ispitSortBy:this.order:this.field | polozeniFilter:searchTerm:searchTerm2:searchTerm3; index as i">
           <tr *ngIf="idUcenika == ispit.ucenik.id && ispit.polozen == true">
             <td>{{i+1}}</td><td>{{ispit.predmet.naziv}}</td>
             <td *ngIf="ispit.predmet.profesor !== undefined && ispit.predmet.profesor !== null;else elseBlock">{{ispit.predmet.profesor.ime}} {{ispit.predmet.profesor.prezime}}</td>

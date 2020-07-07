@@ -4,15 +4,38 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Naziv predmeta</th>
-            <th>Nastavnik</th>
-            <th>Datum polaganja</th>
-            <th>Bodovi</th>
-            <th>Ocena</th>
-            <th>Ispitni rok</th>
+            <th (click)="sort('predmet.naziv')"><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i> 
+              <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i>Naziv predmeta</th>
+            <th (click)="sort('predmet.profesor.ime')"><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i>
+              <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Nastavnik</th>
+              <th (click)="sort('predmet.datumPolaganja')"><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i> 
+                <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i>Datum polaganja</th>
+                <th (click)="sort('bodoviTeorija')"><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i> 
+                  <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Bodovi</th>
+                  <th (click)="sort('ocena')"><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i> 
+                    <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Ocena</th>
+                    <th (click)="sort('ispitniRok.nazivRoka')"><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i> 
+                      <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Ispitni rok</th>
           </tr>
+
+          <tr class="form-group">
+            <th colspan="2">
+              <input type="text" placeholder="Pretraga po nazivu predmeta" class="form-control"
+              [(ngModel)]="searchTerm">
+            </th>
+            <th>
+              <input type="text" placeholder="Pretraga po oceni" class="form-control"
+              [(ngModel)]="searchTerm2">
+            </th>
+            <th>
+              <input type="text" placeholder="Pretraga po ispitnom roku" class="form-control"
+              [(ngModel)]="searchTerm3">
+            </th>
+            
+            </tr>
+
         </thead>
-        <tbody *ngFor="let ispit of istorijaPolaganja; index as i">
+        <tbody *ngFor="let ispit of istorijaPolaganja|ispitSortBy:this.order:this.field | istorijaFilter:searchTerm:searchTerm2:searchTerm3; index as i">
           <tr>
             <td>{{i+1}}</td><td>{{ispit.predmet.naziv}}</td>
             <td *ngIf="ispit.predmet.profesor !== undefined && ispit.predmet.profesor !== null;else elseBlock">{{ispit.predmet.profesor.ime}} {{ispit.predmet.profesor.prezime}}</td>
