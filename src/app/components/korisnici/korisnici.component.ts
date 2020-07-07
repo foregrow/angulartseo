@@ -10,7 +10,8 @@ import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 export class KorisniciComponent implements OnInit {
 
   public korisnici = [];
-
+  searchTerm: string;
+  korisnickoIme: string;
   constructor(
               public _korisnikService: KorisnikService,
               private _activatedRoute: ActivatedRoute, 
@@ -21,6 +22,7 @@ export class KorisniciComponent implements OnInit {
 
   }
 
+  
   detaljiKorisnika(korisnik){
     var strId : string = String(korisnik.id);
     this.router.navigate(['korisnici-detail/'+strId]);

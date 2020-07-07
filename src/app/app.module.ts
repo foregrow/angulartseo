@@ -20,6 +20,8 @@ import { IspitniRokService } from './services/ispitni-rok.service';
 import { DatePipe } from '@angular/common';
 import { KolokvijumService } from './services/kolokvijum.service';
 import { NanGuardGuard } from './nan-guard.guard';
+import { KorisnikFilterPipe } from './filters/kor-filter.pipe';
+import { KorisnikSortPipe } from './filters/kor-sort.pipe';
 
 
 
@@ -29,7 +31,9 @@ import { NanGuardGuard } from './nan-guard.guard';
 @NgModule({
   declarations: [
     AppComponent,
-    routingComponents
+    routingComponents,
+    KorisnikFilterPipe,
+    KorisnikSortPipe
   ],
   imports: [
     BrowserModule,
