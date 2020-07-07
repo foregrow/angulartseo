@@ -12,6 +12,14 @@
               <input formControlName="prezime" type="text" class="form-control" >
               <small [class.d-none]="prezime.valid || prezime.untouched" class="text-danger">Prezime je obavezno!</small>
           </div>
+          <div class="form-group" >
+            <label>Lozinka</label>
+            <input  formControlName="lozinka" type="password" class="form-control" >
+        </div>
+        <div class="form-group" >
+            <label>Ponovite lozinku</label>
+            <input  formControlName="lozinkaPonovljena" type="password" class="form-control" >
+        </div>
           <div class="form-group">
             <label>Email</label>
             <input formControlName="email" type="text" class="form-control" >

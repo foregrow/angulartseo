@@ -1,3 +1,4 @@
+import { Korisnik } from './../../../model/korisnik';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { KorisnikService } from 'src/app/services/korisnik.service';
@@ -66,6 +67,8 @@ export class NastavniciDetailComponent implements OnInit {
     this.editForm = this.fb.group({
       ime: ['',Validators.required],
       prezime: ['',Validators.required],
+      lozinka:[''],
+      lozinkaPonovljena:[''],
       email: ['',[Validators.required,Validators.email]],
       uloga: [this.fb.array(this.ulogeArray)],
       korisnik: [{value: '', disabled: true}],
@@ -263,6 +266,11 @@ export class NastavniciDetailComponent implements OnInit {
     var prezime = this.prezime.value;
     var email = this.email.value;
     var uloga = this.uloga.value;
+    var lozinka = this.lozinka.value;
+    var lozinkaPonovljena = this.lozinkaPonovljena.value;
+    if(lozinka != lozinkaPonovljena){
+      alert('Lozinke se ne poklapaju !')
+    }else if(lozinka == '' && lozinkaPonovljena == '') {
     var nastavnik: Nastavnik = new Nastavnik(numbId,ime,prezime,email,uloga,null,null,null);
       this._nastavnikService.updateNastavnik(nastavnik)
       .subscribe(
@@ -270,9 +278,30 @@ export class NastavniciDetailComponent implements OnInit {
           this.nastavnik = data;
           this.getByIdAndSetValues(this.id);
           alert('Uspesna izmena podataka! ');
-         
+          this.router.navigate(['nastavnik']);
         }
       );
+    } else {
+      var korisnik: Korisnik = new Korisnik(null,null,lozinka,null,null,null);
+      this.korisnikService.updateNastavnikPassword(korisnik,numbId)
+      .subscribe(
+        response => {
+          var nastavnik: Nastavnik = new Nastavnik(numbId,ime,prezime,email,uloga,null,null,null);
+          this._nastavnikService.updateNastavnik(nastavnik)
+          .subscribe(
+            data =>{
+              this.nastavnik = data;
+              this.getByIdAndSetValues(this.id);
+              alert('Uspesna izmena podataka! ');
+              this.router.navigate(['nastavnik']);
+            }
+          );
+        },
+        error => {
+          alert('Doslo je do greske');
+        }
+      )
+    }
    }
 
    get ime() {
@@ -289,6 +318,12 @@ export class NastavniciDetailComponent implements OnInit {
   }
   get korisnik() {
     return this.editForm.get('korisnik');
+  }
+  get lozinka(){
+    return this.editForm.get('lozinka');
+  }
+  get lozinkaPonovljena(){
+    return this.editForm.get('lozinkaPonovljena');
   }
 
   get smerovi() {

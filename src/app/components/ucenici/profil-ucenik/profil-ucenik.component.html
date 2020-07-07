@@ -1,4 +1,4 @@
-<div class="container">    
+<div class="container">
   <div *ngIf="korisnik != undefined">
     <div class="jumbotron">
       <div class="row">
@@ -25,5 +25,19 @@
           </div>
       </div>
   </div>
-    
+  <div>
+    <form class="w-50" [formGroup]="editForm">
+    <h3>Promena lozinke</h3>
+    <div class="form-group">
+    <label>Lozinka</label>
+    <input formControlName="lozinka" type="password" class="form-control" (keyup)="onKey($event)">
+    </div>
+    <div class="form-group">
+      <label>Ponovite lozinku</label>
+      <input formControlName="lozinkaPonovljena" type="password" class="form-control" >
+      </div>
+      <button style="margin-bottom: 3cm;" class="btn btn-primary mt-1" [disabled]="!cekiran" (click)="updatePassword()" type="submit">Sazuvaj izmene</button>
+    </form>
+  </div>
+
     </div>

@@ -55,6 +55,10 @@ export class KorisnikService {
     return this._http.put<any>(`${this._urlGetAll}`,korData);
   }
 
+  updateNastavnikPassword(korData:Korisnik,idNastavnika){
+    return this._http.put<any>(`${this._urlGetAll}/${idNastavnika}`,korData);
+  }
+
   deleteKorisnik(id): Observable<any>{
     var numbid = +id;
     return this._http.delete(`${this._urlGetAll}/${numbid}`);
