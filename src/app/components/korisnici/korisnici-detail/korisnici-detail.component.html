@@ -35,19 +35,7 @@
         </div>
     </form>
     <button (click)="submitKorisnik()" class="btn btn-primary" [disabled]="addEditForm.invalid" type="submit">Izmeni</button>
-        <button class="btn btn-primary" (click)="goBackToKorisnici()">Back</button>
-        <!-- <h4 class="mt-5 mb-3">Izmena podataka korisnika</h4>
-        <form [formGroup]="korisnikForm" (ngSubmit)="izmenaKorisnika()">
-            <div class="form-group">
-                <label>Korisnicko ime</label>
-                <input [class.is-invalid]="korisnickoIme.invalid &&
-                korisnickoIme.touched" formControlName="korisnickoIme" type="text" class="form-control">
-                <small [class.d-none]="korisnickoIme.valid
-                || korisnickoIme.untouched" class="text-danger">Korisnicko ime je obavezno!</small>
-            </div>
 
-            <button class="btn btn-primary" type="submit">Izmeni</button>
-        </form> -->
 
     
 </div>  

@@ -47,4 +47,7 @@ export class NastavnikComponent implements OnInit {
   upisOcena(){
     this.router.navigate(['ispit-upis'])
   }
+  kolokvijumOcene(){
+    this.router.navigate(['kolokvijum-upis'])
+  }
 }

@@ -1,27 +1,55 @@
-<div class="container">
+<div class="container" *ngIf="this.korisnik !== undefined && this.korisnik.nastavnik.uloga==='PROFESOR'">
     <div class="row mt-5">
       <div class="col-md-4 mb-5">
         <div class="card text-center">
-          <div class="card-body">
-            <a class="btn btn-primary" (click)="detaljiNastavnika()">Profil</a>
-          </div>
+
+          <button class="btn" (click)="detaljiNastavnika()"><i class="fa fa-user"></i> Profil</button>
+
         </div>
       </div>
         <div class="col-md-4 mb-5">
           <div class="card text-center">
-            <div class="card-body">
-              <a class="btn btn-primary" (click)="rokovi()" >Rokovi</a>
-            </div>
+
+              <button class="btn" (click)="upisOcena()"><i class="fa fa-pencil-square"></i> Upis ocena</button>
+
           </div>
         </div>
         <div class="col-md-4 mb-5">
           <div class="card text-center">
-            <div class="card-body">
-              <a class="btn btn-primary" (click)="upisOcena()">Upis ocena</a>
-            </div>
+
+            <button class="btn" (click)="rokovi()"><i class="fa fa-calendar-check-o"></i> Rokovi</button>
+
           </div>
         </div>
     </div>
   </div>
+
+<!-- DRUGA ROLA -->
+
+<div class="container" *ngIf="this.korisnik !== undefined && (this.korisnik.nastavnik.uloga==='ASISTENT' || this.korisnik.nastavnik.uloga==='DEMONSTRATOR')">
+  <div class="row mt-5">
+    <div class="col-md-4 mb-5">
+      <div class="card text-center">
+
+          <button class="btn" (click)="detaljiNastavnika()"><i class="fa fa-user"></i> Profil</button>
+
+      </div>
+    </div>
+      <div class="col-md-4 mb-5">
+        <div class="card text-center">
+
+            <button class="btn" (click)="kolokvijumOcene()"><i class="fa fa-pencil-square"></i> Kolokvijum ocene</button>
+
+        </div>
+      </div>
+      <div class="col-md-4 mb-5">
+        <div class="card text-center">
+
+            <button class="btn" (click)="rokovi()"><i class="fa fa-calendar-check-o"></i> Rokovi</button>
+
+        </div>
+      </div>
+  </div>
+</div>
   
   

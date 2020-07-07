@@ -1,0 +1,36 @@
+.divv{
+    border-style: ridge;     
+    width: 500px;
+    height: 380px;
+    margin-top: 3cm;
+    margin-left: 15cm;
+}
+
+.btn{
+    background-color: #339DFF;
+    border: none;
+    color: white;
+    padding: 15px 150px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 20px;
+    margin-left: 70px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    box-shadow: 0 2px 4px rgba(83, 100, 255, 0.45);
+  }
+
+.h2{
+    margin-top: 1cm;
+    margin-bottom: 1cm;
+    text-align: center;
+}
+
+.form-group{
+    margin-left: 25px;
+    margin-right: 25px;
+}

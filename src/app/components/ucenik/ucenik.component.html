@@ -1,46 +1,54 @@
-<h3  *ngIf="korisnik">{{korisnik.ucenik.ime}} {{korisnik.ucenik.prezime}} - {{index}}</h3>
+<h2  *ngIf="korisnik">{{korisnik.ucenik.ime}} {{korisnik.ucenik.prezime}} - {{index}}</h2>
 <div class="container">
     <div class="row mt-5">
       <div class="col-md-4 mb-5">
         <div class="card text-center">
-          <div class="card-body">
-            <a class="btn btn-primary" (click)="prikazProfilaUcenika()">Profil</a>
+
+          <button class="btn" (click)="prikazProfilaUcenika()"><i class="fa fa-user"></i> Profil</button>
           </div>
-        </div>
+
       </div>
       <div class="col-md-4 mb-5">
           <div class="card text-center">
-            <div class="card-body">
-              <a class="btn btn-primary" (click)="finansijskaKartica()" >Finansijska kartica</a>
-            </div>
+
+            <button class="btn" (click)="finansijskaKartica()"><i class="fa fa-credit-card"></i> Finansijska kartica</button>
+
           </div>
         </div>
         <div class="col-md-4 mb-5">
           <div class="card text-center">
-            <div class="card-body">
-              <a class="btn btn-primary" (click)="polozeniIspiti()">Polozeni ispiti</a>
-            </div>
+
+            <button class="btn" (click)="polozeniIspiti()"><i class="fa fa-check"></i> Polozeni ispiti</button>
+
           </div>
         </div>
         <div class="col-md-4 mb-5">
           <div class="card text-center">
-            <div class="card-body">
-              <a class="btn btn-primary" (click)="nepolozeniIspiti()" >Nepolozeni ispiti</a>
-            </div>
+
+            <button class="btn" (click)="nepolozeniIspiti()"><i class="fa fa-times-circle"></i> Nepolozeni predmeti</button>
+
           </div>
         </div>
         <div class="col-md-4 mb-5">
           <div class="card text-center">
-            <div class="card-body">
-              <a class="btn btn-primary" (click)="prijavaIspita()">Prijava ispita</a>
-            </div>
+
+            <button class="btn" (click)="prijavaIspita()"><i class="fa fa-book"></i> Prijava ispita</button>
+            
+
           </div>
         </div>
         <div class="col-md-4 mb-5">
           <div class="card text-center">
-            <div class="card-body">
-              <a class="btn btn-primary" (click)="istorijaPolaganja()">Istorija polaganja</a>
-            </div>
+
+            <button class="btn" (click)="istorijaPolaganja()"><i class="fa fa-history"></i> Istorija polaganja</button>
+
+          </div>
+        </div>
+        <div class="col-md-4 mb-5">
+          <div class="card text-center">
+
+            <button class="btn" (click)="spisakUplata()"><i class="fa fa-credit-card-alt"></i> Uplate</button>
+
           </div>
         </div>
     </div>

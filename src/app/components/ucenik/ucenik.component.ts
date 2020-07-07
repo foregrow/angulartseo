@@ -55,5 +55,8 @@ export class UcenikComponent implements OnInit {
   istorijaPolaganja(){
     this._router.navigate(['istorija-polaganja'])
   }
+  spisakUplata(){
+    this._router.navigate(['spisak-uplata'])
+  }
 
 }
