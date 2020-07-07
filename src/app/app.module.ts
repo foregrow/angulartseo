@@ -34,7 +34,7 @@ import { IspitniRokFilterPipe } from './filters/irok-filter-pipe';
 import { IspitniRokSortPipe } from './filters/irok-sort-pipe';
 import { IspitFilterPipe } from './filters/ispit-filter.pipe';
 import { IspitSortByPipe } from './filters/ispit-sort-pipe';
-import { istorijaFilterPipe } from './filters/istorijaPolaganja-filter-pipe';
+import { IstorijaFilterPipe } from './filters/istorijaPolaganja-filter-pipe';
 import { polozeniFilterPipe } from './filters/polozeni-ispiti-filter-pipe';
 
 
@@ -53,7 +53,7 @@ import { polozeniFilterPipe } from './filters/polozeni-ispiti-filter-pipe';
     PredmetSortByPipe,PredmetFilterPipe,
     IspitniRokFilterPipe,IspitniRokSortPipe,
     IspitFilterPipe,IspitSortByPipe,
-    istorijaFilterPipe,polozeniFilterPipe
+    IstorijaFilterPipe,polozeniFilterPipe
 
 
   ],
@@ -65,7 +65,7 @@ import { polozeniFilterPipe } from './filters/polozeni-ispiti-filter-pipe';
     BrowserAnimationsModule,
     FormsModule
   ],
-  providers: [istorijaFilterPipe,polozeniFilterPipe,
+  providers: [IstorijaFilterPipe,polozeniFilterPipe,
     IspitFilterPipe,IspitSortByPipe,
     IspitniRokFilterPipe,IspitniRokSortPipe,
     PredmetSortByPipe,PredmetFilterPipe,

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IspitService } from 'src/app/services/ispit.service';
 import { KorisnikService } from 'src/app/services/korisnik.service';
-import { Korisnik } from 'src/app/model/korisnik';
 
 @Component({
   selector: 'app-istorija-polaganja',
@@ -15,7 +14,6 @@ export class IstorijaPolaganjaComponent implements OnInit {
   kor;
   searchTerm;
   searchTerm2;
-  searchTerm3;
   order;
   field;
   constructor(private _ispitService: IspitService,

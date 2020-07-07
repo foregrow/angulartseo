@@ -16,11 +16,11 @@
                       <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Broj ECTS bodova</th>
           </tr>
           <tr class="form-group">
-            <th colspan="2">
-              <input type="text" placeholder="Pretraga po nazivu predmeta" class="form-control"
+            <th colspan="3">
+              <input type="text" placeholder="Pretraga po nazivu predmeta i nastavniku" class="form-control"
               [(ngModel)]="searchTerm">
             </th>
-            <th>
+            <th colspan="2">
               <input type="text" placeholder="Pretraga po oceni" class="form-control"
               [(ngModel)]="searchTerm2">
             </th>
