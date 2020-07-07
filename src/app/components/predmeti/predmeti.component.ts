@@ -13,7 +13,10 @@ import { LoginComponent } from '../login/login.component';
 export class PredmetiComponent implements OnInit {
 
   public predmeti = [];
-  
+  searchTerm;
+  searchTerm2;
+  order;
+  field;
   
 
   constructor(private _predmetService: PredmetService,
@@ -49,5 +52,23 @@ export class PredmetiComponent implements OnInit {
       }
     )
   }
+  counterKorIme = 0;
 
+  sort(param){
+    if(param === 'naziv'){
+      this.field = 'naziv'; 
+    }else if(param === 'smer.oznakaSmera'){
+      this.field = 'smer.oznakaSmera'; 
+    }
+    
+    if(this.counterKorIme === 0){
+      //desc
+      this.order = 'asc';
+      this.counterKorIme = 1;
+    }else if(this.counterKorIme === 1){
+      //asc
+      this.order = 'desc';
+      this.counterKorIme = 0;
+    } 
+  }
 }

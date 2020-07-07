@@ -4,20 +4,29 @@
     <table class="table table-hover w-75">
         <thead>
           <tr>
-            <th>#</th>
-            <th>Korisnicko ime</th>
-            <th>Uloga</th>
-            <th>Info</th>
-            <th>Brisanje</th>
+            <th >#</th>
+            <th (click)="sort('korisnickoIme')">
+              <i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i>
+              <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Korisnicko ime
+            </th>
+            <th (click)="sort('uloga')">
+              <i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i>
+              <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Uloga</th>
+            <th> 
+              <i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i>
+              <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Info</th>
+            <th>
+              <i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i>
+              <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Brisanje</th>
           </tr>
           <tr class="form-group">
-            <th colspan="6">
-              <input type="text" placeholder="Pretrazi" class="form-control"
+            <th colspan="3">
+              <input type="text" placeholder="Pretraga po korisnickom imenu i ulozi korisnika" class="form-control"
               [(ngModel)]="searchTerm">
             </th>
             </tr>
         </thead>
-        <tbody *ngFor="let kor of korisnici | korFilter:searchTerm; index as i">
+        <tbody *ngFor="let kor of korisnici| sortBy:this.order:this.field | korFilter:searchTerm; index as i">
 
           <tr>
             <td>{{i+1}}</td>

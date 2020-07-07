@@ -5,11 +5,27 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Naziv predmeta</th>
-            <th>Oznaka smera</th>
+            <th (click)="sort('naziv')"><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i>
+              <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Naziv predmeta</th>
+            <th (click)="sort('smer.oznakaSmera')"><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i>
+              <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Oznaka smera</th>
+            <th><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i>
+              <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Info</th>
+            <th><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i>
+              <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Brisanje</th>
           </tr>
+          <tr class="form-group">
+            <th colspan="2">
+              <input type="text" placeholder="Pretraga po nazivu predmeta" class="form-control"
+              [(ngModel)]="searchTerm">
+            </th>
+            <th colspan="1">
+              <input type="text" placeholder="Pretraga po nazivu i oznaci smera" class="form-control"
+              [(ngModel)]="searchTerm2">
+            </th>
+            </tr>
         </thead>
-        <tbody *ngFor="let predmet of predmeti; index as i">
+        <tbody *ngFor="let predmet of predmeti|predSortBy:this.order:this.field | predFilter:searchTerm:searchTerm2; index as i">
           <tr>
             <td>{{i+1}}</td><td>{{predmet.naziv}}</td><td>{{predmet.smer.oznakaSmera}}</td>
             <td><a class="btn btn-sm text-white btn-primary" (click)="detaljiPredmeta(predmet)">Detalji</a></td>

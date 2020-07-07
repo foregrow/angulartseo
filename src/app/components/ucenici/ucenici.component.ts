@@ -13,6 +13,10 @@ export class UceniciComponent implements OnInit {
   public ucenici = [];
 
   uloga: string;
+  searchTerm;
+  searchTerm2;
+  order:string;
+  field:string;
   constructor(private _ucenikService: UcenikService,
               public _korisnikService: KorisnikService,
               private _activatedRoute: ActivatedRoute, 
@@ -37,5 +41,33 @@ export class UceniciComponent implements OnInit {
     .subscribe(
       data => this.ucenici = data
     );
+  }
+
+  counter = 0;
+  sort(param){
+    if(param === 'ime'){
+      this.field = 'ime'; 
+    }else if(param === 'prezime'){
+      this.field = 'prezime'; 
+    }else if(param === 'index'){
+      this.field = 'index'; 
+    }else if(param === 'godinaUpisa'){
+      this.field = 'godinaUpisa'; 
+    }else if(param === 'godinaStudija'){
+      this.field = 'godinaStudija'; 
+    }else if(param === 'smer.naziv'){
+      this.field = 'smer.naziv'; 
+    }
+
+    if(this.counter === 0){
+      //desc
+      this.order = 'asc';
+      this.counter = 1;
+    }else if(this.counter === 1){
+      //asc
+      this.order = 'desc';
+      this.counter = 0;
+    }
+    
   }
 }

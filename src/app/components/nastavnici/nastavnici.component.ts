@@ -11,7 +11,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class NastavniciComponent implements OnInit {
 
   public nastavnici = [];
-  
+  searchTerm: string;
+  searchTerm2: string;
+  order:string;
+  field:string;
   constructor(private _nastavnikService: NastavnikService,
               public _korisnikService: KorisnikService,
               private _activatedRoute: ActivatedRoute, 
@@ -38,6 +41,28 @@ export class NastavniciComponent implements OnInit {
     );
   }
 
-  
+  counterKorIme = 0;
+
+  sort(param){
+    if(param === 'ime'){
+      this.field = 'ime'; 
+    }else if(param === 'prezime'){
+      this.field = 'prezime'; 
+    }else if(param === 'email'){
+      this.field = 'email'; 
+    }else if(param === 'uloga'){
+      this.field = 'uloga'; 
+    }
+    
+    if(this.counterKorIme === 0){
+      //desc
+      this.order = 'asc';
+      this.counterKorIme = 1;
+    }else if(this.counterKorIme === 1){
+      //asc
+      this.order = 'desc';
+      this.counterKorIme = 0;
+    } 
+  }
   
 }

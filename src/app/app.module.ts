@@ -21,8 +21,17 @@ import { DatePipe } from '@angular/common';
 import { KolokvijumService } from './services/kolokvijum.service';
 import { NanGuardGuard } from './nan-guard.guard';
 import { KorisnikFilterPipe } from './filters/kor-filter.pipe';
-import { KorisnikSortPipe } from './filters/kor-sort.pipe';
-
+import { KorisnikSortByPipe } from './filters/kor-sort.pipe';
+import { NastavnikFilterPipe } from './filters/nas-filter.pipe';
+import { NastavnikSortByPipe } from './filters/nas-sort.pipe';
+import { UcenikFilterPipe } from './filters/uce-filter.pipe';
+import { UcenikSortByPipe } from './filters/uce-sort.pipe';
+import { SmerSortByPipe } from './filters/smer-sort-pipe';
+import { SmerFilterPipe } from './filters/smer-filter.pipe';
+import { PredmetSortByPipe } from './filters/pred-sort.pipe';
+import { PredmetFilterPipe } from './filters/pred-filter.pipe';
+import { IspitniRokFilterPipe } from './filters/irok-filter-pipe';
+import { IspitniRokSortPipe } from './filters/irok-sort-pipe';
 
 
 
@@ -32,8 +41,13 @@ import { KorisnikSortPipe } from './filters/kor-sort.pipe';
   declarations: [
     AppComponent,
     routingComponents,
-    KorisnikFilterPipe,
-    KorisnikSortPipe
+    KorisnikFilterPipe,KorisnikSortByPipe,
+    NastavnikFilterPipe,NastavnikSortByPipe,
+    UcenikFilterPipe,UcenikSortByPipe,
+    SmerSortByPipe,SmerFilterPipe,
+    PredmetSortByPipe,PredmetFilterPipe,
+    IspitniRokFilterPipe,IspitniRokSortPipe
+
   ],
   imports: [
     BrowserModule,
@@ -43,7 +57,13 @@ import { KorisnikSortPipe } from './filters/kor-sort.pipe';
     BrowserAnimationsModule,
     FormsModule
   ],
-  providers: [KolokvijumService,DatePipe,PredmetService,KorisnikService,AuthGuard,SmerService,FinansijskaKarticaService,IspitService,NastavnikService,PredmetService,UcenikService,IspitniRokService,
+  providers: [IspitniRokFilterPipe,IspitniRokSortPipe,
+    PredmetSortByPipe,PredmetFilterPipe,
+    SmerSortByPipe,SmerFilterPipe,
+    UcenikFilterPipe,UcenikSortByPipe,
+    NastavnikFilterPipe,NastavnikSortByPipe,
+    KorisnikFilterPipe,KorisnikSortByPipe,
+    KolokvijumService,DatePipe,PredmetService,KorisnikService,AuthGuard,SmerService,FinansijskaKarticaService,IspitService,NastavnikService,PredmetService,UcenikService,IspitniRokService,
   {
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptorService,

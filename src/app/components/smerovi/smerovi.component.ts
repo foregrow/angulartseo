@@ -11,7 +11,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class SmeroviComponent implements OnInit {
 
   public smerovi = [];
-
+  searchTerm;
+  searchTerm2;
+  order;
+  field;
   constructor(private _smerService: SmerService,
               public _korisnikService: KorisnikService,
               private _activatedRoute: ActivatedRoute, 
@@ -37,5 +40,27 @@ export class SmeroviComponent implements OnInit {
     .subscribe(
       data => this.smerovi = data
     );
+  }
+
+  counterKorIme = 0;
+
+  sort(param){
+    if(param === 'naziv'){
+      this.field = 'naziv'; 
+    }else if(param === 'oznakaSmera'){
+      this.field = 'oznakaSmera'; 
+    }else if(param === 'nastavnik.ime'){
+      this.field = 'nastavnik.ime'; 
+    }
+    
+    if(this.counterKorIme === 0){
+      //desc
+      this.order = 'asc';
+      this.counterKorIme = 1;
+    }else if(this.counterKorIme === 1){
+      //asc
+      this.order = 'desc';
+      this.counterKorIme = 0;
+    } 
   }
 }

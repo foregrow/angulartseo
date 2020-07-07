@@ -1,10 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { orderBy } from 'lodash';
-import { Korisnik } from '../model/korisnik';
+import { IspitniRok } from '../model/ispitnirok';
 
-@Pipe({ name: 'sortBy' })
-export class KorisnikSortByPipe implements PipeTransform {
-  public transform(value: Korisnik[], order = '', column: string = ''): Korisnik[] {
+@Pipe({ name: 'irokSortBy' })
+export class IspitniRokSortPipe implements PipeTransform {
+  public transform(value: IspitniRok[], order = '', column: string = ''): IspitniRok[] {
     if (!value || order === '' || !order) { return value; } // no array
     if (value.length <= 1) { return value; } // array with only one item
     if (!column || column === '') { 

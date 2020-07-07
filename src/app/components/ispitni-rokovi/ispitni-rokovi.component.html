@@ -1,22 +1,36 @@
-<div class="container">
+<div class="container-fluid">
     <h2 class="mt-5 mb-5">Ispitni rokovi</h2>
     <!-- w-25,75,50.. klasa za width tabele  -->
     <table class="table table-hover w-75">
         <thead>
           <tr>
             <th>#</th>
-            <th>Naziv</th>
-            <th>Pocetak roka</th>
-            <th>Kraj roka</th>
-            <th>Info</th>
+            <th (click)="sort('nazivRoka')"><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i>
+              <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Naziv</th>
+            <th (click)="sort('pocetakRoka')"><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i>
+              <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Pocetak roka</th>
+            <th (click)="sort('krajRoka')"><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i>
+              <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> KrajRoka</th>
+            <th><i *ngIf="this.order==='asc'" class="fa fa-arrow-up" aria-hidden="true"></i>
+              <i *ngIf="this.order==='desc'" class="fa fa-arrow-down" aria-hidden="true"></i> Info</th>
           </tr>
+          <tr class="form-group">
+            <th colspan="2">
+              <input type="text" placeholder="Pretraga po nazivu" class="form-control"
+              [(ngModel)]="searchTerm">
+            </th>
+            <th colspan="2">
+              <input type="date" placeholder="Datum od:" class="form-control"
+              [(ngModel)]="searchTerm2">
+            </th>
+            </tr>
         </thead>
-        <tbody *ngFor="let ir of rokovi; index as i">
+        <tbody *ngFor="let ir of rokovi|irokSortBy:this.order:this.field | irokFilter:searchTerm:searchTerm2; index as i">
           <tr>
             <td>{{i+1}}</td>
             <td>{{ir.nazivRoka}}</td>
-            <td>{{ir.pocetakRoka}}</td>
-            <td>{{ir.krajRoka}}</td>
+            <td>{{ir.pocetakRoka | date}}</td>
+            <td>{{ir.krajRoka | date}}</td>
             <td><a class="btn btn-sm text-white btn-primary" (click)="detaljiRoka(ir)">Detalji</a></td>
         </tr>
         </tbody>
