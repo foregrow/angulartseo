@@ -10,7 +10,8 @@ import { FinansijskaKarticaService } from 'src/app/services/finansijska-kartica.
 import { KorisnikService } from 'src/app/services/korisnik.service';
 import { Dokument } from 'src/app/model/dokument';
 import { HttpClient } from '@angular/common/http';
-
+import { saveAs } from 'file-saver';
+import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-ucenici-detail',
   templateUrl: './ucenici-detail.component.html',
@@ -115,7 +116,6 @@ export class UceniciDetailComponent implements OnInit {
           suma: this.kartica.suma
         });
 
-        console.log(this.kartica.ucenik.dokumenti);
        });
 
        this.uploadForm = this.fb.group({
@@ -127,40 +127,42 @@ export class UceniciDetailComponent implements OnInit {
     this._router.navigate(['predmeti-detail',obj.id]);
   }
 
-  preuzmiDokumente(){
-    if(this.dokumentiArray.length <= 0){
-      alert('Ucenik nema ni jedan elektronski dokument! ');
-    }else{
-      var fk = new FinansijskaKartica(null,null,null,new Ucenik(this.kartica.ucenik.id,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
-        null,null,null,null,null,null,null),null,null,null);
-      this._ucenikService.download(this.kartica.ucenik.id).subscribe(
-        data=>{
-          console.log('uspeh');
-        }
-      );
+  selectedFiles: File[] = [];
+  onFileChanged(e: any){
+    for(var i=0;i<e.target.files.length;i++){
+      var file = e.target.files[i];
+      this.selectedFiles.push(file);
     }
   }
-
-  fileName;
-  selectedFile;
-  onFileChanged(e: any){
-
-    this.selectedFile = e.target.files[0];
-  }
-
-  
-  onUpload(){  
-    const fileData = new FormData();
-    fileData.append('file', this.selectedFile, this.selectedFile.name);
-    fileData.append('uid', this.kartica.ucenik.id);
-    this._ucenikService.upload(fileData).subscribe(
-      data=>{
-        alert('Uspesno dodat fajl!');
+  deleteFile(id){
+    this._ucenikService.deleteDokument(id).subscribe(
+      data =>{
+        this.getByIdAndSetValues(this.addEditParam);
+          alert('Uspesno ste izbrisali dokument!');
       }
     )
-    
   }
-
+  onUpload(){  
+    if(this.selectedFiles.length <= 0)
+      alert("Niste dodali nijedan dokument! ");
+    else{
+      var fileData: FormData  = new FormData();
+      for(var i =0;i<this.selectedFiles.length;i++){
+        fileData.append('files', this.selectedFiles[i], this.selectedFiles[i].name);
+      }
+      fileData.append('uid', this.kartica.ucenik.id);
+      this._ucenikService.upload(fileData).subscribe(
+        data=>{
+          this.selectedFiles= [];
+          this.getByIdAndSetValues(this.addEditParam);
+          alert('Uspesno dodati dokumenti!');
+        });
+    }
+  }
+  obj;
+  downloadFile(uid){
+    this._ucenikService.downloadFile(uid,this.kartica.ucenik);
+  }
 
   chosenSmer(){
     if(this.smerArray.includes(this.smer.value))
